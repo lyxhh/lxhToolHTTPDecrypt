@@ -58,7 +58,7 @@ com.one.sdk.e.b.b   decrypt
 在可编辑区域调用的是Request function 1,2，不可编辑区域调用的是response function3 ,4
 
 打开Auto后，Burp Scanner ，Intruder模块 也可以使用。
-
+Auto功能 数据包加密调用的是 Request function 1，数据包解密调用的Request function 2。
 
 #### 签名
 ![3](images/3.png)
@@ -70,6 +70,7 @@ com.one.sdk.e.b.b   decrypt
 
 效果：
 ![sign](images/sign.gif)
+
 
 
 ### toBurp-hook (配合export使用)

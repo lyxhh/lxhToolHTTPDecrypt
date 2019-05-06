@@ -17,10 +17,10 @@ flask
 
 不指定端口直接运行则为默认端口，
 
-1.python3 app.py
-2.Android_frida_server 运行
-3.转发frida端口。 
-4.打开HTTP Decrypt页面，如果在Start界面出现应用包名列表信息则可正常使用其他功能，如果不行，刷新一下看看控制台出现的信息。
+1. python3 app.py
+2. Android_frida_server 运行
+3. 转发frida端口。 
+4. 打开HTTP Decrypt页面，如果在Start界面出现应用包名列表信息则可正常使用其他功能，如果不行，刷新一下看看控制台出现的信息。
 
 ![1](images/5.png)
 
@@ -85,3 +85,9 @@ Note:也可以直接在POST修改，但是需要解码一次，比较麻烦，�
 拦截指定函数，修改参数or返回值，再返回给应用程序。
 复杂数据类型仅支持修改一维数组。
 ![toburp-toburp](images/toburp-toburp.gif)
+
+
+### future
+1. 支持IOS，（老板说配IOS测试机 配了几个月了 还没到手。）
+2. toBurp-toBurp 增加栈。
+3. 还没想好。

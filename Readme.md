@@ -2,17 +2,29 @@
 
 利用HTTP协议 远程加解密数据包，实现Burp一条龙服务。
 
+## 背景
+在做APP渗透测试的时候，通常通信协议都是做了加解密功能，每次都需要去逆向APP并寻找到加解密算法后，针对写Burp插件，花费了一大堆的时间，然后利用几分钟来抓包改包，然后发现0高0中0低...我枯了，你们呢。
 
-env:
+HTTP Decrypt 提供了Finds Hooks模块，可以在不逆向不脱壳的情况下快速的找到APP所使用的加解密算法，而toBurp模块提供了直接使用APP内的方法进行加解密，而不需自己动手敲代码，对于整体POST加密更是提供了自动化加解密功能，可以实现Burp一条龙，Burp Scanner ，Intruder自动加解密。
+
+
+### env base:
 python3
+感谢python3 世界上最好的语言
+
 frida
+感谢frida  世界上最牛逼的逆向框架
+
 Burp
+感谢BurpSuite 世界上最牛逼的Web测试工具
+
 flask
+感谢flask 世界上最轻量级的web应用框架
 
 
 ## 使用方式
 
-运行
+* 运行
 ![1](images/0.png)
 
 不指定端口直接运行则为默认端口，
@@ -58,7 +70,7 @@ com.one.sdk.e.b.b   decrypt
 在可编辑区域调用的是Request function 1,2，不可编辑区域调用的是response function3 ,4
 
 打开Auto后，Burp Scanner ，Intruder模块 也可以使用。
-Auto功能 数据包加密调用的是 Request function 1，数据包解密调用的Request function 2。
+Auto功能 数据包加密调用的是 Request function 1，数据包解密调用的Request function 2，因此想要使用Auto功能，需要正确填写加解密函数位置，不要填反了。
 
 #### 签名
 ![3](images/3.png)

@@ -90,5 +90,6 @@ Note:也可以直接在POST修改，但是需要解码一次，比较麻烦，�
 
 ### future
 1. 支持IOS，（老板说配IOS测试机 配了几个月了 还没到手。）
-2. toBurp-toBurp 增加栈。
-3. 还没想好。
+2. 支持Native
+3. toBurp-toBurp 增加栈。
+4. 还没想好。

@@ -223,7 +223,7 @@ window.onload = function() {
     });
 
     $("#Inspect").click(function(){
-        var InspectText = $("#InspectText").val();
+        var InspectText = $("#InspectText").val().trim();
         if(InspectText){
             var InspectText_load = { InspectText: InspectText };
             socket.emit("loadInspect", InspectText_load);

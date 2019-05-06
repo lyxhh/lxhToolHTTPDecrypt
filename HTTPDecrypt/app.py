@@ -63,8 +63,8 @@ def bcall():
 def main():
     parser = argparse.ArgumentParser()
     parser.description = '哈哈哈哈'
-    parser.add_argument("-p", "--FlaskPort", help="Specify the Flask port")
-    parser.add_argument("-fp", "--FridaPort", help="Specify the Frida port")
+    parser.add_argument("-p", "--FlaskPort", help="Specify the Flask port , default port is 8088")
+    parser.add_argument("-fp", "--FridaPort", help="Specify the Frida port, default port is 27042")
     args = parser.parse_args()
     # print(args)
     host = "127.0.0.1"

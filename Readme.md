@@ -21,7 +21,7 @@ Burp
 flask
 感谢flask 世界上最轻量级的web应用框架
 
-意见反馈提issue 或 https://www.t00ls.net/articles-51070.html。
+意见反馈提issue 或 https://www.t00ls.net/articles-51070.html
 
 
 

@@ -20,13 +20,14 @@ class Globalenv(object):
     def get_pkgname(self):
         return self.packagename
 
-    def set_device(self, port):
-        devm = frida.get_device_manager()
-        rdev = devm.add_remote_device("127.0.0.1:%s" % port)
-        # rdev = devm.add_remote_device("127.0.0.1:23456")
-        self.device = rdev
+    # def set_device(self, port):
+    #     devm = frida.get_device_manager()
+    #     rdev = devm.add_remote_device("127.0.0.1:%s" % port)
+    #     # rdev = devm.add_remote_device("127.0.0.1:23456")
+    #     self.device = rdev
 
     def get_device(self):
+        self.device = frida.get_device_manager().enumerate_devices()[-1]
         return self.device
 
 app = Flask(__name__)

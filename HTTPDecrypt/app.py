@@ -72,7 +72,7 @@ def main():
     FridaPort = 27042 if (args.FridaPort is None) else args.FridaPort
     # print(FridaPort)
     logger.info("HTTP Decrypt running at http://127.0.0.1:{}".format(FlaskPort))
-    genv.set_device(FridaPort)
+    # genv.set_device(FridaPort)
     socketio.run(app, host=host, port=FlaskPort, debug=False)
 
 if __name__ == '__main__':

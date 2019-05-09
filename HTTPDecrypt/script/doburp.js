@@ -2,8 +2,6 @@ var retval = null;
 var sendback = {};
 var recv_data = null;
 var signature = "-to0obuooO0rp-";
-var doburp = "-do00boouOrp-";
-var slect = "-seOOleoo00ct-";
 var datatype = null;
 
 function getDataType(data) {

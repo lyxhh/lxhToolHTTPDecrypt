@@ -245,12 +245,3 @@ def dofindclass(message):
     # print(script_content)
     loadScript(script_content)
 
-
-# @socketio.on('loadCryptoScript',namespace='/defchishi')
-# def doCrypto():
-#         # logger.info("")
-#         print(colored("[INFO] do Crypto...", "cyan"))
-#         with open("./script/crypto.js", 'r', encoding="utf-8") as f:
-#             script_content = f.read()
-#             # print(script_content)
-#         loadScript(script_content)

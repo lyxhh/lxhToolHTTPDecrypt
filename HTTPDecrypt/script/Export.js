@@ -1,6 +1,6 @@
 'use strict';
 
-var result = null;
+var rpc_result = null;
 rpc.exports = {
     {{scripts}}
 }

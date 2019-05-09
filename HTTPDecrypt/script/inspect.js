@@ -1,18 +1,18 @@
-var sendback = { "methodInfo": []};
-var cell = null;
+var inspect_sendback = { "methodInfo": []};
+var inspect_cell = null;
 var inspect_signature = "-wh00ooer00e-";
 var signature = "-in00sOpOeooct-";
 setTimeout(function() {
     Java.perform(function() {
         var result = "%s";
         // console.log(result);
-        // sendback.result.push(result);
+        // inspect_sendback.result.push(result);
         var arr = result.split(inspect_signature);
         // console.log(arr);
         var clazz_name = arr[0];
         var method_name = arr[1];
-        sendback['classname'] = clazz_name;
-        sendback['methodname'] = method_name;
+        inspect_sendback['classname'] = clazz_name;
+        inspect_sendback['methodname'] = method_name;
 
         //console.log(clazz_name+": " + method_name);
         var class_hook = Java.use(clazz_name);
@@ -29,11 +29,11 @@ setTimeout(function() {
                 arg_type.push(method_hook.argumentTypes[index]["className"])
             }
 
-            cell = { 'Arg': JSON.stringify(arg_type), 'Return Value': JSON.stringify(ret_type), 'length': method_hook.argumentTypes.length};
+            inspect_cell = { 'Arg': JSON.stringify(arg_type), 'Return Value': JSON.stringify(ret_type), 'length': method_hook.argumentTypes.length};
             // console.log(arg_type + ret_type);
-            sendback.methodInfo.push(cell)
+            inspect_sendback.methodInfo.push(inspect_cell)
             }
-            // console.log(sendback);
-            send(JSON.stringify(sendback) + signature)
+            // console.log(inspect_sendback);
+            send(JSON.stringify(inspect_sendback) + signature)
     });
 }, 0);

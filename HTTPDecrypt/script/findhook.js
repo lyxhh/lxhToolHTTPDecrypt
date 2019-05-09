@@ -1,6 +1,5 @@
-var retval = null;
-var sendback = {};
-var signature = "-fi0n0dh0o0ok-";
+var findhook_retval = null;
+var findhook_sendback = {};
 
 
 setTimeout(function() {

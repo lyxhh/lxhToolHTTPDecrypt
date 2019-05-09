@@ -20,11 +20,11 @@ var returntype = null;
         }
     }
     returntype = String({{ clazz_var }}_{{ method_var }}.returnType['className']);
-    retval = this[{{ method_var }}].apply(this, arguments);
-    sendback['Methodinfo'] = returntype + " {{ clazz_name }}.{{ method_name }}(" + findhook_arg_type + ")";
-    sendback['Args'] = arguments;
-    sendback['Retval'] = retval;
-    sendback['methodtag'] = "{{ methodtag }}";
-    send(JSON.stringify(sendback,null,4) + signature);
-    return retval;
+    findhook_retval = this[{{ method_var }}].apply(this, arguments);
+    findhook_sendback['Methodinfo'] = returntype + " {{ clazz_name }}.{{ method_name }}(" + findhook_arg_type + ")";
+    findhook_sendback['Args'] = arguments;
+    findhook_sendback['Retval'] = findhook_retval;
+    findhook_sendback['methodtag'] = "{{ methodtag }}";
+    send(JSON.stringify(findhook_sendback,null,4) + "-fi0n0dh0o0ok-");
+    return findhook_retval;
 };

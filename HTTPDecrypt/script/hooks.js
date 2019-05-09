@@ -1,13 +1,13 @@
 var clazz_Thread = null;
 var linebreak = "-lineline-";
 var line = '-lioonooe-';
-var signature = '-h00oOOoks-';
 var hooks_type = '';
 var hooks_args_index = '';
 var hooks_retval_dump = '';
 var hooks_datatype = '';
 var hooks_ret_type = '';
 var hooks_retval = "";
+var hooks_cell = "";
 
 function getCaller(){
 	// return clazz_Thread.currentThread().getStackTrace().reverse().toString().replace(/,/g,linebreak);
@@ -149,10 +149,10 @@ function traceMethod(targetClass,targetMethod){
 			// console.log(datatype +": "+ arg_dump);
 			method_stack += getCaller();
 
-			cell = { "method_stack": method_stack, "arg_type" : arg_type,"arg_dump" : arg_dump, "retval_dump" : hooks_retval_dump,"targetClassMethod" : targetClassMethod};
-			sendback = JSON.stringify(cell) + signature;
+			hooks_cell = { "method_stack": method_stack, "arg_type" : arg_type,"arg_dump" : arg_dump, "retval_dump" : hooks_retval_dump,"targetClassMethod" : targetClassMethod};
+			// sendback =
 			// console.log(sendback);
-			send(sendback);
+			send(JSON.stringify(hooks_cell) + "-h00oOOoks-");
 			return hooks_retval;
 		}
 	}

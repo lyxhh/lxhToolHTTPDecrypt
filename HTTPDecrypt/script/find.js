@@ -1,6 +1,4 @@
 var line = '-lioonooe-';
-var signature = '-fO0ioon00ds-';
-
 var index = null;
 var pkgname = null;
 var classname = null;
@@ -47,7 +45,7 @@ function traceClass(targetClass)
 			methodname = method.toString().replace(targetClass + ".", "TOKEN").match(/\sTOKEN(.*)/)[1];
 
 			cell = { "pkgname": pkgname, "fullclassname":targetClass, "classname": classname, "methodname": methodname, "methodinfo": method.toString(),"Accesspermissions":Accesspermissions};
-			sendback = JSON.stringify(cell) + signature;
+			sendback = JSON.stringify(cell) + "-fO0ioon00ds-";
 			// console.log(sendback);
 			send(sendback);
 		});

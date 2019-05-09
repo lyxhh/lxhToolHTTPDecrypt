@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+colorlog = "*"
+flask = "*"
+frida = "*"
+flask-login = "*"
+flask-socketio = "*"
+requests = "*"
+
+[requires]
+python_version = ">=3.6"

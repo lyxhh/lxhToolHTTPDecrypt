@@ -1,33 +1,56 @@
 # HTTP Decrypt
 
-利用HTTP协议 远程加解密数据包，实现Burp一条龙服务。
+利用 HTTP 协议 远程加解密数据包，实现 Burp 一条龙服务。
 
 ## 背景
-在做APP渗透测试的时候，通常通信协议基本都做了加解密功能，每次都需要去逆向APP并寻找到加解密算法后，针对写Burp插件，这么一个流程下来花费了一大堆的时间，万一遇到加固，又要耗时间去脱壳，这尼玛遇到壳又脱不了，咋怎，最后利用几分钟来抓包改包，然后发现0高0中0低...我枯了，你们呢。
+在做 APP 渗透测试的时候，通常通信协议基本都做了加解密功能，每次都需要去逆向 APP 并寻找到加解密算法后，针对写 Burp 插件，这么一个流程下来花费了一大堆的时间，万一遇到加固，又要耗时间去脱壳，这尼玛遇到壳又脱不了，咋怎，最后利用几分钟来抓包改包，然后发现 0 高 0 中 0 低...我枯了，你们呢。
 
-HTTP Decrypt 提供了Finds Hooks模块，可以在不逆向不脱壳的情况下快速的找到APP所使用的加解密算法，而toBurp模块提供了直接使用APP内的方法进行加解密，而不需自己动手敲代码，对于整体POST加密更是提供了自动化加解密功能，可以实现Burp一条龙，Burp Scanner ，Intruder自动加解密。
+HTTP Decrypt 提供了 Finds Hooks 模块，可以在不逆向不脱壳的情况下快速的找到 APP 所使用的加解密算法，而 toBurp 模块提供了直接使用 APP 内的方法进行加解密，而不需自己动手敲代码，对于整体 POST 加密更是提供了自动化加解密功能，可以实现 Burp 一条龙，Burp Scanner，Intruder 自动加解密。
 
 
 ### env base:
-python3
-感谢python3 世界上最好的语言
+Python3
+感谢 Python3 世界上最好的语言
 
 frida
-感谢frida  世界上最牛逼的逆向框架
+感谢 frida 世界上最牛逼的逆向框架
 
 Burp
-感谢BurpSuite 世界上最牛逼的Web测试工具
+感谢 BurpSuite 世界上最牛逼的Web测试工具
 
 flask
-感谢flask 世界上最轻量级的web应用框架
+感谢 flask 世界上最轻量级的web应用框架
 
-意见反馈提issue 或 https://www.t00ls.net/articles-51070.html
+意见反馈提 issue 或 https://www.t00ls.net/articles-51070.html
 
 
 
 ## 使用方式
 
-**运行**
+**安装运行**
+
+- 使用 pipenv
+
+```
+pip install pipenv
+git clone https://github.com/lyxhh/lxhToolHTTPDecrypt
+cd lxhToolHTTPDecrypt
+pipenv install
+pipenv shell
+python3 app.py <PORT>
+```
+
+或者
+
+- 使用 venv 或 virtualenv
+
+```
+git clone https://github.com/lyxhh/lxhToolHTTPDecrypt
+cd lxhToolHTTPDecrypt
+python3 -m venv env
+./env/Scripts/activate
+python3 app.py <PORT>
+```
 
 ![1](images/0.png)
 
@@ -35,8 +58,7 @@ flask
 
 1. python3 app.py
 2. Android_frida_server 运行
-3. 转发frida端口。 
-4. 打开HTTP Decrypt页面，如果在Start界面出现应用包名列表信息则可正常使用其他功能，如果不行，刷新一下看看控制台出现的信息。
+3. 打开HTTP Decrypt页面，如果在Start界面出现应用包名列表信息则可正常使用其他功能，如果不行，刷新一下看看控制台出现的信息。
 
 ![1](images/5.png)
 

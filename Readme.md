@@ -26,10 +26,15 @@ flask
 HTTP Decrypt在以下环境测试通过。
 
 frida Version 12.0.5
+
 python Version 3.6
+
 frida-tools Version 1.1.0
+
 Android Version 6.0.1
+
 Phone Nexus5/HUAWEI 6x
+
 
 ## 使用方式
 
@@ -50,7 +55,7 @@ pip3 install colorlog flask flask_socketio requests
 
 
 ### Hooks
-填写的字符串，会与所有已加载的类名进行匹配，如果匹配上了则hook该类下的所有方法。多个字符串，换行填写。
+填写的字符串，会与所有已加载的类名进行匹配，如果匹配上了则hook该类下的所有方法。多个字符串，换行填写,增加过滤功能。
 ![6](images/hooks.png)
 
 ### Stack

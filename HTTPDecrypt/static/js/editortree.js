@@ -116,10 +116,28 @@ function zTreeOnClick(event, treeId, treeNode) {
     toBurpinfo.setShowPrintMargin(false);
     toBurpinfo.setReadOnly(false);
 
-	var Hooksinfo = ace.edit("matchtext");
+	var Hooksinfo = ace.edit("HooksMatchcode");
     Hooksinfo.setTheme("ace/theme/twilight");
     Hooksinfo.setShowPrintMargin(false);
     Hooksinfo.setReadOnly(false);
+
+	var HooksOptionscode = ace.edit("HooksOptionscode");
+    HooksOptionscode.setTheme("ace/theme/twilight");
+    HooksOptionscode.setShowPrintMargin(false);
+    HooksOptionscode.setReadOnly(false);
+
+	var DecoderLeft = ace.edit("DecoderLeft");
+    DecoderLeft.setTheme("ace/theme/twilight");
+    DecoderLeft.setShowPrintMargin(false);
+    DecoderLeft.setReadOnly(false);
+    DecoderLeft.setOption("wrap", "free")
+
+	var DecoderRight = ace.edit("DecoderRight");
+    DecoderRight.setTheme("ace/theme/twilight");
+    DecoderRight.setShowPrintMargin(false);
+    DecoderRight.setReadOnly(false);
+    DecoderRight.setOption("wrap", "free")
+
     //以下部分是设置输入代码提示的，如果不需要可以不用引用ext-language_tools.js
    // ace.require("ace/ext/language_tools");
    // FindOptionscode.session.setMode("ace/mode/text");

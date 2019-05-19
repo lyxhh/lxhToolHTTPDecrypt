@@ -60,7 +60,8 @@ def on_message(message, data):
                     </div>
                 <input onclick="addinfo()" class="btn btn-default "  style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="add">
                 <input onclick="findhook()" class="btn btn-default " style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="hook">
-                <input onclick="rpcExport()" class="btn btn-default " style="width:90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export">
+                <input onclick="rpcExport()" class="btn btn-default " style="width:130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export static">
+                <input onclick="rpcExportInstance()" class="btn btn-default " style="width:130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export instance">
                 <input onclick="doburp()" class="btn btn-default" style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="toBurp">
                 """
             httparr = {'result': httpout}
@@ -115,6 +116,7 @@ def on_message(message, data):
 
     elif message['type'] == 'error':
         if(message.get('description') != None):
+            print(message)
             logger.error("on_message description is: %s" % message.get('description'))
         else:
             logger.error("on_message  No description")

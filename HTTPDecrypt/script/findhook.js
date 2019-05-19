@@ -1,10 +1,10 @@
 var findhook_retval = null;
 var findhook_sendback = {};
+var findhook_returntype = null;
 
-
-setTimeout(function() {
+setImmediate(function() {
     Java.perform(function() {
         console.log("In ..");
         {{scripts}}
     });
-}, 0);
+});

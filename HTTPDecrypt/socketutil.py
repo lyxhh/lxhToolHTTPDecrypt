@@ -108,18 +108,41 @@ def render(tpl_path, context):
     ).get_template(filename).render(context)
 
 
-# @socketio.on('call',namespace='/defchishi')
-# def callc(message):
-#     resultjson = json.loads(message.get('data'), object_pairs_hook=OrderedDict)
-#     argumentsinfo = resultjson.get('argumentsinfo').values()
-#
-#     ccc = genv.script.exports.myfunc(*argumentsinfo)
-#     # print(argumentsinfo.values())
-#
-#     print(ccc)
-#     # methodname = resultjson.get('methodname')
-#     # argumentslength = resultjson.get('argumentslength')
-#     # args = ""
+@socketio.on('rpcExportInstance', namespace='/defchishi')
+def exportrpc(message):
+    script_content = ""
+    methods_list = message.get('methods_list')
+    # print(methods_list)
+    for item in methods_list:
+        if "" == item:
+            continue
+        temptime = random.random()
+        classname = item.get('classname')
+        methodname = item.get('methodname')
+        length = item.get('length')
+        methodtag = item.get('methodtag')
+        logger.info(classname + "." + methodname + " length: " +str(length) + "-> " + methodtag)
+        # print(methodtag)
+        args = ""
+        for i in range(length):
+            args += "arg" + str(i) if 0 == i else ", " + "arg" + str(i)
+
+        context = {
+            'clazz_var': classname.split('.')[-1] + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+            'clazz_name': classname,
+            'method_var': methodtag,
+            'method_name': methodname,
+            'args': args
+        }
+        script_content += render('./script/Export_Template_Instance.js', context)
+        script_content += "\n// Added Function \n"
+    # print(script_content)
+    content = {'scripts': script_content}
+    result = render('./script/Export.js', content)
+    # print(result)
+    loadScript(result)
+
+
 @socketio.on('rpcExport', namespace='/defchishi')
 def exportrpc(message):
     script_content = ""
@@ -153,17 +176,6 @@ def exportrpc(message):
     result = render('./script/Export.js', content)
     # print(result)
     loadScript(result)
-    # resultjson = json.loads(message.get('data'))
-    # classname = resultjson.get('classname')
-    # methodname = resultjson.get('methodname')
-    # argumentslength = resultjson.get('argumentslength')
-    # a = "111123aa"
-    # b = 100000999
-    # bb = True
-    # c = 'a'
-    # bt = [97, 98, 99]
-    # li = [a,b,bb,c,bt]
-    # print(ccc)
 
 
 @socketio.on('findhook', namespace='/defchishi')
@@ -198,18 +210,31 @@ def findhook(message):
 
 @socketio.on('loadHookScript',namespace='/defchishi')
 def doLoadHook(message):
-    matchtext = message.get('matchtext')
+    hooks_list = message.get('hooks_list')
+    matchtext = hooks_list.get('matchtext')
+    hookOptions_lists = message.get('hookOptions_lists')
+    hookOptions_list = hookOptions_lists.get('hookOptions_list')
     # print(matchtext)
+    # print(hookOptions_list)
 
-    if matchtext != None:
-        logger.info("HooksMatch: %s" % matchtext)
+    options = ""
+    for item in hookOptions_list:
+        options += "!targetClassMethod.startsWith(\"%s\") " % item if "" == options else "&& !targetClassMethod.startsWith(\"%s\") " % item
+
+    logger.info("HooksMatch: %s, Options: %s" % (matchtext, options))
+    if "" == options:
         content = {
             'hookslist': matchtext,
+            'options': "targetClassMethod.startsWith(\"\")",
         }
-        script_content = render('./script/hooks.js', content)
-
-        # print(script_content)
-        loadScript(script_content)
+    else:
+        content = {
+            'hookslist': matchtext,
+            'options': options,
+        }
+    script_content = render('./script/hooks.js', content)
+    # print(script_content)
+    loadScript(script_content)
 
 
 @socketio.on('loadfindclassScript',namespace='/defchishi')
@@ -236,12 +261,12 @@ def dofindclass(message):
     # print(options)
     # print(matchfindtext)
 
-    logger.info("FindMatch: %s, Options: %s" % (matchfindtext,options))
+    logger.info("FindMatch: %s, Options: %s" % (matchfindtext, options))
     content = {
                 'matchfindtext': matchfindtext,
                 'options': options,
                }
-    script_content = render('./script/find.js', content)
+    script_content = render('./script/finds.js', content)
     # print(script_content)
     loadScript(script_content)
 

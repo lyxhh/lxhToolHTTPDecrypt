@@ -18,11 +18,11 @@ function getDataType(data) {
     }
 }
 
-setTimeout(function() {
+setImmediate(function() {
     Java.perform(function() {
        console.log("In ..");
         {{scripts}}
     });
-}, 0);
+});
 
 

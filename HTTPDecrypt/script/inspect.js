@@ -1,8 +1,8 @@
 var inspect_sendback = { "methodInfo": []};
 var inspect_cell = null;
 var inspect_signature = "-wh00ooer00e-";
-var signature = "-in00sOpOeooct-";
-setTimeout(function() {
+var inspect_signature_send = "-in00sOpOeooct-";
+setImmediate(function() {
     Java.perform(function() {
         var result = "%s";
         // console.log(result);
@@ -34,6 +34,6 @@ setTimeout(function() {
             inspect_sendback.methodInfo.push(inspect_cell)
             }
             // console.log(inspect_sendback);
-            send(JSON.stringify(inspect_sendback) + signature)
+            send(JSON.stringify(inspect_sendback) + inspect_signature_send)
     });
-}, 0);
+});

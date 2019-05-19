@@ -3,7 +3,7 @@ var {{ index_var }} = {{ index }};
 var {{ clazz_var }} = Java.use("{{ clazz_name }}");
 var {{ clazz_var }}_{{ method_var }} = null;
 
-var returntype = null;
+
 {{ clazz_var }}_{{ method_var }}  = eval('{{ clazz_var }}[{{ method_var }}].overloads[{{ index_var }}]');
 
 {{ clazz_var }}_{{ method_var }}.implementation = function() {
@@ -19,9 +19,9 @@ var returntype = null;
             findhook_arg_type += "," + String({{ clazz_var }}_{{ method_var }}.argumentTypes[index]["className"]);
         }
     }
-    returntype = String({{ clazz_var }}_{{ method_var }}.returnType['className']);
+    findhook_returntype = String({{ clazz_var }}_{{ method_var }}.returnType['className']);
     findhook_retval = this[{{ method_var }}].apply(this, arguments);
-    findhook_sendback['Methodinfo'] = returntype + " {{ clazz_name }}.{{ method_name }}(" + findhook_arg_type + ")";
+    findhook_sendback['Methodinfo'] = findhook_returntype + " {{ clazz_name }}.{{ method_name }}(" + findhook_arg_type + ")";
     findhook_sendback['Args'] = arguments;
     findhook_sendback['Retval'] = findhook_retval;
     findhook_sendback['methodtag'] = "{{ methodtag }}";

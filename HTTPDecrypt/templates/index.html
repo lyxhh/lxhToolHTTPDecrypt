@@ -13,13 +13,12 @@
 	<script type="text/javascript" src="{{url_for('static', filename='edit-js/ace.js') }}"></script>
 	<script type="text/javascript" src="{{url_for('static', filename='edit-js/ext-language_tools.js') }}"></script>
 
-    <!--<script src="{{url_for('static', filename='js/bootstrap.min.js') }}"></script>-->
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{#    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">#}
+{#	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>#}
 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
 	<script src="{{url_for('static', filename='js/jquery.ztree.core.min.js') }}"></script>
-	<script src="{{url_for('static', filename='js/fuzzysearch.js') }}"></script>
-	<script src="{{url_for('static', filename='js/jquery.ztree.exedit.min.js') }}"></script>
 
 	<script src="{{url_for('static', filename='js/jquery.easyui.min.js') }}"></script>
 
@@ -48,11 +47,11 @@
 
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-toggle="tab" href="#Start" >Start</a></li>
-			<!--<li><a data-toggle="tab" href="#Crypto">Crypto</a></li>-->
 			<li><a data-toggle="tab" href="#hook" >Hooks</a></li>
 			<li><a data-toggle="tab" href="#stack">Stack</a></li>
 			<li><a data-toggle="tab" href="#find">Finds</a></li>
 			<li><a data-toggle="tab" href="#toBurp">toBurp</a></li>
+            <li><a data-toggle="tab" href="#Decoder">Decoder</a></li>
 			<!--<li><a data-toggle="tab" href="#custom">Custom</a></li>-->
 		</ul>
 		<div class="tab-content">
@@ -83,11 +82,17 @@
   				<!--<button type="button" class="btn btn-warning btn-xs" onclick="unloadScript()">UnLoadScript</button>-->
 				</div>
                 <div class="well" id="hooks-info-div">
-                    <label>Match <span  title="Hooks 是将给定的类名下的所有方法都Hook一遍。&#10;可填写完整类名，填写类名中包含的一部分字符串也可以匹配到你想要的类，多个类换行分隔。支持正则(JavaScript match) &#10;例如: 完整类名com.lxh.xxx.class1 可以写成 com.lxh or lxh.xxx or xxx or... 写成com.lxh,会把所有包含这个字符的类名都匹配上，然后把类下面的所有方法都Hook了, 为空Hook所有方法（会导致APP崩溃）"><i class="glyphicon glyphicon-question-sign"></i></span></label>
-                    <div class="subclass">
-						<div id="matchtext" style="height: 122px"></div>
+                    <div class="row ">
+                        <div class="col-sm-6">
+                            <label>Match <span  title="Hooks 是将给定的类名下的所有方法都Hook一遍。&#10;可填写完整类名，填写类名中包含的一部分字符串也可以匹配到你想要的类，多个类换行分隔。支持正则(JavaScript match) &#10;例如: 完整类名com.lxh.xxx.class1 可以写成 com.lxh or lxh.xxx or xxx or... 写成com.lxh,会把所有包含这个字符的类名都匹配上，然后把类下面的所有方法都Hook了, 为空Hook所有方法（会导致APP崩溃）"><i class="glyphicon glyphicon-question-sign"></i></span></label>
+						    <div id="HooksMatchcode" style="height: 250px"></div>
                         <!--<input type="text" id="matchtext" class="form-control" placeholder="hook class" style="width: 250px;display: inline-block">-->
                         <!--<button type="submit" id="loadScript" class="btn btn-success " style="width: 90px;height: 32px;margin-bottom: 2px">Confirm</button>-->
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Options  <span title="将导致崩溃的方法，填写再此处，多个换行分隔。"><i class="glyphicon glyphicon-question-sign"></i></span></label>
+                            <div id="HooksOptionscode" style="height: 250px"></div>
+                    	</div>
                     </div>
 				</div>
 				<p style="color: #337ab7;margin: 5px 0px;"> Output Console <span class="glyphicon glyphicon-remove clickable" aria-hidden="true" onclick="clear_hookMessage()"  ></span></p>
@@ -211,11 +216,33 @@
 
 				</div>
 			</div>
-			<!--<div class="tab-pane fade form-group" id="custom">-->
-                <!--<div id="code">-->
-					<!--<textarea class="form-control" id="code_textarea" name="code_textarea" cols="20" rows="10"></textarea>-->
-				<!--</div>-->
-			<!--</div>-->
+            <div class="tab-pane fade form-group" id="Decoder">
+                <p id="toggle_find_info" class="text-primary" style="cursor: pointer; margin-bottom: 3px;display: inline-block;">Decoder </p>&nbsp;&nbsp;
+                <select class="btn-xs" id="Decoder_select_result">
+                    <option value="1">byte array and hex string interconvert</option>
+                    <option value="2">byte array and string interconvert</option>
+                </select>
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" id="DecoderConfirmLeft" class="btn btn-default btn-xs">---></button>
+                    <button type="button" id="DecoderConfirmRight" class="btn btn-warning btn-xs" onclick=""><---</button>
+				</div>
+
+				<div class="well" id="Decoder-info-div">
+                    <div class="row ">
+                        <div class="col-sm-6 ">
+{#                            <label>Match </label>#}
+                            <div id="DecoderLeft" style="height: 250px"></div>
+                        </div>
+
+                        <div class="col-sm-6">
+{#                            <label>Options </label>#}
+                            <div id="DecoderRight" style="height: 250px"></div>
+                    	</div>
+
+					</div>
+				</div>
+
+            </div>
 
 		</div>
 

@@ -23,7 +23,13 @@ flask
 
 意见反馈提issue 或 https://www.t00ls.net/articles-51070.html
 
+HTTP Decrypt在以下环境测试通过。
 
+frida Version 12.0.5
+python Version 3.6
+frida-tools Version 1.1.0
+Android Version 6.0.1
+Phone Nexus5/HUAWEI 6x
 
 ## 使用方式
 
@@ -45,7 +51,7 @@ pip3 install colorlog flask flask_socketio requests
 
 ### Hooks
 填写的字符串，会与所有已加载的类名进行匹配，如果匹配上了则hook该类下的所有方法。多个字符串，换行填写。
-![6](images/6.png)
+![6](images/hooks.png)
 
 ### Stack
 Hooks打印的堆栈会在这里显示。
@@ -106,12 +112,19 @@ Note:也可以直接在POST修改，但是需要解码一次，比较麻烦，�
 复杂数据类型仅支持修改一维数组。
 ![toburp-toburp](images/toburp-toburp.gif)
 
+## Decoder
+新增Decoder功能，支持byte[] 与字符串相互转换，byte[] 与十六进制字符串相互转换。
+在Hooks的时候，会打印byte[]参数，如果我们想看byte参数的字符串内容，或者看AES/DES等加密算法的Key(Key与iV都是以数组形式打印出来，将其转换成16进制字符串就是代码中填写的值)，就可以使用这个功能。
+![Decoder1](images/Decoder1.png)
+
+![Decoder2](images/Decoder2.png)
+
+Note：如果转换后是乱码，一般都是加密算法(AES等)加密之后的结果。
 
 ### future
 1. 支持IOS，（老板说配IOS测试机 配了几个月了 还没到手。）
-2. 支持Native
-3. toBurp-toBurp 增加栈。
-4. 暂无，欢迎提供建议一起交流。
+2. 自定义脚本
+3. 欢迎提供建议交流。
 
 
 

@@ -2,6 +2,8 @@ var matchtext = null;
 
 var findOptionscode = null;
 var findmatchdata = null;
+var Hooksinfodata = null;
+var hooksOptionscode = null;
 
 var pkgnameText = null;
 var zTree = null;
@@ -13,15 +15,28 @@ socket.emit('connect', function() {
     console.log("socket connect ok!");
 });
 
-function uniqBy(arr){
-    arr = arr.sort();
-    var result = [arr[0]];
 
-    for (var i=1, len=arr.length; i<len; i++) {
-        arr[i] !== arr[i-1] && result.push(arr[i])
-    }
-    return result
+function bytesToHex(byteArray) {
+  return Array.from(byteArray, function(byte) {
+    return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+  }).join('')
 }
+
+function hexToBytes(hexString) {
+  var result = [];
+  for (var i = 0; i < hexString.length; i += 2) {
+    result.push(parseInt(hexString.substr(i, 2), 16));
+  }
+  return result;
+}
+
+function uniqBy(arr) {
+  var seen = {};
+  return arr.filter(function(item) {
+    return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+  });
+}
+
 
 function clear_hookMessage() {
     $("#outputBody").empty();
@@ -73,13 +88,7 @@ function doburp() {
         }
     }
     socket.emit("doburp", methods_list);
-    // alert("aaa");
-    // var select_result = $("#select_result").val();
-    // var pkg_class_method_name_code =  $("#pkg_class_method_name_code").text();
-    // // alert(pkg_class_method_name_code);
-    // // console.log("select_result: " + select_result);
-    // var intercept_index = { select_result: Number(select_result), pkg_class_method_name_code: pkg_class_method_name_code};
-    // socket.emit("doburp", intercept_index);
+
 }
 
 function unloadScript() {
@@ -111,7 +120,7 @@ function addinfo(){
     var jsoninfo = JSON.parse(pkg_class_method_name_code);
     var jmethodname = jsoninfo.methodname;
     var methodarglength = JSON.parse(select_text).length;
-    console.log(select_result + "::::"+select_text+":::"+methodarglength);
+    // console.log(select_result + "::::"+select_text+":::"+methodarglength);
     // var methodtag = jmethodname + jsoninfo.classtag + select_result + methodarglength;
     var methodtag = "tag" + jsoninfo.classtag + select_result + methodarglength;
     // console.log(jsoninfo);
@@ -145,11 +154,31 @@ function rpcExport(){
     socket.emit("rpcExport", methods_list);
 }
 
-function call(){
-    var data = $("#findhookmessage").val();
-    var script_to_load = { data: data };
-    socket.emit("call", script_to_load);
+function rpcExportInstance(){
+    var lists = toBurpinfo.getValue().split('\n');
+    lists = uniqBy(lists);
+
+    var methods_list = { methods_list: [] };
+    for (var index = 0; index < lists.length; index++) {
+        try {
+            if ("" == lists[index]){
+                continue;
+            }
+            var temp = JSON.parse(lists[index]);
+            methods_list.methods_list.push(temp)
+        } catch (e) {
+            console.log("rpcExportInstance is error: " + lists[index])
+        }
+    }
+    socket.emit("rpcExportInstance", methods_list);
 }
+
+
+// function call(){
+//     var data = $("#findhookmessage").val();
+//     var script_to_load = { data: data };
+//     socket.emit("call", script_to_load);
+// }
 
 
 window.onload = function() {
@@ -171,8 +200,27 @@ window.onload = function() {
             }
         }
 
-        // var script_to_load = { matchtext: Hooksinfodata };
-        socket.emit("loadHookScript", hooks_list);
+        hooksOptionscode = HooksOptionscode.getValue().split('\n');
+        hooksOptionscode = uniqBy(hooksOptionscode);
+
+        var hookOptions_lists = { hookOptions_list: [] };
+        for (var index = 0; index < hooksOptionscode.length; index++) {
+            try {
+                    if ("" == hooksOptionscode[index]){
+                        //去除空行。
+                        continue;
+                    }
+                    var hookOptions = hooksOptionscode[index].trim();
+                    hookOptions_lists.hookOptions_list.push( hookOptions);
+
+            } catch (e) {
+                console.log("findOptions error No Json: " + hooksOptionscode[index])
+            }
+        }
+
+        var script_to_load = { "hooks_list": hooks_list, "hookOptions_lists":hookOptions_lists};
+        // console.log(script_to_load);
+        socket.emit("loadHookScript", script_to_load);
     });
 
 
@@ -219,7 +267,36 @@ window.onload = function() {
     $("#loadCryptoScript").click(function(){
         // matchfindtext = $("#matchfindtext").val();
         // var script_to_load = { matchfindtext: matchfindtext };
+
         socket.emit("loadCryptoScript");
+    });
+
+    $("#DecoderConfirmLeft").click(function(){
+        var Decoderselected = $("#Decoder_select_result option:selected").val();
+        var DecoderLeftvalues = DecoderLeft.getValue().trim();
+        // console.log(DecoderLeftvalues);
+        if ("1" == Decoderselected){
+            DecoderRight.setValue(bytesToHex(DecoderLeftvalues.split(',')));
+        }else if ("2" == Decoderselected){
+            let bytes = new Uint8Array(DecoderLeftvalues.split(','));
+            let str = new TextDecoder().decode(bytes);
+            // console.log(bytes);
+            DecoderRight.setValue(str);
+        }
+        // console.log(Decoderselected);
+    });
+
+    $("#DecoderConfirmRight").click(function(){
+        var Decoderselected = $("#Decoder_select_result option:selected").val();
+        var DecoderRightvalues = DecoderRight.getValue().trim();
+        // console.log(DecoderRightvalues);
+        if ("1" == Decoderselected){
+            DecoderLeft.setValue(hexToBytes(DecoderRightvalues).toString());
+
+        }else if ("2" == Decoderselected){
+            let bytes = new TextEncoder().encode(DecoderRightvalues);
+            DecoderLeft.setValue(bytes.toString());
+        }
     });
 
     $("#Inspect").click(function(){
@@ -384,44 +461,44 @@ window.onload = function() {
 
 
 
-    socket.on('Crypto_message', function(msg) {
-        crypto_count += 1;
-        var f_data = JSON.parse(msg.data);
-        var type = f_data.type;
-        //var hashcode = f_data.hashcode;
-        var key = f_data.key;
-        var Iv = f_data.IV;
-        var transformation = f_data.transformation;
-        var before_do = f_data.before_doFinal;
-        var after_do = f_data.after_doFinal;
+    // socket.on('Crypto_message', function(msg) {
+    //     crypto_count += 1;
+    //     var f_data = JSON.parse(msg.data);
+    //     var type = f_data.type;
+    //     //var hashcode = f_data.hashcode;
+    //     var key = f_data.key;
+    //     var Iv = f_data.IV;
+    //     var transformation = f_data.transformation;
+    //     var before_do = f_data.before_doFinal;
+    //     var after_do = f_data.after_doFinal;
+    //
+    //    // alert($('#outputBody').html());
+    //     $('#CryptooutputBody').append('<tr><td>' + crypto_count + '</td><td>'+
+    //         "type: "+"<code>"+type+"</code>"+
+    //         //", hashcode: "+hashcode+
+    //         ", key: "+"<code>" +key +
+    //         "</code>"+", iv: "+"<code>" + Iv + "</code>"+
+    //         "</code>"+", transformation: "+"<code>" + transformation + "</code>"+
+    //         ", before_doFinal: "+"<code>"+before_do+"</code>"+
+    //         ", after_doFinal: "+"<code>"+after_do+"</code>"+
+    //         '</td></tr>');
+    //     // $('#stackoutputBody').append('<tr><td>' + methodname + '</td><td><code>' + stackname + '</code></td></tr>');
+    //     // console.log(jdata);
+    //     // alert(jdata);
+    // });
 
-       // alert($('#outputBody').html());
-        $('#CryptooutputBody').append('<tr><td>' + crypto_count + '</td><td>'+
-            "type: "+"<code>"+type+"</code>"+
-            //", hashcode: "+hashcode+
-            ", key: "+"<code>" +key +
-            "</code>"+", iv: "+"<code>" + Iv + "</code>"+
-            "</code>"+", transformation: "+"<code>" + transformation + "</code>"+
-            ", before_doFinal: "+"<code>"+before_do+"</code>"+
-            ", after_doFinal: "+"<code>"+after_do+"</code>"+
-            '</td></tr>');
-        // $('#stackoutputBody').append('<tr><td>' + methodname + '</td><td><code>' + stackname + '</code></td></tr>');
-        // console.log(jdata);
-        // alert(jdata);
-    });
 
-
-    socket.on('temp', function(msg) {
-        var jdata = JSON.parse(msg.data);
-        // var hook_message = jdata.get("")
-        var stackname = jdata.method;
-        var methodname = jdata.methodname;
-        // var retval = jdata.retval;
-       // alert($('#outputBody').html());
-        $('#stackoutputBody').append('<tr><td>' + methodname + '</td><td><code>' + stackname + '</code></td></tr>');
-        // console.log(jdata);
-        // alert(jdata);
-    });
+    // socket.on('temp', function(msg) {
+    //     var jdata = JSON.parse(msg.data);
+    //     // var hook_message = jdata.get("")
+    //     var stackname = jdata.method;
+    //     var methodname = jdata.methodname;
+    //     // var retval = jdata.retval;
+    //    // alert($('#outputBody').html());
+    //     $('#stackoutputBody').append('<tr><td>' + methodname + '</td><td><code>' + stackname + '</code></td></tr>');
+    //     // console.log(jdata);
+    //     // alert(jdata);
+    // });
 
     socket.on('input_result', function(msg) {
         // var jresult= msg.result;
@@ -448,7 +525,7 @@ window.onload = function() {
         // console.log(msg.data);
         // console.log(f_data);
 
-        $('#toburpoutputBody').append('<tr><td>' + JSON.stringify(dict1) + '</td><td><form action="/call" method="POST" target="_blank"><input type="hidden" name="methodtag"  value="' + f_data.methodtag + '" />'+'<input type="hidden" name="argsinfo"  value=' + JSON.stringify(f_data.Args) + ' />'+'<button type="submit"  onclick="call()" class="btn btn-default " style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;">call</button></form></td></tr>');
+        $('#toburpoutputBody').append('<tr><td>' + JSON.stringify(dict1) + '</td><td><form action="/call" method="POST" target="_blank"><input type="hidden" name="methodtag"  value="' + f_data.methodtag + '" />'+'<input type="hidden" name="argsinfo"  value=' + JSON.stringify(f_data.Args) + ' />'+'<button type="submit"  class="btn btn-default " style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;">call</button></form></td></tr>');
 
 
     });

@@ -27,13 +27,14 @@ def call():
     if genv.script is None:
         return "Export Script no load, please check."
     # print(type(request.form.get('argsinfo')))
+
     try:
         jArgsInfo = json.loads(ArgsInfo, object_pairs_hook=OrderedDict)
         argumentsinfo = jArgsInfo.values()
-        method_to_call = getattr(genv.script.exports, MethodTag)
-        # print("123")
-        # print(method_to_call(*argumentsinfo))
-        return method_to_call(*argumentsinfo)
+        # print(request.form)
+        method_to_call = getattr(genv.script.exports, MethodTag)(*argumentsinfo)
+        # print(method_to_call)
+        return method_to_call
     except Exception as e:
         return str(e)
 
@@ -53,9 +54,9 @@ def bcall():
         jArgsInfo = json.loads(ArgsInfo, object_pairs_hook=OrderedDict)
         argumentsinfo = [base64.b64decode(temp).decode('utf-8') for temp in jArgsInfo.values()]
         # print(argumentsinfo)
-        method_to_call = getattr(genv.script.exports, MethodTag)
+        method_to_call = getattr(genv.script.exports, MethodTag)(*argumentsinfo)
         # print(method_to_call(*argumentsinfo))
-        return method_to_call(*argumentsinfo)
+        return method_to_call
     except Exception as e:
         return str(e)
 

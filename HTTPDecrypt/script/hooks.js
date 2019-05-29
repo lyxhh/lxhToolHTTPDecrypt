@@ -1,7 +1,6 @@
 var hooks_clazz_Thread = null;
 var hooks_line = '-lioonooe-';
 var hooks_cell = "";
-// var hooks_hook = null;
 
 function getCaller(){
 	// return hooks_clazz_Thread.currentThread().getStackTrace().reverse().toString().replace(/,/g,linebreak);
@@ -47,21 +46,6 @@ function traceClass(targetClass)
 				traceMethod(targetClass, targetMethod);
 		});
 	}catch (err) {}
-}
-
-
-function getDataType(data) {
-    if(data === null){
-        return 'null';
-    } else if(typeof data == 'object'){
-        if( typeof data.length == 'number' ){
-            return 'Array';
-        }else{
-            return 'Object';
-        }
-    }else{
-        return 'no object type ';
-    }
 }
 
 function traceMethod(targetClass,targetMethod){
@@ -118,12 +102,6 @@ function traceMethod(targetClass,targetMethod){
                             // console.log(e.message + " "+targetMethod +" "+ targetClassMethod);
                         }
 
-                        // if (hooks_retval === null || hooks_retval === 'undefined') {
-                        //     return '';
-                        // }
-                        // hooks_retval = this[targetMethod].call(this, arguments);
-                        //     // var hooks_retval = this.$new().this[targetMethod].apply(this, arguments);
-                        //     // var hooks_retval = this[targetMethod].call(this,);
                         var hooks_ret_type = String(List_hook.returnType['className']);
 
                         if (hooks_ret_type == "[B") {
@@ -133,7 +111,7 @@ function traceMethod(targetClass,targetMethod){
                         }
 
                         method_stack += getCaller();
-                        // console.log(hooks_ret_type + " "+targetClassMethod);
+                        console.log(hooks_ret_type + " "+targetClassMethod);
                         hooks_cell = {
                             "method_stack": method_stack,
                             "arg_type": arg_type,

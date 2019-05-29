@@ -1,13 +1,7 @@
 var hooks_clazz_Thread = null;
 var hooks_line = '-lioonooe-';
-var hooks_type = '';
-var hooks_args_index = '';
-var hooks_retval_dump = '';
-var hooks_datatype = '';
-var hooks_ret_type = '';
-var hooks_retval = "";
 var hooks_cell = "";
-var hooks_hook = null;
+// var hooks_hook = null;
 
 function getCaller(){
 	// return hooks_clazz_Thread.currentThread().getStackTrace().reverse().toString().replace(/,/g,linebreak);
@@ -38,7 +32,7 @@ function uniqBy(arr) {
 function traceClass(targetClass)
 {
     try {
-        hooks_hook = Java.use(targetClass);
+        var hooks_hook = Java.use(targetClass);
 		var methods = hooks_hook.class.getDeclaredMethods();
 		// var Modifier = Java.use("java.lang.reflect.Modifier");
 		hooks_hook.$dispose;
@@ -50,18 +44,7 @@ function traceClass(targetClass)
 		var targets = uniqBy(parsedMethods);
 	  //hook all method
 		targets.forEach(function(targetMethod) {
-
-			// if(!targetClass.startsWith("android.")
-			// 	&& !targetClass.startsWith("org.")
-			// 	&& !targetClass.startsWith("java.")
-			// 	&& !targetClass.startsWith(".system")
-			// 	// && !targetClass.contains("com.huawei")
-			// ) {
-			// 	console.log("1");
-
 				traceMethod(targetClass, targetMethod);
-
-            // }
 		});
 	}catch (err) {}
 }
@@ -83,55 +66,74 @@ function getDataType(data) {
 
 function traceMethod(targetClass,targetMethod){
 	// console.log("123");
-    try {   
+    // try {
             var targetClassMethod = targetClass+'.'+ targetMethod;
             if ({{ options }}){
             // console.log("11111");
                 var hookClazz = Java.use(targetClass);
+                if (hookClazz == null || typeof hookClazz[targetMethod] === 'undefined') {
+                    return;
+                }
                 var overloadCount = hookClazz[targetMethod].overloads.length;
+
                 hooks_clazz_Thread = Java.use("java.lang.Thread");
                 var List_hook = null;
+
                 for (var i = 0; i < overloadCount; i++) {
-                    // console.log("222");
-                    List_hook = eval('hookClazz[targetMethod].overloads[i]');
-                    // console.log("444");
+
+                    try {
+                        List_hook = eval('hookClazz[targetMethod].overloads[i]');
+                    }catch (e) {
+                        console.log("[&&] List_hook error " + e.message);
+                    }
+                    // var mArgs  = hookClazz[targetMethod].overloads[i].argumentTypes;
+
                     List_hook.implementation = function () {
-                        // console.log("3333");
                         // 打印参数
                         var arg_dump = '';
                         var arg_type = '';
                         var method_stack = '';
+                        var args = arguments;
 
-                        for (var index = 0; index < arguments.length; index++) {
-                            // for (var index = 0; index < method_hook.argumentTypes.length; index++) {
-                            hooks_args_index = arguments[index];
-                            hooks_type = typeof (hooks_args_index);
-                            // type = method_hook.argumentTypes[index]["className"];
-                            hooks_datatype = getDataType(hooks_args_index);
-
-                            arg_type += (hooks_line + 'argType' + index.toString() + " : " + String(hooks_type));
-                            // console.log(arg_type);
-                            if (hooks_datatype == "Array") {
-                                // hex_arg =  arrayTohex(args_index);
-                                arg_dump += ("arg" + index.toString() + ": " + JSON.stringify(hooks_args_index) + hooks_line);
-                            } else {
-                                arg_dump += ("arg" + index.toString() + ": " + String(hooks_args_index) + hooks_line);
+                        for (var index = 0; index < args.length; index++) {
+                            var value = '';
+                            if (args[index] === null ||  typeof args[index] === 'undefined'){
+                                value = 'null';
+                            } else{
+                                if (typeof args[index] === 'object') {
+                                    value = JSON.stringify(args[index]);
+                                } else {
+                                    value = args[index].toString();
+                                }
                             }
+                            arg_type += (hooks_line + 'argType' + index.toString() + " : " + typeof args[index]);
+                            // arg_type += (hooks_line + 'argType' + index.toString() + " : " + mArgs[index]['className'].toString()); // Error
+                            arg_dump += ("arg" + index.toString() + ": " + value + hooks_line);
                         }
-                        hooks_ret_type = String(List_hook.returnType['className']);
-                        // console.log(targetClassMethod);
-                        hooks_retval = this[targetMethod].apply(this, arguments); // rare crash (Frida bug?)
+                        try {
+                            var hooks_retval = this[targetMethod].apply(this, args); // cannot call instance method without an instance？
+                        }catch (e) {
+                            // hooks_retval = hookClazz.$new().targetMethod.apply(this, arguments);
+                            return '';
+                            // console.log(e.message + " "+targetMethod +" "+ targetClassMethod);
+                        }
+
+                        // if (hooks_retval === null || hooks_retval === 'undefined') {
+                        //     return '';
+                        // }
+                        // hooks_retval = this[targetMethod].call(this, arguments);
+                        //     // var hooks_retval = this.$new().this[targetMethod].apply(this, arguments);
+                        //     // var hooks_retval = this[targetMethod].call(this,);
+                        var hooks_ret_type = String(List_hook.returnType['className']);
 
                         if (hooks_ret_type == "[B") {
-                            // new_retval=  arrayTohex(retval);
-                            hooks_retval_dump = "(" + hooks_ret_type + ') : ' + JSON.stringify(hooks_retval);
+                            var hooks_retval_dump = "(" + hooks_ret_type + ') : ' + JSON.stringify(hooks_retval);
                         } else {
-                            hooks_retval_dump = "(" + hooks_ret_type + ') : ' + String(hooks_retval);
+                            var hooks_retval_dump = "(" + hooks_ret_type + ') : ' + String(hooks_retval);
                         }
 
-                        // console.log(datatype +": "+ arg_dump);
                         method_stack += getCaller();
-                        console.log(hooks_ret_type + " "+targetClassMethod);
+                        // console.log(hooks_ret_type + " "+targetClassMethod);
                         hooks_cell = {
                             "method_stack": method_stack,
                             "arg_type": arg_type,
@@ -144,11 +146,11 @@ function traceMethod(targetClass,targetMethod){
                         return hooks_retval;
                     }
                 }
+                hookClazz.$dispose();
             }
-            // }
-	}catch (err) {
-        console.log("hooks function traceMethod is " + targetClassMethod +" error: "+ err);
-    }
+	// }catch (err) {
+    //     console.log("hooks function traceMethod is " + targetClassMethod +" error: "+ err);
+    // }
 }
 
 

@@ -10,8 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
 
@@ -37,6 +36,11 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
     private JTextArea ParameterText;
     private JTextArea SignParametertext;
+
+    private JTextArea RequestsText;
+    private JTextArea ResponseText;
+
+
     private JCheckBox jCheckBox;
     private final List<String> method = Arrays.asList(new String[]{"String", "GET", "POST", "COOKIE", "Body", "HEADER"});
     private final List<String> HashEncrypt = Arrays.asList(new String[]{"16md5", "32md5", "SHA1", "SHA-224", "SHA-256", "SHA-384", "SHA-512", "methodtag"});
@@ -74,25 +78,24 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         HServerurlDescLabel.setBounds(236 + 330 + 20 + 60 + 10 + 170, 16, 300, 20);
 
         JLabel CustomfunctionRequestDescLabel = new JLabel();
-        CustomfunctionRequestDescLabel.setText("Set the method(encrypt) of the context menu call in the request packet.");
-        CustomfunctionRequestDescLabel.setBounds(236 + 330 + 20, 9 + 40, 560, 20);
+        CustomfunctionRequestDescLabel.setText("Set method(encrypt) in the request.");
+        CustomfunctionRequestDescLabel.setBounds(236 + 330 + 20 + 60 + 10 + 170+136+230, 9 + 40+11, 560, 20);
 
         JLabel Customfunction1RequestDescLabel = new JLabel();
-        Customfunction1RequestDescLabel.setText("Set the method(decrypt) of the context menu call in the request packet.");
-        Customfunction1RequestDescLabel.setBounds(236 + 330 + 20, 47 + 35, 560, 20);
+        Customfunction1RequestDescLabel.setText("Set method(decrypt) in the request.");
+        Customfunction1RequestDescLabel.setBounds(236 + 330 + 20 + 60 + 10 + 170+136+230, 47 + 35+11, 560, 20);
 
         JLabel CustomfunctionResponseDescLabel = new JLabel();
-        CustomfunctionResponseDescLabel.setText("Set the method(encrypt) of the context menu call in the response packet.");
-        CustomfunctionResponseDescLabel.setBounds(236 + 330 + 20, 17 + 100, 560, 20);
+        CustomfunctionResponseDescLabel.setText("Set method(encrypt) in the response.");
+        CustomfunctionResponseDescLabel.setBounds(236 + 330 + 20 + 60 + 10 + 170+136+230, 17 + 100+11, 560, 20);
 
         JLabel Customfunction1ResponseDescLabel = new JLabel();
-        Customfunction1ResponseDescLabel.setText("Set the method(decrypt) of the context menu call in the response packet.");
-        Customfunction1ResponseDescLabel.setBounds(236 + 330 + 20, 17 + 100+35, 560, 20);
+        Customfunction1ResponseDescLabel.setText("Set method(decrypt) in the response.");
+        Customfunction1ResponseDescLabel.setBounds(236 + 330 + 20 + 60 + 10 + 170+136+230, 17 + 100+35+11, 560, 20);
 
 //        JLabel CustomfunctionResponseDescLabel = new JLabel();
 
         jCheckBox = new JCheckBox("Auto");
-
 
         BurpExtender.this.url = new JTextField();
 
@@ -105,39 +108,54 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         ParameterText.setLineWrap(true);    // set auto line
         Dimension size = ParameterText.getPreferredSize();
         JScrollPane jsp = new JScrollPane(ParameterText);
-        jsp.setBounds(16, 117 + 26 + 35, size.width, size.height);
+        jsp.setBounds(16, 117 + 26 + 35+11, size.width, size.height);
 
         SignParametertext = new JTextArea(10, 33);
         SignParametertext.setLineWrap(true);    // set auto line
         Dimension Signtextsize = SignParametertext.getPreferredSize();
         JScrollPane Signtextjsp = new JScrollPane(SignParametertext);
-        Signtextjsp.setBounds(20 + 6 + size.width + 155 + 40 + 175 + 40, 117 + 26 + 35, Signtextsize.width, Signtextsize.height);
+        Signtextjsp.setBounds(20 + 6 + size.width + 155 + 40 + 175 + 40, 117 + 26 + 35+11, Signtextsize.width, Signtextsize.height);
+
+        RequestsText = new JTextArea(3, 53);
+        RequestsText.setLineWrap(true);    // set auto line
+        RequestsText.setText("{\"0\":\"019CE961992BA5AB\"}");
+        Dimension RequestsTextsize = RequestsText.getPreferredSize();
+        JScrollPane RequestsTextsizejsp = new JScrollPane(RequestsText);
+        RequestsTextsizejsp.setBounds(236 + 330 + 20, 5 + 40, RequestsTextsize.width, RequestsTextsize.height);
+
+        ResponseText = new JTextArea(3, 53);
+        ResponseText.setLineWrap(true);    // set auto line
+        ResponseText.setText("{\"0\":\"019CE961992BA5AB\"}");
+        Dimension ResponseTextsize = ResponseText.getPreferredSize();
+        JScrollPane ResponseTextsizejsp = new JScrollPane(ResponseText);
+        ResponseTextsizejsp.setBounds(236 + 330 + 20, 17 + 100, ResponseTextsize.width, ResponseTextsize.height);
+
 
         Text = new JTextField();
-        Text.setBounds(20 + 16 + size.width + 155 + 20, 117 + 26 + 35 + 38 + 40 + 28 + 10 + 40, 175 + 50, 28);
+        Text.setBounds(20 + 16 + size.width + 155 + 20, 117 + 26 + 35 + 38 + 40 + 28 + 10 + 40+11, 175 + 50, 28);
 
         methodtag = new JTextField();
         methodtag.setEditable(false);
         methodtag.setBackground(new Color(232, 232, 232));
-        methodtag.setBounds(20 + 16 + size.width + 155 + 20, 117 + 26 + 35 + 28, 175 + 50, 28);
+        methodtag.setBounds(20 + 16 + size.width + 155 + 20, 117 + 26 + 35 + 28+11, 175 + 50, 28);
 
         JButton Add = new JButton("Add Parameters");
-        Add.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 80 + 110, 175, 20);
+        Add.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 80 + 110+11, 175, 20);
         Add.setActionCommand("ParameterContext");
         Add.addActionListener(this);
 
         JButton confirm = new JButton("Add SignParameters");
-        confirm.setBounds(20 + 16 + size.width + 155 + 20, 117 + 26 + 35 + 80 + 110, 175 + 50, 20);
+        confirm.setBounds(20 + 16 + size.width + 155 + 20, 117 + 26 + 35 + 80 + 110+11, 175 + 50, 20);
         confirm.setActionCommand("SignParameterContext");
         confirm.addActionListener(this);
 
 
         JLabel HashDescLabel = new JLabel();
         HashDescLabel.setText("Select Encryption Algorithm.");
-        HashDescLabel.setBounds(10 + 16 + size.width, 117 + 26 + 35, 200, 28);
+        HashDescLabel.setBounds(10 + 16 + size.width, 117 + 26 + 35+11, 200, 28);
 
         HASHSelectbox = new JComboBox(this.HashEncrypt.toArray());
-        HASHSelectbox.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 28, 175, 28);
+        HASHSelectbox.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 28+11, 175, 28);
         HASHSelectbox.setSelectedIndex(0);
         HASHSelectbox.setActionCommand("HASHSelectbox");
         HASHSelectbox.addActionListener(this);
@@ -145,18 +163,18 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
         JLabel AddEncodeDescLabel = new JLabel();
         AddEncodeDescLabel.setText("Select Encode information.");
-        AddEncodeDescLabel.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 38 + 20, 175, 28);
+        AddEncodeDescLabel.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 38 + 20+11, 175, 28);
 
         Encodebox = new JComboBox(this.EncodeList.toArray());
-        Encodebox.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 38 + 40 + 10, 175, 28);
+        Encodebox.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 38 + 40 + 10+11, 175, 28);
         Encodebox.setSelectedIndex(0);
 
 
         JLabel AddParameterDescLabel = new JLabel();
         AddParameterDescLabel.setText("Add Parameter information.");
-        AddParameterDescLabel.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 38 + 40 + 28 + 20, 175, 28);
+        AddParameterDescLabel.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 38 + 40 + 28 + 20+11, 175, 28);
         Selectbox = new JComboBox(this.method.toArray());
-        Selectbox.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 38 + 40 + 28 + 10 + 40, 175, 28);
+        Selectbox.setBounds(10 + 16 + size.width, 117 + 26 + 35 + 38 + 40 + 28 + 10 + 40+11, 175, 28);
         Selectbox.setSelectedIndex(0);
 
         UrlLabel.setText("Custom HTTPServer Url:");
@@ -173,21 +191,21 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         jButton.addActionListener(this);
 
         bContextCustomLabel.setText("Custom Request functions1:");
-        bContextCustomLabel.setBounds(16, 15 + 30, 200, 20);
-        this.bContextCustomText1.setBounds(236, 12 + 30, 330, 28);
+        bContextCustomLabel.setBounds(16, 15 + 30+10, 200, 20);
+        this.bContextCustomText1.setBounds(236, 12 + 30+10, 330, 28);
 
         bContextCustomLabe2.setText("Custom Request functions2:");
-        bContextCustomLabe2.setBounds(16, 50 + 30, 200, 20);
-        this.bContextCustomText2.setBounds(236, 47 + 30, 330, 28);
+        bContextCustomLabe2.setBounds(16, 50 + 30+10, 200, 20);
+        this.bContextCustomText2.setBounds(236, 47 + 30+10, 330, 28);
 
 
         bContextCustomLabe3.setText("Custom Response functions3:");
-        bContextCustomLabe3.setBounds(16, 85 + 30, 200, 20);
-        this.bContextCustomText3.setBounds(236, 82 + 30, 330, 28);
+        bContextCustomLabe3.setBounds(16, 85 + 30+11, 200, 20);
+        this.bContextCustomText3.setBounds(236, 82 + 30+11, 330, 28);
 
         bContextCustomLabe4.setText("Custom Response functions4:");
-        bContextCustomLabe4.setBounds(16, 120 + 30, 200, 20);
-        this.bContextCustomText4.setBounds(236, 117 + 30, 330, 28);
+        bContextCustomLabe4.setBounds(16, 120 + 30+11, 200, 20);
+        this.bContextCustomText4.setBounds(236, 117 + 30+11, 330, 28);
 
         this.jPanel.add(UrlLabel);
         this.jPanel.add(this.url);
@@ -208,8 +226,12 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         this.jPanel.add(Encodebox);
         this.jPanel.add(AddEncodeDescLabel);
         this.jPanel.add(Add);
+
         this.jPanel.add(jsp);
         this.jPanel.add(Signtextjsp);
+        this.jPanel.add(RequestsTextsizejsp);
+        this.jPanel.add(ResponseTextsizejsp);
+
         this.jPanel.add(Selectbox);
         this.jPanel.add(HASHSelectbox);
         this.jPanel.add(Text);
@@ -276,8 +298,15 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
         String command = event.getActionCommand();
         String buildArgResult = "";
         String methodtag = "";
+        String RequeststextArgs = "";
 
         if (command.equals("contextcustom1") || command.equals("contextcustom2")) {
+            RequeststextArgs = (command.equals("contextcustom1")) ? RequestsText.getText().trim() : ResponseText.getText().trim();
+            if (RequeststextArgs.equals("") || null == RequeststextArgs){
+                BurpExtender.this.Stderr.println("RequeststextArgs is Null, please check Custom Request functions1 or 2...");
+                return;
+            }
+
             methodtag = (command.equals("contextcustom1")) ? this.bContextCustomText1.getText().trim() : this.bContextCustomText2.getText().trim();
             if (methodtag.equals("") || null == methodtag) {
                 BurpExtender.this.Stderr.println("methodtag is Null, please check Custom Request functions1 or 2...");
@@ -300,7 +329,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 byte[] preSelectedPortion = Arrays.copyOfRange(selectedRequestOrResponse, 0, selectedBounds[0]);
                 byte[] selectedPortion = Arrays.copyOfRange(selectedRequestOrResponse, selectedBounds[0], selectedBounds[1]);
                 byte[] postSelectedPortion = Arrays.copyOfRange(selectedRequestOrResponse, selectedBounds[1], selectedRequestOrResponse.length);
-                buildArgResult = this.buildArgMessage(methodtag, selectedPortion);
+
+                buildArgResult = this.buildArgMessage(methodtag, selectedPortion, RequeststextArgs);
 
                 byte[] newRequest = ArrayUtils.addAll(preSelectedPortion, this.helpers.stringToBytes(Util.sendPost(BurpExtender.this.postUrl, buildArgResult)));
                 newRequest = ArrayUtils.addAll(newRequest, postSelectedPortion);
@@ -313,6 +343,11 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
             }
         } else if (command.equals("contextcustom3") || command.equals("contextcustom4")) {
+            RequeststextArgs = (command.equals("contextcustom3")) ? RequestsText.getText().trim() : ResponseText.getText().trim();
+            if (RequeststextArgs.equals("") || null == RequeststextArgs){
+                BurpExtender.this.Stderr.println("RequeststextArgs is Null, please check Custom Request functions3 or 4...");
+                return;
+            }
             methodtag = (command.equals("contextcustom3")) ? this.bContextCustomText3.getText().trim() : this.bContextCustomText4.getText().trim();
             if (methodtag.equals("") || null == methodtag) {
                 BurpExtender.this.Stderr.println("methodtag is Null, please check Custom Response functions3 or 4...");
@@ -333,7 +368,7 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                 }
 
                 byte[] selectedPortion = Arrays.copyOfRange(selectedRequestOrResponse, selectedBounds[0], selectedBounds[1]);
-                buildArgResult = this.buildArgMessage(methodtag, selectedPortion);
+                buildArgResult = this.buildArgMessage(methodtag, selectedPortion, RequeststextArgs);
 
                 String result = Util.sendPost(BurpExtender.this.postUrl, buildArgResult);
                 SwingUtilities.invokeLater(new Runnable() {
@@ -414,24 +449,18 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
     }
 
-    public String buildArgMessage(String methodtag, byte[] BodyContentOrSelectContent) throws UnsupportedEncodingException {
+    public String buildArgMessage(String methodtag, byte[] BodyContentOrSelectContent, String TextArgs) throws UnsupportedEncodingException {
         StringBuffer paramsBuffer = new StringBuffer();
-        ;
-        StringBuffer dictBuffer = new StringBuffer();
 
         paramsBuffer.append("methodtag=");
         paramsBuffer.append(BurpExtender.this.helpers.base64Encode(methodtag));
 
         paramsBuffer.append("&argsinfo=");
-        dictBuffer.append("{");
-        dictBuffer.append("\"0\":");
-        dictBuffer.append("\"");
-        dictBuffer.append(BurpExtender.this.helpers.base64Encode(BodyContentOrSelectContent));
-        dictBuffer.append("\"");
-        dictBuffer.append("}");
 
-        paramsBuffer.append(URLEncoder.encode(dictBuffer.toString(), "UTF-8"));
+        String Argsinfo = TextArgs.replace("019CE961992BA5AB", "-H0T0TooP00Deocot0y0pr-" + BurpExtender.this.helpers.base64Encode(BodyContentOrSelectContent));
 
+        paramsBuffer.append(URLEncoder.encode(Argsinfo, "UTF-8"));
+//        this.stdout.println(paramsBuffer);
         return paramsBuffer.toString();
     }
 
@@ -457,11 +486,12 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
                     byte[] body = Arrays.copyOfRange(request, analyzeRequest.getBodyOffset(), request.length);
                     String methodtag = this.bContextCustomText1.getText().trim();
+                    String RequestsTextArginfo = this.RequestsText.getText().trim();
                     if (methodtag.equals("") || null == methodtag){
                         BurpExtender.this.Stderr.println("Custom Request functions1 is null,please check...");
                         return;
                     }
-                    String ResultArg = this.buildArgMessage(methodtag, body);
+                    String ResultArg = this.buildArgMessage(methodtag, body, RequestsTextArginfo);
                     String Result = Util.sendPost(this.postUrl, ResultArg);
                     messageInfo.setRequest(this.helpers.buildHttpMessage(analyzeRequest.getHeaders(), this.helpers.stringToBytes(Result)));
                 } else {
@@ -470,11 +500,12 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
 
                     byte[] body = Arrays.copyOfRange(response, analyzedResponse.getBodyOffset(), response.length);
                     String methodtag = this.bContextCustomText2.getText();
+                    String ResponseTexttArginfo = this.ResponseText.getText().trim();
                     if (methodtag.equals("") || null == methodtag){
                         BurpExtender.this.Stderr.println("Custom Request functions2 is null,please check...");
                         return;
                     }
-                    String ResultArg = this.buildArgMessage(methodtag, body);
+                    String ResultArg = this.buildArgMessage(methodtag, body, ResponseTexttArginfo);
 
                     String Result = Util.sendPost(this.postUrl, ResultArg);
                     messageInfo.setResponse(this.helpers.buildHttpMessage(analyzedResponse.getHeaders(), this.helpers.stringToBytes(Result)));
@@ -651,7 +682,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, IContextMenuF
                     try {
                         if (HashEncryption.equals("methodtag")){
                             String methodtag = BurpExtender.this.methodtag.getText().trim();
-                            String sdata = BurpExtender.this.buildArgMessage(methodtag, sign.getBytes());
+                            String RequestsTextArginfo = BurpExtender.this.RequestsText.getText().trim();
+                            String sdata = BurpExtender.this.buildArgMessage(methodtag, sign.getBytes(),RequestsTextArginfo);
                             encrypt = (Encodename.equals("None")) ? Util.sendPost(BurpExtender.this.postUrl, sdata) : EncodeUtil.Encode(Encodename, Util.sendPost(BurpExtender.this.postUrl, sdata));
                         }else {
                             encrypt = (Encodename.equals("None")) ? Util.Encrypt(HashEncryption, sign) : EncodeUtil.Encode(Encodename, Util.Encrypt(HashEncryption, sign));

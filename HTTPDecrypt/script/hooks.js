@@ -97,8 +97,9 @@ function traceMethod(targetClass,targetMethod){
                         try {
                             var hooks_retval = this[targetMethod].apply(this, args); // cannot call instance method without an instance？
                         }catch (e) {
+                            console.log(hooks_ret_type + " "+targetClassMethod);
                             // hooks_retval = hookClazz.$new().targetMethod.apply(this, arguments);
-                            return '';
+                            return ;
                             // console.log(e.message + " "+targetMethod +" "+ targetClassMethod);
                         }
 
@@ -111,7 +112,7 @@ function traceMethod(targetClass,targetMethod){
                         }
 
                         method_stack += getCaller();
-                        console.log(hooks_ret_type + " "+targetClassMethod);
+
                         hooks_cell = {
                             "method_stack": method_stack,
                             "arg_type": arg_type,

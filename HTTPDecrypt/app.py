@@ -52,13 +52,19 @@ def bcall():
 
     try:
         jArgsInfo = json.loads(ArgsInfo, object_pairs_hook=OrderedDict)
-        argumentsinfo = [base64.b64decode(temp).decode('utf-8') for temp in jArgsInfo.values()]
-        # print(argumentsinfo)
-        method_to_call = getattr(genv.script.exports, MethodTag)(*argumentsinfo)
-        # print(method_to_call(*argumentsinfo))
+        
+        JArgsList = list(jArgsInfo.values())
+        for item in range(len(JArgsList)):
+            temp = str(JArgsList[item])
+            if "-H0T0TooP00Deocot0y0pr-" in temp:
+                JArgsList[item] = base64.b64decode(temp.replace("-H0T0TooP00Deocot0y0pr-","")).decode('utf-8')
+ 
+        print(JArgsList)
+        method_to_call = getattr(genv.script.exports, MethodTag)(*JArgsList)
+        print(method_to_call)
         return method_to_call
     except Exception as e:
-        return str(e)
+        return "bcall Error is :" + str(e)
 
 
 def main():

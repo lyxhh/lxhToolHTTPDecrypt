@@ -5,6 +5,9 @@ var findmatchdata = null;
 var Hooksinfodata = null;
 var hooksOptionscode = null;
 
+var AllNotes = null;
+// var treeObj = null;
+
 var pkgnameText = null;
 var zTree = null;
 var findhookmessage  = null;
@@ -14,6 +17,7 @@ var socket = io.connect('http://' + document.domain + ':' + location.port + name
 socket.emit('connect', function() {
     console.log("socket connect ok!");
 });
+
 
 
 function bytesToHex(byteArray) {
@@ -223,6 +227,23 @@ window.onload = function() {
         socket.emit("loadHookScript", script_to_load);
     });
 
+    $("#EnumExportNative").click(function(){
+        $.fn.zTree.init($("#javatree"), setting, null);
+	    zTree = $.fn.zTree.getZTreeObj("javatree");
+	    socket.emit("loadEnumExportNativeScript");
+    });
+
+    $("#EnumImportNative").click(function(){
+        $.fn.zTree.init($("#javatree"), setting, null);
+	    zTree = $.fn.zTree.getZTreeObj("javatree");
+	    socket.emit("loadEnumImportNativeScript");
+    });
+
+    $("#EnumSymbols").click(function(){
+        $.fn.zTree.init($("#javatree"), setting, null);
+	    zTree = $.fn.zTree.getZTreeObj("javatree");
+	    socket.emit("loadEnumSymbolsScript");
+    });
 
     $("#loadfindScript").click(function(){
 	    $.fn.zTree.init($("#javatree"), setting, null);
@@ -258,16 +279,11 @@ window.onload = function() {
                 console.log("findOptions error No Json: " + findOptionscode[index])
             }
         }
-
-        // var script_to_load = { "matchfindtext": matchfindtext, "startsWithText":startsWithText, "containsText":containsText, "endsWithText":endsWithText};
         var script_to_load = { "finds_list": finds_list, "findOptions_lists":findOptions_lists};
         socket.emit("loadfindclassScript", script_to_load);
     });
 
     $("#loadCryptoScript").click(function(){
-        // matchfindtext = $("#matchfindtext").val();
-        // var script_to_load = { matchfindtext: matchfindtext };
-
         socket.emit("loadCryptoScript");
     });
 
@@ -393,9 +409,10 @@ window.onload = function() {
         var fullclassname = f_data.fullclassname;
         var pkg_class_method = fullclassname + '.'+methodname.split('(')[0];
         // console.log("123"+class_method);
-        treeObj = $.fn.zTree.getZTreeObj("javatree");
-        var pkgnodes = treeObj.getNodesByParam("name", pkgname, null);
-        var classnodes = treeObj.getNodesByParam("name", classname, null);
+        zTree = $.fn.zTree.getZTreeObj("javatree");
+        treeObj=zTree;
+        var pkgnodes = treeObj.getNodesByParam("name", pkgname, null); //获取包名的所有节点
+        var classnodes = treeObj.getNodesByParam("name", classname, null); // 获取类名的所有节点
 
         if (classAccesspermissions.includes("interface")) {
             classico = "/static/images/int_obj.png"
@@ -456,56 +473,46 @@ window.onload = function() {
 	        treeObj.addNodes(node, methodNode);
 
         }
-
+        AllNotes = zTree.getNodes();
     });
 
+    socket.on('enumNative_message', function(msg) {
+        var f_data = JSON.parse(msg.data);
+        var nodeinfo = null;
+        var modulename = f_data.modulename;
+        var funcname = f_data.exportname;
+        // var methodSig = f_data.methodSig;
+        var node = null;
+        var classNode = null;
+        zTree = $.fn.zTree.getZTreeObj("javatree");
+        var modulenodes = zTree.getNodesByParam("name", modulename, null); // 获取所有的模块节点
+        var funcnamenodes = zTree.getNodesByParam("name", funcname, null); // 获取所有的方法名。
 
+        if (0 != modulenodes.length) {
+                node = zTree.getNodeByParam("name", modulename, null);
+                classNode = {name: funcname, icon:"/static/images/native_co.png",fullclassname: funcname, "NativeTag":funcname};
+                zTree.addNodes(node, classNode);
 
-    // socket.on('Crypto_message', function(msg) {
-    //     crypto_count += 1;
-    //     var f_data = JSON.parse(msg.data);
-    //     var type = f_data.type;
-    //     //var hashcode = f_data.hashcode;
-    //     var key = f_data.key;
-    //     var Iv = f_data.IV;
-    //     var transformation = f_data.transformation;
-    //     var before_do = f_data.before_doFinal;
-    //     var after_do = f_data.after_doFinal;
-    //
-    //    // alert($('#outputBody').html());
-    //     $('#CryptooutputBody').append('<tr><td>' + crypto_count + '</td><td>'+
-    //         "type: "+"<code>"+type+"</code>"+
-    //         //", hashcode: "+hashcode+
-    //         ", key: "+"<code>" +key +
-    //         "</code>"+", iv: "+"<code>" + Iv + "</code>"+
-    //         "</code>"+", transformation: "+"<code>" + transformation + "</code>"+
-    //         ", before_doFinal: "+"<code>"+before_do+"</code>"+
-    //         ", after_doFinal: "+"<code>"+after_do+"</code>"+
-    //         '</td></tr>');
-    //     // $('#stackoutputBody').append('<tr><td>' + methodname + '</td><td><code>' + stackname + '</code></td></tr>');
-    //     // console.log(jdata);
-    //     // alert(jdata);
-    // });
+        }else{
+            nodeinfo = {name: modulename, icon:"/static/images/package_obj.png", fullclassname: modulename};
+            zTree.addNodes(null, nodeinfo);
 
+            node = zTree.getNodeByParam("name", modulename, null);
+	        classNode = {name: funcname, icon:"/static/images/native_co.png",fullclassname: modulename, "NativeTag":funcname };
 
-    // socket.on('temp', function(msg) {
-    //     var jdata = JSON.parse(msg.data);
-    //     // var hook_message = jdata.get("")
-    //     var stackname = jdata.method;
-    //     var methodname = jdata.methodname;
-    //     // var retval = jdata.retval;
-    //    // alert($('#outputBody').html());
-    //     $('#stackoutputBody').append('<tr><td>' + methodname + '</td><td><code>' + stackname + '</code></td></tr>');
-    //     // console.log(jdata);
-    //     // alert(jdata);
-    // });
+	        zTree.addNodes(node, classNode);
+        }
+
+        AllNotes = zTree.getNodes();
+    });
 
     socket.on('input_result', function(msg) {
-        // var jresult= msg.result;
-        // console.log(jresult);
         $("#input_reuslt").html(msg.result);
     });
 
+    socket.on('CSig', function(msg) {
+        $("#findsmethodname").text(msg.CSig);
+    });
 
     socket.on('findhook_message', function(msg) {
         var dict1 = {};
@@ -526,10 +533,7 @@ window.onload = function() {
         // console.log(f_data);
 
         $('#toburpoutputBody').append('<tr><td>' + JSON.stringify(dict1) + '</td><td><form action="/call" method="POST" target="_blank"><input type="hidden" name="methodtag"  value="' + f_data.methodtag + '" />'+"<input type='hidden' name='argsinfo'  value='" + JSON.stringify(f_data.Args) + "' />"+'<button type="submit"  class="btn btn-default " style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;">call</button></form></td></tr>');
-
-
     });
-
 
     socket.on('setpkgNameResult', function(msg) {
         // var jresult= msg.result;

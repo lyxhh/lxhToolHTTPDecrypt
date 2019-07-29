@@ -4,7 +4,7 @@ var findhook_returntype = null;
 
 setImmediate(function() {
     Java.perform(function() {
-        console.log("In ..");
+        send("findhooks running..." + "-se00nood00tooag-");
         {{scripts}}
     });
 });

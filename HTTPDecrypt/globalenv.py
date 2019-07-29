@@ -13,7 +13,7 @@ class Globalenv(object):
         self.packagename = None
         self.session = None
 
-    def set_pkgname(self,pkg):
+    def set_pkgname(self, pkg):
         self.packagename = pkg
 
     def get_pkgname(self):
@@ -31,12 +31,7 @@ class Globalenv(object):
 app = Flask(__name__)
 async_mode = None
 socketio = SocketIO(app, async_mode=async_mode)
-# login_manager = LoginManager()
-# login_manager.init_app(app)
 
-# thread = None
-# thread_lock = Lock()
-# random_token = uuid.uuid4().hex
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = 'secret!'

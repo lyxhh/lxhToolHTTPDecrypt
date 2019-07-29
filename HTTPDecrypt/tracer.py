@@ -16,11 +16,13 @@ class RequestHandler(BaseHTTPRequestHandler):
 
         self.wfile.write(self.rfile.read(length))
 
+
 def main():
     print('Listening on localhost:%d' % ECHO_PORT)
     server = HTTPServer(('', ECHO_PORT), RequestHandler)
     server.serve_forever()
 
+
 if __name__ == "__main__":
-    print("[x] Starting echo server on port %d" % ECHO_PORT)
+    print("[+] Starting echo server on port %d" % ECHO_PORT)
     main()

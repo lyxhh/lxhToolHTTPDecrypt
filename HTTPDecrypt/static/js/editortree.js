@@ -1,13 +1,26 @@
 var methodinfo = null;
+var Nativeinfo = null;
 
 var setting = {
-
+    view: {
+		// fontCss : {color:"yellow"}
+	},
 	callback: {
 		onClick: zTreeOnClick,
 		onRightClick: OnRightClick
 	}
 
 };
+
+function AutoMatch(txtObj) {
+    if (txtObj.value.length > 0) {
+        $.fn.zTree.init($("#javatree"), setting, AllNotes);
+        fuzzySearch('javatree','#keyword',null,true); //初始化模糊搜索方法
+    }else {
+        $.fn.zTree.init($("#javatree"), setting, AllNotes);
+    }
+}
+
 
 
 function OnRightClick(event, treeId, treeNode) {
@@ -80,11 +93,18 @@ function sendtoburp() {
 }
 
 function zTreeOnClick(event, treeId, treeNode) {
+    Nativeinfo = treeNode.NativeTag;
 	methodinfo = treeNode.methodinfo;
-	if (!methodinfo) {
+	if (methodinfo) {
+        $("#findsmethodname").text(methodinfo);
 		return ;
 	}
-	$("#findsmethodname").text(methodinfo);
+	if (Nativeinfo) {
+        // $("#findsmethodname").text(Nativeinfo);
+        var Nativesymbol = { Nativesymbol: Nativeinfo };
+        socket.emit("Native2Sig", Nativesymbol);
+		return ;
+    }
     // alert(treeNode.name +','+ treeNode.methodname);
 };
 

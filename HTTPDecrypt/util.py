@@ -1,10 +1,11 @@
 # - * - coding:utf-8 - * -
-from globalenv import socketio,genv
+from globalenv import socketio, genv
 import json
 import requests
 import hashlib
 import time
 import frida
+import subprocess
 from log import logger
 import cgi
 
@@ -67,9 +68,13 @@ def on_message(message, data):
             httparr = {'result': httpout}
             socketio.emit('input_result', httparr, namespace='/defchishi')
         elif "-to0obuooO0rp-" in info:
+            jinfo = json.loads(info.replace('-to0obuooO0rp-', ''))
+            uri = jinfo.get("uri")
+            jinfo.pop("uri")
+            data = json.dumps(jinfo, indent=4)
             headers = {"Content-Type": "application/x-www-form-urlencoded"}
-            req = requests.request('FRIDA', 'http://%s:%d/' % (BURP_HOST, BURP_PORT), headers=headers,
-                                   data=str(info.replace('-to0obuooO0rp-','')).encode('UTF-8'))
+            req = requests.request('FRIDA', 'http://%s:%d/%s' % (BURP_HOST, BURP_PORT, uri), headers=headers,
+                                   data=data.encode('UTF-8'))
             # req.encoding='utf-8'
             # print("req.text:" + req.text)
             genv.script.post({'type': 'input', 'payload': req.text})
@@ -90,7 +95,7 @@ def on_message(message, data):
             methodinfo = j_info.get("methodinfo")
             methodname = j_info.get("methodname")
             Accesspermissions = j_info.get("Accesspermissions")
-            find_info_dict = {"pkgname": pkgname, "classname": classname, "fullclassname": fullclassname, "methodinfo": methodinfo, "methodname": methodname,"Accesspermissions":Accesspermissions}
+            find_info_dict = {"pkgname": pkgname, "classname": classname, "fullclassname": fullclassname, "methodinfo": methodinfo, "methodname": methodname, "Accesspermissions": Accesspermissions}
             socketio.emit('find_message',
                           {'data': json.dumps(find_info_dict)},
                           namespace='/defchishi')
@@ -100,7 +105,14 @@ def on_message(message, data):
             socketio.emit('findhook_message',
                           {'data': cgi.escape(json.dumps(j_info))},
                           namespace='/defchishi')
-
+        elif "-enuoom0N0a0ti0ve-" in info:
+            j_info = json.loads(info.replace('-enuoom0N0a0ti0ve-', ''))
+            socketio.emit('enumNative_message',
+                          {'data': json.dumps(j_info)},
+                          namespace='/defchishi')
+        elif "-se00nood00tooag-" in info:
+            log = info.replace("-se00nood00tooag-","")
+            logger.info(log);
         # elif "-CrOOooyp00to-" in info:
         #     my_json = json.loads(info.replace('-CrOOooyp00to-', ''))
         #     print(my_json)
@@ -140,7 +152,6 @@ def loadScript(script_content):
     except frida.ServerNotRunningError as e:
         logger.error("frida-server No Running or port no forward....please check.")
         return
-        # print(colored("[ERROR] frida-server No Running or port no forward....please check.", "red"))
         # app.logger.error("frida_server No Running! or port no forward! please check.")
     except frida.ProcessNotFoundError as e:
         pkg = rdev.spawn([process_name])
@@ -153,8 +164,6 @@ def loadScript(script_content):
     # else:
     logger.info("create_script")
     logger.info("Hook App: %s" % process_name)
-    # print(colored("[INFO] create_script", "cyan"))
-    # print(colored("[INFO] Hook App: %s" % process_name, "cyan"))
     # # print(process)
     # if process:
     #     logger.error("process is null, please check")
@@ -166,6 +175,5 @@ def loadScript(script_content):
     genv.script = genv.session.create_script(script_content)  # 注册js代码
     time.sleep(1)
     logger.info("script_on...")
-    # print(colored("[INFO] script_on...", "cyan"))
     genv.script.on("message", on_message)  # on()方法注册message handler
     genv.script.load()

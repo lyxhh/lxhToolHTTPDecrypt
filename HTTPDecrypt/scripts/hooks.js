@@ -3,7 +3,6 @@ var hooks_line = '-lioonooe-';
 var hooks_cell = "";
 
 function getCaller(){
-	// return hooks_clazz_Thread.currentThread().getStackTrace().reverse().toString().replace(/,/g,linebreak);
 	return hooks_clazz_Thread.currentThread().getStackTrace().slice(2,5).reverse().toString().replace(/,/g,"-lineline-");
 }
 
@@ -12,10 +11,13 @@ function enumtrace(pattern){
 	Java.enumerateLoadedClasses({
 			onMatch: function(aClass) {
 				if (aClass.match(pattern)) {
+				    send("hooks class "+ aClass +" all method" + "-se00nood00tooag-");
 					traceClass(aClass);
 				}
 			},
-			onComplete: function() {}
+			onComplete: function() {
+			    send("hooks class enum done..." + "-se00nood00tooag-");
+            }
 		});
 	
 }
@@ -135,9 +137,7 @@ function traceMethod(targetClass,targetMethod){
 
 setImmediate(function() {
     Java.perform(function() {
-        // enumerate all classes
-		//enumtrace("com.example.TestAct");
-		console.log("In ..");
+        send("hooks running..." + "-se00nood00tooag-");
 
 		var x = {{ hookslist }};
 		var val = "";

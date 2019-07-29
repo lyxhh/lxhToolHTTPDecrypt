@@ -1,5 +1,5 @@
 # - * - coding:utf-8 - * -
-from globalenv import socketio
+from globalenv import socketio, genv
 import frida
 import jinja2
 from util import *
@@ -7,31 +7,72 @@ import os
 import random
 
 
-@socketio.on('loadInspect',namespace='/defchishi')
+@socketio.on('loadInspect', namespace='/defchishi')
 def loadInspect(message):
     InspectTextval = message.get('InspectText')
-    # app.logger.debug(InspectTextval)
+
     if InspectTextval != None:
         pos = InspectTextval.rfind('.')
         className = InspectTextval[:pos]
         methodNmae = InspectTextval[pos+1:]
-        with open("./script/inspect.js", 'r', encoding="utf-8") as f:
-            script_content = f.read() % (className+'-wh00ooer00e-'+methodNmae)
+        content = {
+            'clazz_name': className,
+            'method_name': methodNmae
+        }
+        script_content = render('./scripts/inspect.js', content)
+        # print(script_content)
         loadScript(script_content)
 
 
-@socketio.on('clear_hookMessage',namespace='/defchishi')
+@socketio.on('clear_hookMessage', namespace='/defchishi')
 def clear_hookMessage():
-    logger.info("clear_hookMessage")
+    logger.info("ClearHookMessage")
 
 
-@socketio.on('unloadfindclassScript',namespace='/defchishi')
+@socketio.on('loadEnumExportNativeScript', namespace='/defchishi')
+def loadEnumExportNativeScript():
+    logger.info("loadEnumExportNativeScript")
+    content = {
+                'pkgname': genv.get_pkgname(),
+                'type': "EnumExportNative"
+               }
+    script_content = render('./scripts/EnumNative.js', content)
+    # print(script_content)
+    loadScript(script_content)
+
+
+@socketio.on('loadEnumImportNativeScript', namespace='/defchishi')
+def loadEnumImportNativeScript():
+    logger.info("loadEnumImportNativeScript")
+    content = {
+                'pkgname': genv.get_pkgname(),
+                'type': "EnumImportNative"
+               }
+    script_content = render('./scripts/EnumNative.js', content)
+    # print(script_content)
+    loadScript(script_content)
+
+
+@socketio.on('loadEnumSymbolsScript', namespace='/defchishi')
+def loadEnumSymbolsScript():
+    logger.info("loadEnumSymbolsScript")
+    content = {
+                'pkgname': genv.get_pkgname(),
+                'type': "EnumSymbols"
+               }
+    script_content = render('./scripts/EnumNative.js', content)
+    # print(script_content)
+    loadScript(script_content)
+
+
+
+@socketio.on('unloadfindclassScript', namespace='/defchishi')
 def unloadfindclassScript():
     logger.info("unload_findclass_script")
     genv.script.unload()
 
 
-@socketio.on('setpkgname',namespace='/defchishi')
+@socketio.on('setpkgname', namespace='/defchishi')
 def setpkgName(message):
     pkgname = message.get('pkgnameText')
     logger.info("setPackageName: %s" % pkgname)
@@ -42,36 +83,39 @@ def setpkgName(message):
     socketio.emit('setpkgNameResult', pkgarr, namespace='/defchishi')
 
 
-@socketio.on('detachall',namespace='/defchishi')
+@socketio.on('detachall', namespace='/defchishi')
 def setpkgName():
     logger.info("Clear all inserted scripts")
     genv.session.detach()
 
+@socketio.on('Native2Sig', namespace='/defchishi')
+def Native2Sig(message):
+    Nativesymbol = message.get('Nativesymbol')
 
-@socketio.on('connect',namespace='/defchishi')
+    status, valus = subprocess.getstatusoutput('c++filt %s' % Nativesymbol)
+    CSig = valus if(0 == status ) else Nativesymbol
+    CSigarr = {'CSig': CSig}
+    socketio.emit('CSig', CSigarr, namespace='/defchishi')
+
+
+@socketio.on('connect', namespace='/defchishi')
 def getApplication():
     try:
         rdev = genv.get_device()
         lists = []
         for i in rdev.enumerate_applications():
-            dictitem = {'pkgname': i.identifier,'name':i.name,'pid':i.pid}
+            dictitem = {'pkgname': i.identifier, 'name': i.name, 'pid': i.pid}
             lists.append(dictitem)
         # print(lists)
         apparr = {'result':lists}
         socketio.emit('getapp',apparr, namespace='/defchishi')
     except frida.ServerNotRunningError as e:
-        # apparr = {'result': "Waiting for device connect..."}
-        # socketio.emit('getapp',apparr, namespace='/defchishi')
         logger.error("frida-server No Running or port no forward....please check.")
-        # print(colored("[ERROR] frida-server No Running or port no forward....please check.", "red"))
     except frida.TransportError as e:
         logger.error("with frida_server connection is closed")
-        # print(colored("[ERROR] with frida_server connection is closed", "red"))
-
-        # print(colored("[INFO] PackagaName is null, please input.", "red"))
 
 
-@socketio.on('doburp',namespace='/defchishi')
+@socketio.on('doburp', namespace='/defchishi')
 def doburp(message):
     script_content = ""
     methods_list = message.get('methods_list')
@@ -92,11 +136,11 @@ def doburp(message):
             'index': index,
             # 'methodtag': methodtag
         }
-        script_content += render('./script/doburp_template.js', context)
+        script_content += render('./scripts/doburp_template.js', context)
         script_content += "\n// Added doburp \n"
         # print(script_content)
     content = {'scripts': script_content}
-    result = render('./script/doburp.js', content)
+    result = render('./scripts/doburp.js', content)
     # print(result)
     loadScript(result)
 
@@ -121,7 +165,7 @@ def exportrpc(message):
         methodname = item.get('methodname')
         length = item.get('length')
         methodtag = item.get('methodtag')
-        logger.info(classname + "." + methodname + " length: " +str(length) + "-> " + methodtag)
+        logger.info(classname + "." + methodname + " length: " + str(length) + "-> " + methodtag)
         # print(methodtag)
         args = ""
         for i in range(length):
@@ -134,11 +178,11 @@ def exportrpc(message):
             'method_name': methodname,
             'args': args
         }
-        script_content += render('./script/Export_Template_Instance.js', context)
+        script_content += render('./scripts/Export_Template_Instance.js', context)
         script_content += "\n// Added Function \n"
     # print(script_content)
     content = {'scripts': script_content}
-    result = render('./script/Export.js', content)
+    result = render('./scripts/Export.js', content)
     # print(result)
     loadScript(result)
 
@@ -169,11 +213,11 @@ def exportrpc(message):
             'method_name': methodname,
             'args': args
         }
-        script_content += render('./script/Export_Template.js', context)
+        script_content += render('./scripts/Export_Template.js', context)
         script_content += "\n// Added Function \n"
     # print(script_content)
     content = {'scripts': script_content}
-    result = render('./script/Export.js', content)
+    result = render('./scripts/Export.js', content)
     # print(result)
     loadScript(result)
 
@@ -199,16 +243,16 @@ def findhook(message):
             'index': index,
             'methodtag': methodtag
         }
-        script_content += render('./script/findhook_template.js', context)
+        script_content += render('./scripts/findhook_template.js', context)
         script_content += "\n// Added Hook \n"
         # print(script_content)
     content = {'scripts': script_content}
-    result = render('./script/findhook.js', content)
+    result = render('./scripts/findhook.js', content)
     # print(result)
     loadScript(result)
 
 
-@socketio.on('loadHookScript',namespace='/defchishi')
+@socketio.on('loadHookScript', namespace='/defchishi')
 def doLoadHook(message):
     hooks_list = message.get('hooks_list')
     matchtext = hooks_list.get('matchtext')
@@ -216,7 +260,6 @@ def doLoadHook(message):
     hookOptions_list = hookOptions_lists.get('hookOptions_list')
     # print(matchtext)
     # print(hookOptions_list)
-
     options = ""
     for item in hookOptions_list:
         options += "!targetClassMethod.startsWith(\"%s\") " % item if "" == options else "&& !targetClassMethod.startsWith(\"%s\") " % item
@@ -232,7 +275,7 @@ def doLoadHook(message):
             'hookslist': matchtext,
             'options': options,
         }
-    script_content = render('./script/hooks.js', content)
+    script_content = render('./scripts/hooks.js', content)
     # print(script_content)
     loadScript(script_content)
 
@@ -266,7 +309,7 @@ def dofindclass(message):
                 'matchfindtext': matchfindtext,
                 'options': options,
                }
-    script_content = render('./script/finds.js', content)
+    script_content = render('./scripts/finds.js', content)
     # print(script_content)
     loadScript(script_content)
 

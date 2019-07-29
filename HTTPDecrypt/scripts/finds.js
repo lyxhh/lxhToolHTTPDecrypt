@@ -14,11 +14,14 @@ function enumtrace(pattern){
     Java.enumerateLoadedClasses({
 			onMatch: function(aClass) {
 				if (aClass.match(pattern) {{ options }} ) {
-					console.log(aClass);
+					// console.log(aClass);
+				 	send("finds class "+ aClass +" all method" + "-se00nood00tooag-");
 					traceClass(aClass);
 				}
 			},
-			onComplete: function() {}
+			onComplete: function() {
+			  	send("findclass enum done..." + "-se00nood00tooag-");
+			}
 		});
 }
 
@@ -54,8 +57,7 @@ function traceClass(targetClass)
 
 setImmediate(function() {
     Java.perform(function() {
-        // enumerate all classes
-		console.log("In ..");
+    	send("finds running..." + "-se00nood00tooag-");
 
 		var x = {{ matchfindtext }};
 		var val = ""

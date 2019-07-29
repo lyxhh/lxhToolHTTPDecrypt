@@ -19,6 +19,8 @@
 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 
 	<script src="{{url_for('static', filename='js/jquery.ztree.core.min.js') }}"></script>
+    <script src="{{url_for('static', filename='js/jquery.ztree.exhide.min.js') }}"></script>
+    <script src="{{url_for('static', filename='js/fuzzysearch.js') }}"></script>
 
 	<script src="{{url_for('static', filename='js/jquery.easyui.min.js') }}"></script>
 
@@ -178,6 +180,12 @@
 				<div class="btn-group" role="group" aria-label="...">
                     <button type="button" id="loadfindScript" class="btn btn-default btn-xs">Confirm</button>
                     <button type="button" class="btn btn-warning btn-xs" onclick="unloadScript()">UnLoadScript</button>
+                    <button type="button" id="EnumExportNative" class="btn btn-default btn-xs" >EnumExportsNative</button>
+                    <button type="button" id="EnumImportNative" class="btn btn-default btn-xs" >EnumImportsNative</button>
+                    <button type="button" id="EnumSymbols" class="btn btn-default btn-xs" >EnumSymbols</button>
+                    <div class="input-group input-group-sm ">
+                        <input type="text" id="keyword" style="height:21.6px;" class="form-control findsearch" onkeyup="AutoMatch(this)" placeholder="Search" aria-describedby="sizing-addon3">
+                    </div>
 				</div>
 
 				<span><code id="findsmethodname"></code></span>
@@ -196,6 +204,7 @@
 
 					</div>
 				</div>
+
 				<div style="min-height: 500px;" >
 					<div class="left">
 						<ul id="javatree" class="ztree"></ul>

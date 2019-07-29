@@ -8,6 +8,10 @@ body {
     margin-right: 15px;
     margin-left: 15px;
 }
+.findsearch{
+    height: 22px;
+    padding: 0px 10px;
+}
 
 /*.root {*/
     /*margin: 40px;*/

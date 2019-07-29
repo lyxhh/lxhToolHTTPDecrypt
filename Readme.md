@@ -39,6 +39,7 @@ Phone Nexus5/HUAWEI 6x
 ## 更新记录
 2019-06-01 支持多参数函数加解密。
 ![args](images/args.png)
+2019-07-29 重构一些代码，修复Bug。
 
 ## New
 多参数函数加解密。

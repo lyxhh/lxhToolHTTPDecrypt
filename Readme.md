@@ -7,7 +7,7 @@ Simple Android/iOS protocol analysis and utilization tool. Powered by [frida.re]
 
 ### Chinese：
 * [Android](/docs/AndroidInstall-Chinese.md)
-* [IOS](/docs/IOSInstall-Chinese.md.md)
+* [IOS](/docs/IOSInstall-Chinese.md)
 ### English：
 * [Android](/docs/AndroidInstall.md)
 * [IOS](/docs/IOSInstall.md)

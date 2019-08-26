@@ -1,0 +1,7 @@
+{"startsWith":"android"}
+{"startsWith":"java"}
+{"startsWith":"org"}
+{"startsWith":"huawei"}
+{"startsWith":"libcore"}
+{"contains":"android"}
+{"endsWith":""}

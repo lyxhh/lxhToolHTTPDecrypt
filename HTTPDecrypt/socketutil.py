@@ -13,12 +13,19 @@ def loadInspect(message):
 
     if InspectTextval != None:
         pos = InspectTextval.rfind('.')
-        className = InspectTextval[:pos]
-        methodNmae = InspectTextval[pos+1:]
-        content = {
-            'clazz_name': className,
-            'method_name': methodNmae
-        }
+        if -1 != pos:
+            # Android
+            className = InspectTextval[:pos]
+            methodNmae = InspectTextval[pos+1:]
+            content = {
+                'clazz_name': className,
+                'method_name': methodNmae
+            }
+        else:
+            # IOS
+            content = {
+                'clazz_name': InspectTextval,
+            }
         script_content = render('./scripts/inspect.js', content)
         # print(script_content)
         loadScript(script_content)
@@ -63,7 +70,6 @@ def loadEnumSymbolsScript():
     script_content = render('./scripts/EnumNative.js', content)
     # print(script_content)
     loadScript(script_content)
-
 
 
 @socketio.on('unloadfindclassScript', namespace='/defchishi')
@@ -119,27 +125,69 @@ def getApplication():
 def doburp(message):
     script_content = ""
     methods_list = message.get('methods_list')
-    for item in methods_list:
-        temptime = random.random()
-        classname = item.get('classname')
-        methodname = item.get('methodname')
-        index = item.get('index')
-        methodtag = item.get('methodtag')
-        # print(type(index))
+    doburp_type = message.get('type')
 
-        context = {
-            'clazz_var': classname.replace('.', '')+ hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
-            'clazz_name': classname,
-            'method_var': methodtag + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
-            'method_name': methodname,
-            'index_var': "index" + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
-            'index': index,
-            # 'methodtag': methodtag
-        }
-        script_content += render('./scripts/doburp_template.js', context)
-        script_content += "\n// Added doburp \n"
-        # print(script_content)
-    content = {'scripts': script_content}
+    if "Android" == doburp_type:
+        for item in methods_list:
+            temptime = random.random()
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            index = item.get('index')
+            methodtag = item.get('methodtag')
+            # print(type(index))
+
+            context = {
+                'clazz_var': classname.replace('.', '')+ hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'clazz_name': classname,
+                'method_var': methodtag + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'method_name': methodname,
+                'index_var': "index" + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'index': index,
+            }
+            script_content += render('./scripts/doburp_template.js', context)
+            script_content += "\n// Added doburp \n"
+            # print(script_content)
+        content = {'scripts': script_content, "iosscript":""}
+
+    elif "IOSChangeArgs" == doburp_type:
+        for item in methods_list:
+            # temptime = random.random()
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            # index = item.get('index')
+            methodtag = item.get('methodtag')
+            # print(type(index))
+
+            context = {
+                'clazz_name': classname,
+                'methodtag': methodtag,
+                'method_name': methodname,
+            }
+            script_content += render('./scripts/doburp_iostemplate.js', context)
+            script_content += "\n// Added doburp \n"
+            # print(script_content)
+        content = {'scripts': "", "iosscript":script_content}
+
+    elif "IOSChangeRetval" == doburp_type:
+        for item in methods_list:
+            # temptime = random.random()
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            # index = item.get('index')
+            methodtag = item.get('methodtag')
+            # print(type(index))
+
+            context = {
+                'clazz_name': classname,
+                'methodtag': methodtag,
+                'method_name': methodname,
+                # 'methodtag': methodtag
+            }
+            script_content += render('./scripts/doburp_iosChangeRetvalTemplate.js', context)
+            script_content += "\n// Added doburp \n"
+            # print(script_content)
+        content = {'scripts': "", "iosscript":script_content}
+
     result = render('./scripts/doburp.js', content)
     # print(result)
     loadScript(result)
@@ -155,33 +203,57 @@ def render(tpl_path, context):
 @socketio.on('rpcExportInstance', namespace='/defchishi')
 def exportrpc(message):
     script_content = ""
+    iosscript_content = ""
     methods_list = message.get('methods_list')
     # print(methods_list)
     for item in methods_list:
         if "" == item:
             continue
         temptime = random.random()
-        classname = item.get('classname')
-        methodname = item.get('methodname')
-        length = item.get('length')
-        methodtag = item.get('methodtag')
-        logger.info(classname + "." + methodname + " length: " + str(length) + "-> " + methodtag)
-        # print(methodtag)
-        args = ""
-        for i in range(length):
-            args += "arg" + str(i) if 0 == i else ", " + "arg" + str(i)
+        platform = item.get('platform')
+        if "IOS" == platform:
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            methodtag = item.get('methodtag')
+            length = item.get('length')
+            logger.info(classname + "[" + methodname + "]" + " length: " + str(length) + "-> " + methodtag)
 
-        context = {
-            'clazz_var': classname.split('.')[-1] + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
-            'clazz_name': classname,
-            'method_var': methodtag,
-            'method_name': methodname,
-            'args': args
-        }
-        script_content += render('./scripts/Export_Template_Instance.js', context)
-        script_content += "\n// Added Function \n"
+            args = ""
+
+            for i in range(length):
+                args += "arg" + str(i) if 0 == i else ", " + "arg" + str(i)
+
+            context = {
+                'clazz_name': classname,
+                'method_name': methodname,
+                'method_var': methodtag,
+                'clazz_var': classname + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'args': args
+            }
+            iosscript_content += render('./scripts/Export_iosTemplate_Instance.js', context)
+            iosscript_content += "\n// Added Hook \n"
+        else:
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            length = item.get('length')
+            methodtag = item.get('methodtag')
+            logger.info(classname + "." + methodname + " length: " + str(length) + "-> " + methodtag)
+            # print(methodtag)
+            args = ""
+            for i in range(length):
+                args += "arg" + str(i) if 0 == i else ", " + "arg" + str(i)
+
+            context = {
+                'clazz_var': classname.split('.')[-1] + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'clazz_name': classname,
+                'method_var': methodtag,
+                'method_name': methodname,
+                'args': args
+            }
+            script_content += render('./scripts/Export_Template_Instance.js', context)
+            script_content += "\n// Added Function \n"
     # print(script_content)
-    content = {'scripts': script_content}
+    content = {'scripts': script_content, 'iosscript': iosscript_content}
     result = render('./scripts/Export.js', content)
     # print(result)
     loadScript(result)
@@ -190,33 +262,60 @@ def exportrpc(message):
 @socketio.on('rpcExport', namespace='/defchishi')
 def exportrpc(message):
     script_content = ""
+    iosscript_content = ""
     methods_list = message.get('methods_list')
     # print(methods_list)
     for item in methods_list:
         if "" == item:
             continue
+        platform = item.get('platform')
         temptime = random.random()
-        classname = item.get('classname')
-        methodname = item.get('methodname')
-        length = item.get('length')
-        methodtag = item.get('methodtag')
-        logger.info(classname + "." + methodname + " length: " +str(length) + "-> " + methodtag)
-        # print(methodtag)
-        args = ""
-        for i in range(length):
-            args += "arg" + str(i) if 0 == i else ", " + "arg" + str(i)
+        if "IOS" == platform:
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            methodtag = item.get('methodtag')
+            length = item.get('length')
+            logger.info(classname + "[" + methodname + "]" + " length: " + str(length) + "-> " + methodtag)
 
-        context = {
-            'clazz_var': classname.split('.')[-1] + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
-            'clazz_name': classname,
-            'method_var': methodtag,
-            'method_name': methodname,
-            'args': args
-        }
-        script_content += render('./scripts/Export_Template.js', context)
-        script_content += "\n// Added Function \n"
+            args = ""
+
+            for i in range(length):
+                args += "arg" + str(i) if 0 == i else ", " + "arg" + str(i)
+
+            context = {
+                'clazz_name': classname,
+                'method_name': methodname,
+                'method_var': methodtag,
+                'clazz_var': classname + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'args': args
+            }
+            iosscript_content += render('./scripts/Export_iosTemplate.js', context)
+            iosscript_content += "\n// Added Hook \n"
+        elif "Android" == platform:
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            length = item.get('length')
+            methodtag = item.get('methodtag')
+            logger.info(classname + "." + methodname + " length: " +str(length) + "-> " + methodtag)
+            # print(methodtag)
+            args = ""
+            for i in range(length):
+                args += "arg" + str(i) if 0 == i else ", " + "arg" + str(i)
+
+            context = {
+                'clazz_var': classname.split('.')[-1] + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'clazz_name': classname,
+                'method_var': methodtag,
+                'method_name': methodname,
+                'args': args
+            }
+            script_content += render('./scripts/Export_Template.js', context)
+            script_content += "\n// Added Function \n"
+        else:
+            logger.error("exportrpc Error, Only supports Android and ios platforms. Please check")
+            return
     # print(script_content)
-    content = {'scripts': script_content}
+    content = {'scripts': script_content, 'iosscript': iosscript_content}
     result = render('./scripts/Export.js', content)
     # print(result)
     loadScript(result)
@@ -225,28 +324,50 @@ def exportrpc(message):
 @socketio.on('findhook', namespace='/defchishi')
 def findhook(message):
     script_content = ""
+    iosscript_content = ""
     methods_list = message.get('methods_list')
+    
     for item in methods_list:
-        temptime = random.random()
-        classname = item.get('classname')
-        methodname = item.get('methodname')
-        index = item.get('index')
-        methodtag = item.get('methodtag')
-        # print(type(index))
-        """ 确保承接重载函数的变量不一致，否则将报错，ex. var a = java.use("aaa.bbb") a 不能重复. """
-        context = {
-            'clazz_var': classname.replace('.', '')+ hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
-            'clazz_name': classname,
-            'method_var': methodtag + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
-            'method_name': methodname,
-            'index_var': "index" + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
-            'index': index,
-            'methodtag': methodtag
-        }
-        script_content += render('./scripts/findhook_template.js', context)
-        script_content += "\n// Added Hook \n"
+        if "" == item:
+            continue
+        # print(item)
+        platform = item.get('platform')
+
+        if "IOS" == platform:
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            methodtag = item.get('methodtag')
+            context = {
+                'clazz_name': classname,
+                'method_name': methodname,
+                'methodtag': methodtag
+            }
+            iosscript_content += render('./scripts/findhook_iostemplate.js', context)
+            iosscript_content += "\n// Added Hook \n"
+        elif "Android" == platform:
+            # for item in methods_list:
+            temptime = random.random()
+            classname = item.get('classname')
+            methodname = item.get('methodname')
+            index = item.get('index')
+            methodtag = item.get('methodtag')
+            # print(type(index))
+            """ 确保承接重载函数的变量不一致，否则将报错，ex. var a = java.use("aaa.bbb") a 不能重复. """
+            context = {
+                'clazz_var': classname.replace('.', '')+ hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'clazz_name': classname,
+                'method_var': methodtag + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'method_name': methodname,
+                'index_var': "index" + hashlib.md5(str(temptime).encode(encoding='UTF-8')).hexdigest(),
+                'index': index,
+                'methodtag': methodtag
+            }
+            script_content += render('./scripts/findhook_template.js', context)
+            script_content += "\n// Added Hook \n"
+        else:
+            logger.error("findhook Error, Only supports Android and ios platforms. Please check")
         # print(script_content)
-    content = {'scripts': script_content}
+    content = {'scripts': script_content, 'iosscript': iosscript_content}
     result = render('./scripts/findhook.js', content)
     # print(result)
     loadScript(result)
@@ -262,13 +383,13 @@ def doLoadHook(message):
     # print(hookOptions_list)
     options = ""
     for item in hookOptions_list:
-        options += "!targetClassMethod.startsWith(\"%s\") " % item if "" == options else "&& !targetClassMethod.startsWith(\"%s\") " % item
+        options += "!methodName.startsWith(\"%s\") " % item if "" == options else "&& !methodName.startsWith(\"%s\") " % item
 
     logger.info("HooksMatch: %s, Options: %s" % (matchtext, options))
     if "" == options:
         content = {
             'hookslist': matchtext,
-            'options': "targetClassMethod.startsWith(\"\")",
+            'options': "methodName.startsWith(\"\")",
         }
     else:
         content = {
@@ -282,6 +403,8 @@ def doLoadHook(message):
 
 @socketio.on('loadfindclassScript',namespace='/defchishi')
 def dofindclass(message):
+    type = message.get('type')
+
     finds_list = message.get('finds_list')
     matchfindtext = finds_list.get("find_list")
 
@@ -293,23 +416,34 @@ def dofindclass(message):
     for item in findOptions_list:
         for key, values in item.items():
             if "startsWith" == key and "" != values:
-                options += "&& !aClass.startsWith(\"%s\") " % values
+                options += "&& !className.startsWith(\"%s\") " % values
             elif "contains" == key and "" != values:
-                options += "&& -1 == aClass.indexOf(\"%s\")  " % values
+                options += "&& -1 == className.indexOf(\"%s\")  " % values
             elif "endsWith" == key and "" != values:
-                options += "&& !aClass.endsWith(\"%s\") " % values
+                options += "&& !className.endsWith(\"%s\") " % values
             else:
                 """如果key不是这三个，则跳过，排除乱七八糟的key"""
                 continue
     # print(options)
     # print(matchfindtext)
+    if "searchmethod" == type:
+        logger.info("searchstring: %s, Options: %s" % (matchfindtext, options))
+        content = {
+                    'find_list': matchfindtext,
+                    'options': options,
+                   }
+        script_content = render('./scripts/findmethods.js', content)
+    elif "findclass" == type:
+        logger.info("FindMatch: %s, Options: %s" % (matchfindtext, options))
+        content = {
+            'matchfindtext': matchfindtext,
+            'options': options,
+        }
+        script_content = render('./scripts/finds.js', content)
+    else:
+        logger.error("find type Error")
+        return
 
-    logger.info("FindMatch: %s, Options: %s" % (matchfindtext, options))
-    content = {
-                'matchfindtext': matchfindtext,
-                'options': options,
-               }
-    script_content = render('./scripts/finds.js', content)
     # print(script_content)
     loadScript(script_content)
 

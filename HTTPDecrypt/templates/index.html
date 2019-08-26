@@ -48,12 +48,14 @@
 	<div class="root ro1w">
 
 		<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#Start" >Start</a></li>
-			<li><a data-toggle="tab" href="#hook" >Hooks</a></li>
-			<li><a data-toggle="tab" href="#stack">Stack</a></li>
-			<li><a data-toggle="tab" href="#find">Finds</a></li>
-			<li><a data-toggle="tab" href="#toBurp">toBurp</a></li>
-            <li><a data-toggle="tab" href="#Decoder">Decoder</a></li>
+			<li class="active"><a data-toggle="tab" href="#Start" ><i class="glyphicon glyphicon-off" style="color: #337ab7"></i>  Start</a></li>
+			<li><a data-toggle="tab" href="#hook" ><i class="glyphicon glyphicon-th-large" style="color: #337ab7"></i> Hooks</a></li>
+			<li><a data-toggle="tab" href="#stack"><i class="glyphicon glyphicon-oil" style="color: #337ab7"></i> Stack</a></li>
+			<li><a data-toggle="tab" href="#find"><i class="glyphicon glyphicon-search" style="color: #337ab7"></i> Finds</a></li>
+{#            <li><a data-toggle="tab" href="#find"><i class="glyphicon glyphicon-eye-open" style="color: #337ab7"></i> UIDump</a></li>#}
+			<li><a data-toggle="tab" href="#toBurp"><i class="glyphicon glyphicon-th" style="color: #337ab7"></i> toBurp</a></li>
+{#            <li><a data-toggle="tab" href="#toBurp"><i class="glyphicon glyphicon-user" style="color: #337ab7"></i> Custom</a></li>#}
+            <li><a data-toggle="tab" href="#Decoder"><i class="glyphicon glyphicon-retweet" style="color: #337ab7"></i> Decoder</a></li>
 			<!--<li><a data-toggle="tab" href="#custom">Custom</a></li>-->
 		</ul>
 		<div class="tab-content">
@@ -92,7 +94,7 @@
                         <!--<button type="submit" id="loadScript" class="btn btn-success " style="width: 90px;height: 32px;margin-bottom: 2px">Confirm</button>-->
                         </div>
                         <div class="col-sm-6">
-                            <label>Options  <span title="将导致崩溃的方法，填写再此处，多个换行分隔。"><i class="glyphicon glyphicon-question-sign"></i></span></label>
+                            <label>Options  <span title="填写方法名称,多个换行分隔。ex. +[MyClass sleep::] 填写sleep "><i class="glyphicon glyphicon-question-sign"></i></span></label>
                             <div id="HooksOptionscode" style="height: 250px"></div>
                     	</div>
                     </div>
@@ -180,9 +182,10 @@
 				<div class="btn-group" role="group" aria-label="...">
                     <button type="button" id="loadfindScript" class="btn btn-default btn-xs">Confirm</button>
                     <button type="button" class="btn btn-warning btn-xs" onclick="unloadScript()">UnLoadScript</button>
-                    <button type="button" id="EnumExportNative" class="btn btn-default btn-xs" >EnumExportsNative</button>
+                	<button type="button" id="Searchmethods" class="btn btn-default btn-xs" >Searchmethods</button>
+<!--                     <button type="button" id="EnumExportNative" class="btn btn-default btn-xs" >EnumExportsNative</button>
                     <button type="button" id="EnumImportNative" class="btn btn-default btn-xs" >EnumImportsNative</button>
-                    <button type="button" id="EnumSymbols" class="btn btn-default btn-xs" >EnumSymbols</button>
+                    <button type="button" id="EnumSymbols" class="btn btn-default btn-xs" >EnumSymbols</button> -->
                     <div class="input-group input-group-sm ">
                         <input type="text" id="keyword" style="height:21.6px;" class="form-control findsearch" onkeyup="AutoMatch(this)" placeholder="Search" aria-describedby="sizing-addon3">
                     </div>
@@ -219,6 +222,13 @@
 
                     <div id="mm1" class="easyui-menu" style="width:120px;">
                         <div id="Send to toBurp" data-options="name:'SendtotoBurp'">Send to toBurp</div>
+                        <!--<div id="modifyNode" data-options="name:'modify'">修改节点</div>-->
+                        <!--<div id="delNode" data-options="name:'del'">删除节点</div>-->
+                    </div>
+
+                    <div id="ios" class="easyui-menu" style="width:120px;">
+                        <div id="Send to toBurp" data-options="name:'SendtotoBurp'">Send to toBurp</div>
+                        <div id="Send to Hooks" data-options="name:'sendhooks'">Send to Hooks</div>
                         <!--<div id="modifyNode" data-options="name:'modify'">修改节点</div>-->
                         <!--<div id="delNode" data-options="name:'del'">删除节点</div>-->
                     </div>

@@ -2,26 +2,527 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb1a3f6-7b29-42b7-82c4-3bbe8f22389d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/globalenv.py" beforeDir="false" afterPath="$PROJECT_DIR$/globalenv.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/Export.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Export.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/Export_Template.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Export_Template.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/Export_Template_Instance.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/Export_Template_Instance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/doburp.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/doburp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/doburp_template.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/doburp_template.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/findhook.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/findhook.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/findhook_template.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/findhook_template.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/finds.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/finds.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/hooks.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/hooks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/script/inspect.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/inspect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socketutil.py" beforeDir="false" afterPath="$PROJECT_DIR$/socketutil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icons-16/native_co.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/editortree.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/editortree.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tracer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tracer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/BurpExtender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/EncodeUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/HashUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IBurpCollaboratorClientContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IBurpCollaboratorInteraction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IBurpExtender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IBurpExtenderCallbacks.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IContextMenuFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IContextMenuInvocation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/ICookie.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IExtensionHelpers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IExtensionStateListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IHttpListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IHttpRequestResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IHttpRequestResponsePersisted.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IHttpRequestResponseWithMarkers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IHttpService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IInterceptedProxyMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IIntruderAttack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IIntruderPayloadGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IIntruderPayloadGeneratorFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IIntruderPayloadProcessor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IMenuItemHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IMessageEditor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IMessageEditorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IMessageEditorTab.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IMessageEditorTabFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IParameter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IProxyListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IRequestInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IResponseInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IResponseKeywords.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IResponseVariations.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IScanIssue.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IScanQueueItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IScannerCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IScannerInsertionPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IScannerInsertionPointProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IScannerListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/IScopeChangeListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/ISessionHandlingAction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/ITab.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/ITempFile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/ITextEditor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/Util.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../BurpSuite/burp/test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/globalenv.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/log.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/Export.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/Export_Template.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/Export_Template_Instance.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/doburp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/doburp_template.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/findhook.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/findhook_template.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/finds.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/hooks.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/script/inspect.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/socketutil.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/css/easyui.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/css/icon.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/css/zTreeStyle.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ace.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-beautify.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-elastic_tabstops_lite.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-emmet.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-error_marker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-keybinding_menu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-language_tools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-linking.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-modelist.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-options.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-rtl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-searchbox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-settings_menu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-spellcheck.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-split.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-static_highlight.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-statusbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-textarea.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-themelist.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/ext-whitespace.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/keybinding-emacs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/keybinding-sublime.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/keybinding-vim.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-abap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-abc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-actionscript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-ada.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-apache_conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-apex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-applescript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-asciidoc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-asl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-assembly_x86.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-autohotkey.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-batchfile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-bro.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-c9search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-c_cpp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-cirru.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-clojure.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-cobol.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-coffee.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-coldfusion.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-csharp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-csound_document.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-csound_orchestra.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-csound_score.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-csp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-css.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-curly.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-dart.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-diff.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-django.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-dockerfile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-dot.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-drools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-edifact.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-eiffel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-ejs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-elixir.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-elm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-erlang.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-forth.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-fortran.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-fsharp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-fsl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-ftl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-gcode.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-gherkin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-gitignore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-glsl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-gobstones.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-golang.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-graphqlschema.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-groovy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-haml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-handlebars.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-haskell.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-haskell_cabal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-haxe.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-hjson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-html.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-html_elixir.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-html_ruby.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-ini.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-io.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-jack.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-jade.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-java.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-javascript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-json.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-jsoniq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-jsp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-jssm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-jsx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-julia.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-kotlin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-latex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-less.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-liquid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-lisp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-livescript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-logiql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-logtalk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-lsl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-lua.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-luapage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-lucene.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-makefile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-markdown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-mask.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-matlab.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-maze.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-mel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-mixal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-mushcode.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-mysql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-nix.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-nsis.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-objectivec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-ocaml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-pascal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-perl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-perl6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-pgsql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-php.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-php_laravel_blade.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-pig.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-plain_text.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-powershell.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-praat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-prolog.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-properties.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-protobuf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-puppet.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-python.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-r.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-razor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-rdoc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-red.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-redshift.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-rhtml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-rst.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-ruby.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-rust.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-sass.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-scad.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-scala.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-scheme.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-scss.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-sh.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-sjs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-slim.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-smarty.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-snippets.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-soy_template.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-space.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-sparql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-sql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-sqlserver.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-stylus.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-svg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-swift.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-tcl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-terraform.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-tex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-text.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-textile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-toml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-tsx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-turtle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-twig.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-typescript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-vala.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-vbscript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-velocity.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-verilog.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-vhdl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-visualforce.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-wollok.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-xml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-xquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/mode-yaml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/abap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/abc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/actionscript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/ada.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/apache_conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/apex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/applescript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/asciidoc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/asl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/assembly_x86.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/autohotkey.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/batchfile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/bro.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/c9search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/c_cpp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/cirru.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/clojure.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/cobol.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/coffee.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/coldfusion.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/csharp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/csound_document.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/csound_orchestra.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/csound_score.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/csp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/css.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/curly.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/d.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/dart.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/diff.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/django.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/dockerfile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/dot.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/drools.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/edifact.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/eiffel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/ejs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/elixir.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/elm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/erlang.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/forth.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/fortran.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/fsharp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/fsl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/ftl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/gcode.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/gherkin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/gitignore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/glsl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/gobstones.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/golang.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/graphqlschema.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/groovy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/haml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/handlebars.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/haskell.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/haskell_cabal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/haxe.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/hjson.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/html.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/html_elixir.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/html_ruby.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/ini.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/io.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/jack.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/jade.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/java.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/javascript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/json.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/jsoniq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/jsp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/jssm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/jsx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/julia.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/kotlin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/latex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/less.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/liquid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/lisp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/livescript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/logiql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/logtalk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/lsl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/lua.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/luapage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/lucene.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/makefile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/markdown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/mask.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/matlab.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/maze.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/mel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/mixal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/mushcode.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/mysql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/nix.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/nsis.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/objectivec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/ocaml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/pascal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/perl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/perl6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/pgsql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/php.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/php_laravel_blade.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/pig.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/plain_text.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/powershell.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/praat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/prolog.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/properties.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/protobuf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/puppet.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/python.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/r.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/razor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/rdoc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/red.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/redshift.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/rhtml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/rst.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/ruby.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/rust.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/sass.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/scad.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/scala.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/scheme.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/scss.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/sh.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/sjs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/slim.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/smarty.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/snippets.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/soy_template.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/space.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/sparql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/sql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/sqlserver.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/stylus.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/svg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/swift.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/tcl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/terraform.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/tex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/text.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/textile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/toml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/tsx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/turtle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/twig.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/typescript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/vala.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/vbscript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/velocity.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/verilog.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/vhdl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/visualforce.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/wollok.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/xml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/xquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/snippets/yaml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-ambiance.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-chaos.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-chrome.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-clouds.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-clouds_midnight.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-cobalt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-crimson_editor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-dawn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-dracula.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-dreamweaver.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-eclipse.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-github.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-gob.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-gruvbox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-idle_fingers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-iplastic.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-katzenmilch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-kr_theme.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-kuroir.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-merbivore.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-merbivore_soft.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-mono_industrial.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-monokai.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-pastel_on_dark.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-solarized_dark.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-solarized_light.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-sqlserver.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-terminal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-textmate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-tomorrow.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-tomorrow_night.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-tomorrow_night_blue.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-tomorrow_night_bright.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-tomorrow_night_eighties.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-twilight.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-vibrant_ink.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/theme-xcode.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-coffee.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-css.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-html.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-javascript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-json.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-lua.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-php.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-xml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/edit-js/worker-xquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/abstract_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/annotation_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/class_default_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/class_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/constr_ovr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/enum_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/final_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/abstract_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/annotation_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/constr_ovr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/enum_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/field_default_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/field_private_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/field_protected_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/field_public_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/final_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/int_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/java_ovr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/native_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/static_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/sync.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/synch_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/transient_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/icons-16/volatile_co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/innerclass_private_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/innerclass_protected_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/int_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/java_ovr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/line_conn.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/methdef_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/methpri_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/methpro_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/methpub_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/package_obj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/zTreeStandard.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/images/zTreeStandard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/js/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/js/bootstrap-treeview.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/js/editortree.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/js/jquery.easyui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/js/jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/js/jquery.ztree.core.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/static/js/socket.io.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/tracer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HTTPDecrypt/util.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/Decoder1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/Decoder2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/hooks.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/post.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/sign.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/toburp-toburp.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../images/toburphook.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,35 +531,112 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/HTTPDecrypt$app.coverage" NAME="app Coverage Results" MODIFIED="1564398345983" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HTTPDecrypt$app.coverage" NAME="app Coverage Results" MODIFIED="1566791559632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HTTPDecrypt$HTTPDecrypt.coverage" NAME="HTTPDecrypt Coverage Results" MODIFIED="1563864618092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/HTTPDecrypt$tracer.coverage" NAME="tracer Coverage Results" MODIFIED="1564219145141" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/finds.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="297">
+              <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/socketutil.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="200" lean-forward="true" selection-start-line="200" selection-end-line="200" />
+              <folding>
+                <element signature="e#27#63#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/Export_Template_Instance.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="18" column="50" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scripts/doburp.js">
+        <entry file="file://$PROJECT_DIR$/templates/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="148">
+              <caret line="57" column="123" selection-start-line="57" selection-start-column="123" selection-end-line="57" selection-end-column="123" />
+              <folding>
+                <element signature="n#style#0;n#i#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#a#0;n#li#1;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#a#0;n#li#2;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#a#0;n#li#3;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#a#0;n#li#4;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#a#0;n#li#5;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/Export.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="189">
-              <caret line="7" column="113" selection-start-line="7" selection-start-column="113" selection-end-line="7" selection-end-column="113" />
+              <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/doburp_template.js">
+        <entry file="file://$PROJECT_DIR$/scripts/Export_iosTemplate.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+            <state relative-caret-position="243">
+              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/hooks.js">
+        <entry file="file://$PROJECT_DIR$/scripts/EnumNative.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="999">
-              <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
+            <state relative-caret-position="297">
+              <caret line="44" column="28" lean-forward="true" selection-start-line="44" selection-start-column="28" selection-end-line="44" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/Export_iosTemplate_Instance.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="297">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1298">
+              <caret line="350" column="108" selection-start-line="350" selection-start-column="108" selection-end-line="350" selection-end-column="108" />
+              <folding>
+                <element signature="n#style#0;n#button#0;n#form#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/findmethods.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="108" column="75" selection-start-line="108" selection-start-column="75" selection-end-line="108" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -86,39 +664,43 @@
       <find>fn.zTree.init</find>
       <find>returntype</find>
       <find>recv_data</find>
+      <find>Searchmethods</find>
+      <find>searchmethods</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/script/hooks.js" />
-        <option value="$PROJECT_DIR$/globalenv.py" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/static/js/fuzzysearch.js" />
         <option value="$PROJECT_DIR$/static/js/editortree.js" />
-        <option value="$PROJECT_DIR$/static/js/app.js" />
         <option value="$PROJECT_DIR$/scripts/inspect.js" />
-        <option value="$PROJECT_DIR$/socketutil.py" />
         <option value="$PROJECT_DIR$/tracer.py" />
-        <option value="$PROJECT_DIR$/util.py" />
-        <option value="$PROJECT_DIR$/scripts/Export_Template_Instance.js" />
         <option value="$PROJECT_DIR$/scripts/findhook.js" />
-        <option value="$PROJECT_DIR$/scripts/hooks.js" />
-        <option value="$PROJECT_DIR$/scripts/finds.js" />
         <option value="$PROJECT_DIR$/scripts/EnumNative.js" />
         <option value="$PROJECT_DIR$/scripts/doburp_template.js" />
         <option value="$PROJECT_DIR$/scripts/doburp.js" />
+        <option value="$PROJECT_DIR$/scripts/hooks.js" />
+        <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/globalenv.py" />
+        <option value="$PROJECT_DIR$/util.py" />
+        <option value="$PROJECT_DIR$/scripts/finds.js" />
+        <option value="$PROJECT_DIR$/static/js/app.js" />
+        <option value="$PROJECT_DIR$/scripts/findmethods.js" />
+        <option value="$PROJECT_DIR$/socketutil.py" />
+        <option value="$PROJECT_DIR$/scripts/Export_iosTemplate_Instance.js" />
+        <option value="$PROJECT_DIR$/scripts/Export_Template_Instance.js" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="33" />
-    <option name="y" value="4" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="321" />
+    <option name="y" value="64" />
     <option name="width" value="1317" />
     <option name="height" value="813" />
   </component>
@@ -140,6 +722,17 @@
               <item name="HTTPDecrypt" type="b2602c69:ProjectViewProjectNode" />
               <item name="HTTPDecrypt" type="462c0819:PsiDirectoryNode" />
               <item name="scripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HTTPDecrypt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HTTPDecrypt" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HTTPDecrypt" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HTTPDecrypt" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="HTTPDecrypt" type="b2602c69:ProjectViewProjectNode" />
@@ -249,22 +842,22 @@
       <updated>1563864541548</updated>
       <workItem from="1563864548721" duration="2501000" />
       <workItem from="1564042676076" duration="70879000" />
+      <workItem from="1566790423252" duration="18835000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73380000" />
+    <option name="totallyTimeSpent" value="92215000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1616" height="886" extended-state="7" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12275064" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15809768" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.37637362" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3997253" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.33791208" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5260989" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -316,13 +909,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/globalenv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/jquery.ztree.core.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
@@ -337,34 +923,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1269">
-          <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#3;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/fuzzysearch.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="60" column="83" selection-start-line="60" selection-start-column="83" selection-end-line="60" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-999">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#form#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -389,61 +951,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="114" column="29" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
-          <folding>
-            <element signature="e#27#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/socketutil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#27#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="82" column="58" selection-start-line="82" selection-start-column="58" selection-end-line="82" selection-end-column="58" />
-          <folding>
-            <element signature="e#15#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/findhook_template.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/finds.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/findhook.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="59" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/EnumNative.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="74" column="8" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -454,20 +965,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/Export_Template_Instance.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="40" lean-forward="true" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/Export.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/inspect.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -475,24 +972,162 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/hooks.js">
+    <entry file="file://$PROJECT_DIR$/scripts/doburp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="999">
-          <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
+        <state relative-caret-position="189">
+          <caret line="7" column="113" selection-start-line="7" selection-start-column="113" selection-end-line="7" selection-end-column="113" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/doburp_template.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/doburp.js">
+    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/python_stubs/1408835273/_frida.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8640">
+          <caret line="407" lean-forward="true" selection-start-line="407" selection-end-line="407" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2181">
+          <caret line="82" column="17" lean-forward="true" selection-start-line="82" selection-start-column="17" selection-end-line="82" selection-end-column="17" />
+          <folding>
+            <element signature="e#15#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/python3/Lib/site-packages/frida/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1908">
+          <caret line="120" column="13" selection-start-line="120" selection-start-column="13" selection-end-line="120" selection-end-column="13" />
+          <folding>
+            <element signature="e#24#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/globalenv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="36" column="17" lean-forward="true" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+          <folding>
+            <element signature="e#16#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="189" column="45" selection-start-line="189" selection-start-column="45" selection-end-line="189" selection-end-column="45" />
+          <folding>
+            <element signature="e#27#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/findhook.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="27" lean-forward="true" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/hooks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="101" column="45" lean-forward="true" selection-start-line="101" selection-start-column="45" selection-end-line="101" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1298">
+          <caret line="350" column="108" selection-start-line="350" selection-start-column="108" selection-end-line="350" selection-end-column="108" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#form#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/findmethods.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="108" column="75" selection-start-line="108" selection-start-column="75" selection-end-line="108" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/finds.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/EnumNative.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="44" column="28" lean-forward="true" selection-start-line="44" selection-start-column="28" selection-end-line="44" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/Export_iosTemplate_Instance.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/Export_iosTemplate.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/socketutil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="200" lean-forward="true" selection-start-line="200" selection-end-line="200" />
+          <folding>
+            <element signature="e#27#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/Export.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
-          <caret line="7" column="113" selection-start-line="7" selection-start-column="113" selection-end-line="7" selection-end-column="113" />
+          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/Export_Template_Instance.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="18" column="50" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="57" column="123" selection-start-line="57" selection-start-column="123" selection-end-line="57" selection-end-column="123" />
+          <folding>
+            <element signature="n#style#0;n#i#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#a#0;n#li#1;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#a#0;n#li#2;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#a#0;n#li#3;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#a#0;n#li#4;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#a#0;n#li#5;n#ul#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

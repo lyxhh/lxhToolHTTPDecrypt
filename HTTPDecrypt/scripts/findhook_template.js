@@ -7,6 +7,11 @@ var {{ clazz_var }}_{{ method_var }} = null;
 {{ clazz_var }}_{{ method_var }}  = eval('{{ clazz_var }}[{{ method_var }}].overloads[{{ index_var }}]');
 
 {{ clazz_var }}_{{ method_var }}.implementation = function() {
+
+    var findhook_retval = null;
+    var findhook_sendback = {};
+    var findhook_returntype = null;
+
     var findhook_arg_type = "";
     for (var index = 0; index < arguments.length; index++) {
         // console.log(typeof (index) + index);

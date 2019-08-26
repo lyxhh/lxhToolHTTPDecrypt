@@ -2,25 +2,216 @@ var hooks_clazz_Thread = null;
 var hooks_line = '-lioonooe-';
 var hooks_cell = "";
 
+
+
+function main(val){
+    if (ObjC.available) {
+        enumObjcAllClass(val);
+    }else if(Java.available) {
+        enumJavaAllClass(val);
+    }
+}
+
+
 function getCaller(){
 	return hooks_clazz_Thread.currentThread().getStackTrace().slice(2,5).reverse().toString().replace(/,/g,"-lineline-");
 }
 
 
-function enumtrace(pattern){
-	Java.enumerateLoadedClasses({
-			onMatch: function(aClass) {
-				if (aClass.match(pattern)) {
-				    send("hooks class "+ aClass +" all method" + "-se00nood00tooag-");
-					traceClass(aClass);
-				}
-			},
-			onComplete: function() {
-			    send("hooks class enum done..." + "-se00nood00tooag-");
-            }
+function enumJavaAllClass(pattern){
+    Java.perform(function() {
+    	Java.enumerateLoadedClasses({
+    			onMatch: function(aClass) {
+    				if (aClass.match(pattern)) {
+    				    send("hooks class "+ aClass +" all method" + "-se00nood00tooag-");
+    					enumJavaClassMethod(aClass);
+    				}
+    			},
+    			onComplete: function() {
+    			    send("hooks class enum done..." + "-se00nood00tooag-");
+                }
 		});
+    });
 	
 }
+
+
+function enumObjcAllClass(classname){
+    // var className = null;
+    for (var className in ObjC.classes) {
+        if (ObjC.classes.hasOwnProperty(className) && className.match(classname)) {
+
+            send("hook class "+ className +" all method" + "-se00nood00tooag-");
+            enumObjcClassMethod(className);
+
+        }
+    }
+    send("hookclass enum done..." + "-se00nood00tooag-");
+
+}
+
+
+
+function enumObjcClassMethod(targetClass) {     
+    // var method = {}
+    // var ownMethods = ObjC.classes[targetClass].$ownMethods; // 不包含父类的公开方法
+
+    // ownMethods.forEach(function(method) {
+    //  console.log(JSON.stringify(method));  //"- getInfo"  //"- sumWith:AndNumber:"
+
+    // });
+    var resolver = new ApiResolver("objc");
+    resolver.enumerateMatches("*[" + targetClass + " *]", {
+        onMatch: function (target) {
+            // console.log(JSON.stringify(target)); //{"name":"-[MyClass getInfo]","address":"0x1007f65cc"}
+            
+            var targetClassMethod = target['name'];
+            var address = target['address'];
+            // console.log(targetClassMethod);
+            send(targetClassMethod + "-se00nood00tooag-");
+            var methodName = targetClassMethod.match(/^[-+]\[.*\s(.*)\]/)[1];
+            // console.log(methodName);  //getInfo
+            var argCount = (methodName.match(/:/g) || []).length;
+
+            var className = targetClassMethod.match(/^[-+]\[(.*)\s/)[1];
+            var methodType = targetClassMethod.match(/^([-+])/)[1];    
+
+            var argumentTypes = ObjC.classes[className][methodType + " " + methodName].argumentTypes; // index 2开始是参数
+
+            var returnType = ObjC.classes[className][methodType + " " + methodName].returnType;
+            
+            // console.log(returnType);
+            if(targetClassMethod != ".cxx_destruct" && {{ options }}){
+                try{
+                    Interceptor.attach(address, {
+
+                        onEnter: function (args) {
+                            this.ios_hooks_cell = {}; 
+                            
+                            var ParameterResults = "";
+                            var argTypes = "(";
+                            if(0 == argCount){
+                                ParameterResults += "None";
+                                argTypes = "(";
+                            }
+ 
+                            for (var i = 0; i < argCount; i++) {
+                                // var sel = ObjC.selectorAsString(args[1]);
+                                // console.log(sel)
+                                // console.log(argumentTypes);
+                                if (0 == i) {
+                                    if (isObjC(args[i+2])) {
+                                        argTypes += ("pointer" == argumentTypes[i+2]) ? ObjC.Object(args[i+2]).$className:argumentTypes[i+2];
+
+                                        if ("float" == argumentTypes[i+2]) {
+                                            ParameterResults +=  "arg" + i +":"+ args[i+2].readFloat();
+                                        }else if ("double" == argumentTypes[i+2]) {
+                                            ParameterResults +=  "arg" + i +":"+ args[i+2].readDouble();
+                                        }else{
+                                            ParameterResults +=  "arg" + i +":"+ ObjC.Object(args[i+2]).toString();
+                                        }
+                                        // ParameterResults +=  "arg" + i +":"+ "("+ ObjC.Object(args[i+2]).$className  +")"+ ObjC.Object(args[i+2]).toString();
+                                        // ParameterResults +=  "arg" + i +":"+ "("+ argumentTypes[i+2]  +")"+ ObjC.Object(args[i+2]).toString();
+                                        // ParameterResults +=  "arg" + i +":"+ ObjC.Object(args[i+2]).toString();
+                                    }else{
+                                        argTypes += argumentTypes[i+2];
+                                        ParameterResults +=  "arg" + i +":"+ args[i+2].toInt32();
+                                    }
+                                }else{
+                                    if (isObjC(args[i+2])) {
+                                        argTypes += ("pointer" == argumentTypes[i+2]) ? ", " + ObjC.Object(args[i+2]).$className:", " + argumentTypes[i+2];
+                                        // argTypes += ", " + ObjC.Object(args[i+2]).$className;
+                                        if ("float" == argumentTypes[i+2]) {
+                                            ParameterResults +=  "<br />" + "arg" + i +":"+ args[i+2].readFloat();
+                                        }else if ("double" == argumentTypes[i+2]) {
+                                            ParameterResults +=  "<br />" + "arg" + i +":"+ args[i+2].readDouble();
+                                        }else{
+                                            ParameterResults +=  "<br />" + "arg" + i +":"+ ObjC.Object(args[i+2]).toString();
+                                        }
+                                    }else{
+                                        argTypes += ", " + argumentTypes[i+2];
+                                        ParameterResults +=  "<br />" + "arg" + i +":"+ args[i+2].toInt32();
+                                    }
+                                }
+
+                            }
+                            argTypes += ")";
+                            this.ios_hooks_cell['methodname'] = targetClassMethod + argTypes;
+                            this.ios_hooks_cell['stacklist'] = Thread.backtrace(this.context, Backtracer.ACCURATE).map(DebugSymbol.fromAddress).join("<br />");
+                            this.ios_hooks_cell['args'] = ParameterResults;
+                        },
+                        onLeave: function (retval) {
+                            // (type)values
+                            var RetvalResults = "";
+                            if (isObjC(retval)) {
+                                // RetvalResults = "(" + ObjC.Object(retval).$className +")" + ObjC.Object(retval).toString();
+                                RetvalResults = "(" + ObjC.Object(retval).$className +"):" + ObjC.Object(retval).toString();
+                                // console.log('retVal:'+ObjC.Object(retval).$className+ObjC.Object(retval).toString() );
+                            }else{
+                                // RetvalResults = "(BaseType)" + retval.toInt32();
+                                RetvalResults = "(" + returnType +"):"+ retval.toInt32();
+                                // console.log('retVal:'+retval.toInt32());
+                            }
+                            this.ios_hooks_cell['RetvalResults'] = RetvalResults;
+                            // send()
+
+                            send(JSON.stringify(this.ios_hooks_cell) + "-ho0ookoiooos-");
+                        },
+
+                    });
+                }catch(e){
+                    console.log('hook '+ targetClassMethod +' error:' + e);
+                }
+
+            }
+        },
+        onComplete: function () {
+            send("hook " + targetClass + " all method done." + "-se00nood00tooag-");
+        }
+    });
+}
+
+// https://codeshare.frida.re/@mrmacete/objc-method-observer/
+
+function isObjC(p) {
+    var klass = getObjCClassPtr(p);
+    return !klass.isNull();
+}
+
+
+var ISA_MASK = ptr('0x0000000ffffffff8');
+var ISA_MAGIC_MASK = ptr('0x000003f000000001');
+var ISA_MAGIC_VALUE = ptr('0x000001a000000001');
+
+function getObjCClassPtr(p) {
+    /*
+     * Loosely based on:
+     * https://blog.timac.org/2016/1124-testing-if-an-arbitrary-pointer-is-a-valid-objective-c-object/
+     */
+
+    if (!isReadable(p)) {
+        return NULL;
+    }
+    var isa = p.readPointer();
+    var classP = isa;
+    if (classP.and(ISA_MAGIC_MASK).equals(ISA_MAGIC_VALUE)) {
+        classP = isa.and(ISA_MASK);
+    }
+    if (isReadable(classP)) {
+        return classP;
+    }
+    return NULL;
+}
+
+function isReadable(p) {
+    try {
+        p.readU8();
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 
 function uniqBy(arr) {
   var seen = {};
@@ -30,7 +221,7 @@ function uniqBy(arr) {
 }
 
 
-function traceClass(targetClass)
+function enumJavaClassMethod(targetClass)
 {
     try {
         var hooks_hook = Java.use(targetClass);
@@ -45,15 +236,15 @@ function traceClass(targetClass)
 		var targets = uniqBy(parsedMethods);
 	  //hook all method
 		targets.forEach(function(targetMethod) {
-				traceMethod(targetClass, targetMethod);
+				HookJavaMethod(targetClass, targetMethod);
 		});
 	}catch (err) {}
 }
 
-function traceMethod(targetClass,targetMethod){
+function HookJavaMethod(targetClass,targetMethod){
 	// console.log("123");
     // try {
-            var targetClassMethod = targetClass+'.'+ targetMethod;
+            var methodName = targetClass+'.'+ targetMethod;
             if ({{ options }}){
             // console.log("11111");
                 var hookClazz = Java.use(targetClass);
@@ -71,6 +262,7 @@ function traceMethod(targetClass,targetMethod){
                         List_hook = eval('hookClazz[targetMethod].overloads[i]');
                     }catch (e) {
                         console.log("[&&] List_hook error " + e.message);
+                        return;
                     }
                     // var mArgs  = hookClazz[targetMethod].overloads[i].argumentTypes;
 
@@ -97,12 +289,12 @@ function traceMethod(targetClass,targetMethod){
                             arg_dump += ("arg" + index.toString() + ": " + value + hooks_line);
                         }
                         try {
-                            var hooks_retval = this[targetMethod].apply(this, args); // cannot call instance method without an instance？
+                            var hooks_retval = this[targetMethod].apply(this, args); 
                         }catch (e) {
-                            console.log(hooks_ret_type + " "+targetClassMethod);
+                            console.log(hooks_ret_type + " "+methodName);
                             // hooks_retval = hookClazz.$new().targetMethod.apply(this, arguments);
                             return ;
-                            // console.log(e.message + " "+targetMethod +" "+ targetClassMethod);
+                            // console.log(e.message + " "+targetMethod +" "+ methodName);
                         }
 
                         var hooks_ret_type = String(List_hook.returnType['className']);
@@ -120,7 +312,7 @@ function traceMethod(targetClass,targetMethod){
                             "arg_type": arg_type,
                             "arg_dump": arg_dump,
                             "retval_dump": hooks_retval_dump,
-                            "targetClassMethod": targetClassMethod
+                            "targetClassMethod": methodName
                         };
                         // console.log(JSON.stringify(hooks_cell));
                         send(JSON.stringify(hooks_cell) + "-h00oOOoks-");
@@ -130,24 +322,23 @@ function traceMethod(targetClass,targetMethod){
                 hookClazz.$dispose();
             }
 	// }catch (err) {
-    //     console.log("hooks function traceMethod is " + targetClassMethod +" error: "+ err);
+    //     console.log("hooks function traceMethod is " + methodName +" error: "+ err);
     // }
 }
 
 
 setImmediate(function() {
-    Java.perform(function() {
-        send("hooks running..." + "-se00nood00tooag-");
+    send("hooks running..." + "-se00nood00tooag-");
 
-		var x = {{ hookslist }};
-		var val = "";
-		for(var item = 0; item < x.length; item++){
-			val = x[item];
-			if (0 == item || "" != val ){
-				//除第一个为空外，其他为空不执行。
-				// console.log(item);
-				enumtrace(val);
-			}
+	var x = {{ hookslist }};
+	var val = "";
+	for(var item = 0; item < x.length; item++){
+		val = x[item];
+		if (0 == item || "" != val ){
+			//除第一个为空外，其他为空不执行。
+			// console.log(item);
+            main(val);
+			// enumJavaAllClass(val);
 		}
-    });
+	}
 });

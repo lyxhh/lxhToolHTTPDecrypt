@@ -77,7 +77,8 @@ function detachall() {
 }
 
 
-function doburp() {
+function doburp(type) {
+    // console.log(type);
     var lists = toBurpinfo.getValue().split('\n');
     var methods_list = { methods_list: [] };
     for (var index = 0; index < lists.length; index++) {
@@ -91,8 +92,14 @@ function doburp() {
             console.log("findhook is error: " + lists[index])
         }
     }
+    if ("Android" == type) {
+        methods_list["type"] = "Android";
+    }else if ("IOSArgs" == type) {
+        methods_list["type"] = "IOSChangeArgs";
+    }else if ("IOSRetval" == type) {
+        methods_list["type"] = "IOSChangeRetval";
+    }
     socket.emit("doburp", methods_list);
-
 }
 
 function unloadScript() {
@@ -123,20 +130,29 @@ function addinfo(){
     var pkg_class_method_name_code =  $("#pkg_class_method_name_code").text();
     var jsoninfo = JSON.parse(pkg_class_method_name_code);
     var jmethodname = jsoninfo.methodname;
+
     var methodarglength = JSON.parse(select_text).length;
-    // console.log(select_result + "::::"+select_text+":::"+methodarglength);
-    // var methodtag = jmethodname + jsoninfo.classtag + select_result + methodarglength;
     var methodtag = "tag" + jsoninfo.classtag + select_result + methodarglength;
-    // console.log(jsoninfo);
+
+    if (jmethodname === undefined) {
+        var iosmethodname = JSON.parse(select_text).methodInfo;
+        var hook_message = { "classname": jsoninfo.classname, "methodname": iosmethodname, "index": Number(select_result), "length":methodarglength, "methodtag": methodtag, "platform": "IOS"};
+    }else{
+        var hook_message = { "classname": jsoninfo.classname, "methodname": jmethodname, "index": Number(select_result), "length":methodarglength, "methodtag": methodtag, "platform": "Android"};
+    }
+
 
     var val = toBurpinfo.getValue();
-    var hook_message = { "classname": jsoninfo.classname, "methodname": jmethodname, "index": Number(select_result), "length":methodarglength, "methodtag": methodtag};
     if (val){
         toBurpinfo.setValue(val + '\n' + JSON.stringify(hook_message));
     }else {
         toBurpinfo.setValue(JSON.stringify(hook_message))
-    }
+    }    
 
+    // console.log(select_result + "::::"+select_text+":::"+methodarglength);
+    // var methodtag = jmethodname + jsoninfo.classtag + select_result + methodarglength;
+
+    // console.log(jsoninfo);
 }
 
 function rpcExport(){
@@ -245,6 +261,59 @@ window.onload = function() {
 	    socket.emit("loadEnumSymbolsScript");
     });
 
+
+
+    // $("#Searchmethods").click(function(){
+    //     $.fn.zTree.init($("#javatree"), setting, null);
+    //     zTree = $.fn.zTree.getZTreeObj("javatree");
+    //     var find_val = FindMatchcode.getValue().split('\n')[0].trim(); //只取第一行的数据。
+    //     if (find_val === "") {
+    //         console.log("search method lack match, please check.");
+    //     }else{
+    //         var script_to_load = { "find_val": find_val};
+    //         socket.emit("searchmethods", script_to_load);
+    //     }
+    //
+    // });
+    $("#Searchmethods").click(function(){
+ 	    $.fn.zTree.init($("#javatree"), setting, null);
+	    zTree = $.fn.zTree.getZTreeObj("javatree");
+        findmatchdata = FindMatchcode.getValue().split('\n');
+        // findmatchdata = uniqBy(findmatchdata);
+
+        var finds_list = { find_list: [] };
+        for (var index = 0; index < findmatchdata.length; index++) {
+            try {
+                var find_val = findmatchdata[index].trim();
+                finds_list.find_list.push(find_val);
+
+            } catch (e) {
+                console.log("findmatchdata error: " + findmatchdata[index])
+            }
+        }
+
+        findOptionscode = FindOptionscode.getValue().split('\n');
+        findOptionscode = uniqBy(findOptionscode);
+
+        var findOptions_lists = { findOptions_list: [] };
+        for (var index = 0; index < findOptionscode.length; index++) {
+            try {
+                    if ("" == findOptionscode[index]){
+                        //去除空行。
+                        continue;
+                    }
+                    var findOptions = JSON.parse(findOptionscode[index]);
+                    findOptions_lists.findOptions_list.push( findOptions);
+
+            } catch (e) {
+                console.log("findOptions error No Json: " + findOptionscode[index])
+            }
+        }
+        var script_to_load = { "finds_list": finds_list, "findOptions_lists":findOptions_lists, "type":"searchmethod"};
+        socket.emit("loadfindclassScript", script_to_load);
+
+    });
+
     $("#loadfindScript").click(function(){
 	    $.fn.zTree.init($("#javatree"), setting, null);
 	    zTree = $.fn.zTree.getZTreeObj("javatree");
@@ -279,7 +348,7 @@ window.onload = function() {
                 console.log("findOptions error No Json: " + findOptionscode[index])
             }
         }
-        var script_to_load = { "finds_list": finds_list, "findOptions_lists":findOptions_lists};
+        var script_to_load = { "finds_list": finds_list, "findOptions_lists":findOptions_lists, "type":"findclass"};
         socket.emit("loadfindclassScript", script_to_load);
     });
 
@@ -388,6 +457,22 @@ window.onload = function() {
     });
 
 
+    socket.on('ios_hook_message', function(msg) {
+        var jdata = JSON.parse(msg.data);
+        // var hook_message = jdata.get("")
+        var args = jdata.args;
+        var methodname = jdata.methodname;
+        var retval = jdata.RetvalResults;
+        var stackname = jdata.stacklist;
+       // alert($('#outputBody').html());
+        $('#outputBody').append('<tr><td>' + methodname + '</td><td><code>' + args + '</code></td><td>' + retval + '</td></tr>');
+        $('#stackoutputBody').append('<tr><td>' + methodname + '</td><td><code>' + stackname + '</code></td></tr>');
+        // console.log(jdata);
+        // alert(jdata);
+    });
+
+
+
     socket.on('find_message', function(msg) {
         var f_data = JSON.parse(msg.data);
         // console.log(f_data);
@@ -475,6 +560,40 @@ window.onload = function() {
         }
         AllNotes = zTree.getNodes();
     });
+
+
+    socket.on('findobjcclass_message', function(msg) {
+
+        var foc_data = JSON.parse(msg.data);
+        var fullclassName = foc_data.fullclassName;
+        var className = foc_data.className;
+        var methodType = foc_data.methodType;
+        var methodName = foc_data.methodName;
+        var argCount = foc_data.argCount;
+        zTree = $.fn.zTree.getZTreeObj("javatree");
+        // var pkgnodes = treeObj.getNodesByParam("name", pkgname, null); //获取包名的所有节点
+        var classnodes = zTree.getNodesByParam("name", className, null); // 获取类名的所有节点
+
+        if (0 != classnodes.length){
+                node = zTree.getNodeByParam("name", className, null);
+                methodNode = {name: methodName, icon:"/static/images/objcmethod.png",methodinfo: fullclassName};
+                zTree.addNodes(node, methodNode);
+
+        }else{
+            classNode = {name: className, icon:"/static/images/objcclass.png", methodinfo: fullclassName, platform:"IOS", pkg_class_method:className, fullclassname: className};
+            zTree.addNodes(null, classNode);
+
+            node = zTree.getNodeByParam("name", className, null);
+            methodNode = {name: methodName, icon:"/static/images/objcmethod.png",methodinfo: fullclassName};
+
+            zTree.addNodes(node, methodNode);
+
+        }
+        AllNotes = zTree.getNodes();
+    });
+
+
+
 
     socket.on('enumNative_message', function(msg) {
         var f_data = JSON.parse(msg.data);

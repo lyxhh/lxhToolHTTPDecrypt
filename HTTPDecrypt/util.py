@@ -39,15 +39,27 @@ def on_message(message, data):
             socketio.emit('new_hook_message',
                           {'data': json.dumps(info_dict)},
                           namespace='/defchishi')
+        elif "-ho0ookoiooos-" in info:
+            j_info = json.loads(info.replace('-ho0ookoiooos-',''))
+            socketio.emit('ios_hook_message',
+                          {'data': json.dumps(j_info)},
+                          namespace='/defchishi')
+            # print(j_info)
 
         elif "-in00sOpOeooct-" in info:
             j_info = json.loads(info.replace('-in00sOpOeooct-',''))
+            isAndroid = j_info.get("isAndroid")
             methodInfo = j_info.get("methodInfo")
 
-            pkg_class_method_name = {"classname": j_info.get("classname"), "methodname": j_info.get("methodname"), 'classtag': hashlib.md5(j_info.get("classname").encode(encoding='UTF-8')+j_info.get("methodname").encode(encoding='UTF-8')).hexdigest()}
-            # print(pkg_class_method_name)
+            if "True" == isAndroid:
+                pkg_class_method_name = {"classname": j_info.get("classname"), "methodname": j_info.get("methodname"), 'classtag': hashlib.md5(j_info.get("classname").encode(encoding='UTF-8') + j_info.get("methodname").encode(encoding='UTF-8')).hexdigest()}
+                # print(pkg_class_method_name)
+            else:
+                pkg_class_method_name = {"classname": j_info.get("classname"), 'classtag': hashlib.md5(j_info.get("classname").encode(encoding='UTF-8')).hexdigest()}
+            
             httpout = "<label>Output</label><p><code id='pkg_class_method_name_code'>{}</code></p>".format(
                 json.dumps(pkg_class_method_name))
+
             httpout += """
                 <div class="form-group">
                     <label for="name">Overloads: </label>
@@ -58,16 +70,35 @@ def on_message(message, data):
                                                                  str(json.dumps(methodInfo[item])).replace('\\\"', ''))
 
             httpout += """</select>
-                    </div>
-                <input onclick="addinfo()" class="btn btn-default "  style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="add">
-                <input onclick="findhook()" class="btn btn-default " style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="hook">
-                <input onclick="rpcExport()" class="btn btn-default " style="width:130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export static">
-                <input onclick="rpcExportInstance()" class="btn btn-default " style="width:130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export instance">
-                <input onclick="doburp()" class="btn btn-default" style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="toBurp">
+                        </div>
+                    <input onclick="addinfo()" class="btn btn-default "  style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="add">
+                    <input onclick="findhook()" class="btn btn-default " style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="hook">
+                    <input onclick="rpcExport()" class="btn btn-default " style="width:130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export static">
+                    <input onclick="rpcExportInstance()" class="btn btn-default " style="width:130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export instance">
+                    """
+            if "True" == isAndroid:
+                httpout += """
+                    <input onclick="doburp('Android')" class="btn btn-default" style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="toBurp">
+                    """
+            else:
+                httpout += """
+                    <input onclick="doburp('IOSArgs')" class="btn btn-default" style="width: 150px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="toBurp arguments">
+                    <input onclick="doburp('IOSRetval')" class="btn btn-default" style="width: 130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="toBurp retval">
                 """
+            
+            # httpout += """</select>
+            #         </div>
+            #     <input onclick="addinfo()" class="btn btn-default "  style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="add">
+            #     <input onclick="findhook()" class="btn btn-default " style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="hook">
+            #     <input onclick="rpcExport()" class="btn btn-default " style="width:130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export static">
+            #     <input onclick="rpcExportInstance()" class="btn btn-default " style="width:130px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="export instance">
+            #     <input onclick="doburp()" class="btn btn-default" style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;" value="toBurp">
+            #     """
+
             httparr = {'result': httpout}
             socketio.emit('input_result', httparr, namespace='/defchishi')
         elif "-to0obuooO0rp-" in info:
+            # print(info);
             jinfo = json.loads(info.replace('-to0obuooO0rp-', ''))
             uri = jinfo.get("uri")
             jinfo.pop("uri")
@@ -110,6 +141,12 @@ def on_message(message, data):
             socketio.emit('enumNative_message',
                           {'data': json.dumps(j_info)},
                           namespace='/defchishi')
+        elif "-iooos00fi0nd0cla0ssm0et0hod-" in info:
+            j_info = json.loads(info.replace('-iooos00fi0nd0cla0ssm0et0hod-',''))
+            socketio.emit('findobjcclass_message',
+              {'data': json.dumps(j_info)},
+              namespace='/defchishi')
+            # print(j_info)
         elif "-se00nood00tooag-" in info:
             log = info.replace("-se00nood00tooag-","")
             logger.info(log);
@@ -150,13 +187,17 @@ def loadScript(script_content):
         pkg = rdev.get_process(process_name).pid
         genv.session = rdev.attach(pkg)
     except frida.ServerNotRunningError as e:
-        logger.error("frida-server No Running or port no forward....please check.")
+        logger.error("frida-server No Running ....please check.")
         return
         # app.logger.error("frida_server No Running! or port no forward! please check.")
     except frida.ProcessNotFoundError as e:
-        pkg = rdev.spawn([process_name])
-        genv.session = rdev.attach(pkg)
-        rdev.resume(pkg)
+        try:
+            pkg = rdev.spawn([process_name])
+            genv.session = rdev.attach(pkg)
+            rdev.resume(pkg)
+        except Exception as e:
+            logger.error("%s" % e)
+            return
     except Exception as e:
         logger.error("loadScript: %s" % e)
         return

@@ -5,7 +5,7 @@ Android设备需要root.
 确保安装python3并配置环境变量
 
 1. **安装依赖库**
-`pip3 install colorlog flask flask_socketio requests`
+`pip3 install colorlog flask flask_socketio requests frida-tools`
 2. 根据手机架构选择frida [frida-server-version-android-arch.xz](https://github.com/frida/frida/releases) 
 3. 解压缩frida-xxx.xz并使用[adb](https://developer.android.com/studio/releases/platform-tools)上传到/data/local/tmp
 `adb push frida-server-12.5.0-android-arm /data/local/tmp`

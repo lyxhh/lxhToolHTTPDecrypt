@@ -5,7 +5,7 @@ Android Device requires root.
 Make sure to install python3 and configure environment variables
 
 1. **Install dependency libraries**
-`pip3 install colorlog flask flask_socketio requests`
+`pip3 install colorlog flask flask_socketio requests frida-tools`
 2. Choose [frida-server-version-android-arch.xz](https://github.com/frida/frida/releases) according to the phone architecture
 3. Unzip xz and upload to /data/local/tmp using [adb](https://developer.android.com/studio/releases/platform-tools)
 `adb push frida-server-12.5.0-android-arm /data/local/tmp`

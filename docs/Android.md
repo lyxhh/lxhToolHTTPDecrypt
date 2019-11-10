@@ -53,7 +53,7 @@ With the Burp plugin, automatic encryption and decryption of packets can be achi
 
 ![GIF](images/post.gif)
 
-Notice:**When "Body Auto" is used, the request packet is encrypted. The tag used is req fun1. When the packet is decrypted, the tag used is req fun2.**
+Notice:**When using Body Auto, the tag used when the request package is automatically encrypted is req fun1. When the package is returned for decryption, the tag used is req fun2**
 
 
 ### toBurp-toBurp

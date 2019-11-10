@@ -115,7 +115,7 @@ setImmediate(function() {
 
 	send("finds running..." + "-se00nood00tooag-");
 	var x = {{ matchfindtext }};
-	var val = ""
+	var val = "";
 	for(var item = 0; item < x.length; item++){
 		val = x[item];
 		if (0 == item || "" != val ){

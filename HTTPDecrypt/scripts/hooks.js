@@ -21,25 +21,24 @@ function getCaller(){
 function enumJavaAllClass(pattern){
     Java.perform(function() {
     	Java.enumerateLoadedClasses({
-    			onMatch: function(aClass) {
-    				if (aClass.match(pattern)) {
-    				    send("hooks class "+ aClass +" all method" + "-se00nood00tooag-");
-    					enumJavaClassMethod(aClass);
-    				}
-    			},
-    			onComplete: function() {
-    			    send("hooks class enum done..." + "-se00nood00tooag-");
+            onMatch: function(className) {
+                if (className.match(pattern) {{ options }} ) {
+                    send("hooks class "+ className +" all method" + "-se00nood00tooag-");
+                    enumJavaClassMethod(className);
                 }
+            },
+            onComplete: function() {
+                send("hooks class enum done..." + "-se00nood00tooag-");
+            }
 		});
     });
-	
 }
 
 
 function enumObjcAllClass(classname){
     // var className = null;
     for (var className in ObjC.classes) {
-        if (ObjC.classes.hasOwnProperty(className) && className.match(classname)) {
+        if (ObjC.classes.hasOwnProperty(className) && className.match(classname) {{ options }}) {
 
             send("hook class "+ className +" all method" + "-se00nood00tooag-");
             enumObjcClassMethod(className);
@@ -81,7 +80,7 @@ function enumObjcClassMethod(targetClass) {
             var returnType = ObjC.classes[className][methodType + " " + methodName].returnType;
             
             // console.log(returnType);
-            if(targetClassMethod != ".cxx_destruct" && {{ options }}){
+            if(targetClassMethod != ".cxx_destruct"){
                 try{
                     Interceptor.attach(address, {
 
@@ -236,94 +235,98 @@ function enumJavaClassMethod(targetClass)
 		var targets = uniqBy(parsedMethods);
 	  //hook all method
 		targets.forEach(function(targetMethod) {
-				HookJavaMethod(targetClass, targetMethod);
+            HookJavaMethod(targetClass, targetMethod);
 		});
 	}catch (err) {}
 }
 
 function HookJavaMethod(targetClass,targetMethod){
 	// console.log("123");
-    // try {
+    try {
             var methodName = targetClass+'.'+ targetMethod;
-            if ({{ options }}){
+            // if ({{ options }}){
             // console.log("11111");
-                var hookClazz = Java.use(targetClass);
-                if (hookClazz == null || typeof hookClazz[targetMethod] === 'undefined') {
+            var hookClazz = Java.use(targetClass);
+            if (hookClazz == null || typeof hookClazz[targetMethod] === 'undefined') {
+                return;
+            }
+            var overloadCount = hookClazz[targetMethod].overloads.length;
+
+            hooks_clazz_Thread = Java.use("java.lang.Thread");
+            var List_hook = null;
+
+            for (var i = 0; i < overloadCount; i++) {
+
+                try {
+                    List_hook = eval('hookClazz[targetMethod].overloads[i]');
+                }catch (e) {
+                    console.log("[&&] List_hook error " + e.message);
                     return;
                 }
-                var overloadCount = hookClazz[targetMethod].overloads.length;
+                // var mArgs  = hookClazz[targetMethod].overloads[i].argumentTypes;
+                List_hook.implementation = function () {
+                    // 打印参数
+                    var arg_dump = '';
+                    var arg_type = '';
+                    var method_stack = '';
+                    var hooks_ret_type = '';
+                    var hooks_retval_dump = '';
+                    var hooks_retval ='';
+                    var args = arguments;
 
-                hooks_clazz_Thread = Java.use("java.lang.Thread");
-                var List_hook = null;
+                    for (var index = 0; index < args.length; index++) {
+                        var value = '';
+                        if (args[index] === null ||  typeof args[index] === 'undefined'){
+                            value = 'null';
+                        } else{
+                            if (typeof args[index] === 'object') {
+                                value = JSON.stringify(args[index]);
+                            } else {
+                                value = args[index].toString();
+                            }
+                        }
+                        arg_type += (hooks_line + 'argType' + index.toString() + " : " + typeof args[index]);
+                        // arg_type += (hooks_line + 'argType' + index.toString() + " : " + mArgs[index]['className'].toString()); // Error
+                        arg_dump += ("arg" + index.toString() + ": " + value + hooks_line);
+                    }
 
-                for (var i = 0; i < overloadCount; i++) {
+                    hooks_ret_type = String(List_hook.returnType['className']);
 
                     try {
-                        List_hook = eval('hookClazz[targetMethod].overloads[i]');
+                        hooks_retval = this[targetMethod].apply(this, arguments);
                     }catch (e) {
-                        console.log("[&&] List_hook error " + e.message);
-                        return;
+                        console.log("apply error: " + e);
+                        return this[targetMethod].apply(this, arguments);
                     }
-                    // var mArgs  = hookClazz[targetMethod].overloads[i].argumentTypes;
 
-                    List_hook.implementation = function () {
-                        // 打印参数
-                        var arg_dump = '';
-                        var arg_type = '';
-                        var method_stack = '';
-                        var args = arguments;
 
-                        for (var index = 0; index < args.length; index++) {
-                            var value = '';
-                            if (args[index] === null ||  typeof args[index] === 'undefined'){
-                                value = 'null';
-                            } else{
-                                if (typeof args[index] === 'object') {
-                                    value = JSON.stringify(args[index]);
-                                } else {
-                                    value = args[index].toString();
-                                }
-                            }
-                            arg_type += (hooks_line + 'argType' + index.toString() + " : " + typeof args[index]);
-                            // arg_type += (hooks_line + 'argType' + index.toString() + " : " + mArgs[index]['className'].toString()); // Error
-                            arg_dump += ("arg" + index.toString() + ": " + value + hooks_line);
-                        }
-                        try {
-                            var hooks_retval = this[targetMethod].apply(this, args); 
-                        }catch (e) {
-                            console.log(hooks_ret_type + " "+methodName);
-                            // hooks_retval = hookClazz.$new().targetMethod.apply(this, arguments);
-                            return ;
-                            // console.log(e.message + " "+targetMethod +" "+ methodName);
-                        }
-
-                        var hooks_ret_type = String(List_hook.returnType['className']);
-
-                        if (hooks_ret_type == "[B") {
-                            var hooks_retval_dump = "(" + hooks_ret_type + ') : ' + JSON.stringify(hooks_retval);
-                        } else {
-                            var hooks_retval_dump = "(" + hooks_ret_type + ') : ' + String(hooks_retval);
-                        }
-
-                        method_stack += getCaller();
-
-                        hooks_cell = {
-                            "method_stack": method_stack,
-                            "arg_type": arg_type,
-                            "arg_dump": arg_dump,
-                            "retval_dump": hooks_retval_dump,
-                            "targetClassMethod": methodName
-                        };
-                        // console.log(JSON.stringify(hooks_cell));
-                        send(JSON.stringify(hooks_cell) + "-h00oOOoks-");
-                        return hooks_retval;
+                    if (hooks_ret_type == "[B") {
+                        hooks_retval_dump = "(" + hooks_ret_type + ') : ' + JSON.stringify(hooks_retval);
+                    } else {
+                        hooks_retval_dump = "(" + hooks_ret_type + ') : ' + String(hooks_retval);
                     }
+
+                    method_stack += getCaller();
+
+                    hooks_cell = {
+                        "method_stack": method_stack,
+                        "arg_type": arg_type,
+                        "arg_dump": arg_dump,
+                        "retval_dump": hooks_retval_dump,
+                        "targetClassMethod": methodName
+                    };
+
+                    // console.log(JSON.stringify(hooks_cell));
+                    send(JSON.stringify(hooks_cell) + "-h00oOOoks-");
+                    return hooks_retval;
                 }
-                hookClazz.$dispose();
             }
-	// }catch (err) {
-    //     console.log("hooks function traceMethod is " + methodName +" error: "+ err);
-    // }
+            hookClazz.$dispose();
+            //}
+	}catch (err) {
+        console.log("HookJavaMethod " + methodName +" Error, Reason is : " + err);
+        return this[targetMethod].apply(this, arguments);
+    }
 }
 
 
@@ -338,7 +341,6 @@ setImmediate(function() {
 			//除第一个为空外，其他为空不执行。
 			// console.log(item);
             main(val);
-			// enumJavaAllClass(val);
 		}
 	}
 });

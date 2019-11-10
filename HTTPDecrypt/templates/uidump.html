@@ -1,0 +1,56 @@
+<p id="uidump_info" class="text-primary" style="cursor: pointer; margin-bottom: 3px;display: inline-block;">UIDump <i class="glyphicon glyphicon-eye-open"></i></p>&nbsp;&nbsp;
+<div class="btn-group" role="group" aria-label="..." id="uidumpbuttom">
+    <button type="button" onclick="loaduiScript()" class="btn btn-default btn-xs">Confirm</button>
+
+    <!--<button type="button" id="" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Refresh</button>-->
+
+</div>
+<div class="well" id="uiwell">
+    <!--
+    <pre id="testcode" style="overflow: auto"></pre>
+
+
+    <p>Activity: <code id="Activity"></code></p>
+    <p>Pid: <code id="pid"></code></p>
+    <p>Click: <code id="click"></code></p>
+    <p>Listener: <code id="listener"></code></p>
+    <p>Fragment: <code id="fragment"></code></p>
+    -->
+</div>
+
+<!-- Modal3 -->
+<div class="modal fade" id="uiquery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">
+                    <a data-toggle="collapse" href="#collapseIntent1" aria-expanded="false" aria-controls="collapseIntent1">
+                        UIQuery
+                    </a>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--FORM-->
+                                <form class="form-horizontal " role="form">
+                                    <div class="form-group">
+                                        NativePointer: <input type="text" class="form-control" aria-label="..." id="txt_ui_ptr">
+                                        <button type="button" onclick="queryui();" class="btn btn-default btn-sm pull-right">Query</button>
+                                    </div>
+                                    View the result in Python console.
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal3-->

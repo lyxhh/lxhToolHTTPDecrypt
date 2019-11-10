@@ -1,5 +1,5 @@
-var methodinfo = null;
-var Nativeinfo = null;
+// var methodinfo = null;
+// var Nativeinfo = null;
 
 var setting = {
     view: {
@@ -32,7 +32,17 @@ function OnRightClick(event, treeId, treeNode) {
                                 top:  event.pageY,
                                 hideOnUnhover:false});
 
-    }else if (treeNode && !treeNode.noparent && treeNode.isParent) {
+    }else if ("native" == treeNode.platform){
+        zTree.selectNode(treeNode);
+        $('#native').menu('show', { left: event.pageX,
+                                top:  event.pageY,
+                                hideOnUnhover:false});
+    } else if (treeNode.NativeTag) {
+	    zTree.selectNode(treeNode);
+        $('#custom').menu('show', { left: event.pageX,
+                                top:  event.pageY,
+                                hideOnUnhover:false});
+    } else if (treeNode && !treeNode.noparent && treeNode.isParent) {
 		// console.log();
 		zTree.selectNode(treeNode);
 		$('#mm').menu('show', { left: event.pageX,
@@ -92,7 +102,45 @@ function OnRightClick(event, treeId, treeNode) {
             }
         }
     });
+    
+    $('#custom').menu({
 
+        onClick: function(item) {
+            // if (item.name == 'Generate hook script') {
+                ghookscript();
+            // }
+        }
+    });
+
+    $('#native').menu({
+
+        onClick: function(item) {
+            if (item.name == 'enumerateExports') {
+                enumerateMoudleByName('enumerateExports');
+            }else if (item.name == 'enumerateRegisterNatives') {
+                enumerateMoudleByName('enumerateRegisterNatives');
+            }else if (item.name == 'enumerateImports') {
+                enumerateMoudleByName('enumerateImports');
+            }else if (item.name == 'enumerateSymbols') {
+                enumerateMoudleByName('enumerateSymbols');
+            }
+        }
+    });
+
+}
+
+function enumerateMoudleByName(type) {
+    var modulename = zTree.getSelectedNodes()[0].modulename;
+    socket.emit("enumerateMoudleByName", {"modulename": modulename,"type": type});
+    // if ("enumerateExports" == type){
+    //
+    // } else if ("enumerateRegisterNatives" == type){
+    //
+    // } else if ("enumerateImports" == type){
+    //
+    // } else if ("enumerateSymbols" == type){
+    //
+    // }
 }
 
 function sendhooks() {
@@ -106,19 +154,28 @@ function sendhooks() {
 
 }
 
+function ghookscript() {
+    alert("Features awaiting development, see next release.");
+}
+
 function sendtoburp() {
 	var pkg_class_method = zTree.getSelectedNodes()[0].pkg_class_method;
 	$('#InspectText').val(pkg_class_method);
 }
 
 function zTreeOnClick(event, treeId, treeNode) {
-    Nativeinfo = treeNode.NativeTag;
-	methodinfo = treeNode.methodinfo;
+    var Nativeinfo = treeNode.NativeTag;
+	var methodinfo = treeNode.methodinfo;
+	var fullname = treeNode.fullname;
 	if (methodinfo) {
         $("#findsmethodname").text(methodinfo);
 		return ;
 	}
-	if (Nativeinfo) {
+
+	if (Nativeinfo && fullname != null){
+	    $("#findsmethodname").text(fullname);
+        return;
+    } else if (Nativeinfo) {
         // $("#findsmethodname").text(Nativeinfo);
         var Nativesymbol = { Nativesymbol: Nativeinfo };
         socket.emit("Native2Sig", Nativesymbol);
@@ -162,6 +219,7 @@ function zTreeOnClick(event, treeId, treeNode) {
 
 	var HooksOptionscode = ace.edit("HooksOptionscode");
     HooksOptionscode.setTheme("ace/theme/twilight");
+    HooksOptionscode.setValue("{\"startsWith\":\"\"}\n{\"contains\":\"\"}\n{\"endsWith\":\"\"}");
     HooksOptionscode.setShowPrintMargin(false);
     HooksOptionscode.setReadOnly(false);
 
@@ -169,13 +227,53 @@ function zTreeOnClick(event, treeId, treeNode) {
     DecoderLeft.setTheme("ace/theme/twilight");
     DecoderLeft.setShowPrintMargin(false);
     DecoderLeft.setReadOnly(false);
-    DecoderLeft.setOption("wrap", "free")
+    DecoderLeft.setOption("wrap", "free");
 
 	var DecoderRight = ace.edit("DecoderRight");
     DecoderRight.setTheme("ace/theme/twilight");
     DecoderRight.setShowPrintMargin(false);
     DecoderRight.setReadOnly(false);
-    DecoderRight.setOption("wrap", "free")
+    DecoderRight.setOption("wrap", "free");
+
+    var dom = require("ace/lib/dom");
+
+    //add command to all new editor instances
+    require("ace/commands/default_commands").commands.push({
+        name: "Toggle Fullscreen",
+        bindKey: "F11",
+        exec: function(Customcode) {
+            var fullScreen = dom.toggleCssClass(document.body, "fullScreen");
+            dom.setCssClass(Customcode.container, "fullScreen", fullScreen);
+            Customcode.setAutoScrollEditorIntoView(!fullScreen);
+            Customcode.resize()
+        }
+    });
+
+
+    var Customcode = ace.edit("Customcode");
+    Customcode.setTheme("ace/theme/twilight");
+    Customcode.setShowPrintMargin(false);
+    Customcode.setReadOnly(false);
+    Customcode.setOption("wrap", "free");
+    Customcode.session.setMode("ace/mode/javascript");
+    Customcode.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+
+
+    var ScriptManageEditorView = ace.edit("ScriptManageEditorView");
+    ScriptManageEditorView.setTheme("ace/theme/twilight");
+    ScriptManageEditorView.setShowPrintMargin(false);
+    ScriptManageEditorView.setReadOnly(false);
+    ScriptManageEditorView.setOption("wrap", "free");
+    ScriptManageEditorView.session.setMode("ace/mode/javascript");
+    ScriptManageEditorView.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
 
     //以下部分是设置输入代码提示的，如果不需要可以不用引用ext-language_tools.js
    // ace.require("ace/ext/language_tools");
@@ -186,3 +284,8 @@ function zTreeOnClick(event, treeId, treeNode) {
    //      enableLiveAutocompletion: true,
 	// 	autoScrollEditorIntoView: true
    // });
+// $("#Settinghook").bootstrapSwitch();
+// $("#SettingExportInstance").bootstrapSwitch();
+// $("#SettingExportstatic").bootstrapSwitch();
+$("#Settingflag_sec").bootstrapSwitch();
+$("#Settingssl_uncheck").bootstrapSwitch();

@@ -6,7 +6,7 @@ var {{ methodtag }}_returnType = eval('ObjC.classes.{{ clazz_name }}["{{method_n
 Interceptor.attach({{ methodtag }}.implementation, {
    onEnter: function (args) {
         this.ios_hooks_cell = {}; 
-        console.log({{ methodtag }}_argumentTypes);
+        // console.log({{ methodtag }}_argumentTypes);
         var argTypes = "(";
         var argCount = ("{{method_name}}".match(/:/g) || []).length;
 

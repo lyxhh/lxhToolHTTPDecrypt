@@ -1,21 +1,27 @@
 body {
     overflow-x: hidden;
-    font-family: "微软雅黑";
-    font-size: 150%;
-
+    /*font-family: "微软雅黑";*/
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;";
+    font-size: 14px;
 }
 .ro1w{
     margin-right: 15px;
     margin-left: 15px;
 }
+
 .findsearch{
     height: 22px;
     padding: 0px 10px;
 }
 
-/*.root {*/
-    /*margin: 40px;*/
-/*}*/
+.scriptManageul{
+    overflow-y: scroll;
+    height: 500px;
+}
+
+.root {
+    /*background-color: #0d698b;*/
+}
 
 .subclass{
     margin: 0 auto;
@@ -63,25 +69,15 @@ div#rMenu ul li{
 }
 
 .ace_editor {
+    height: 500px
         /*position: relative !important;*/
         /*border: 1px solid lightgray;*/
         /*margin: auto;*/
-        height: 200px;
+        /*height: 200px;*/
         /*width: 80%;*/
     }
 
-/*.ace_editor.fullScreen {*/
-    /*height: auto;*/
-    /*width: auto;*/
-    /*border: 0;*/
-    /*margin: 0;*/
-    /*position: fixed !important;*/
-    /*top: 0;*/
-    /*bottom: 0;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*z-index: 10;*/
-/*}*/
+
 
 .fullScreen {
     overflow: hidden
@@ -95,6 +91,29 @@ div#rMenu ul li{
 
     margin-bottom: 5px
 }
+
+.navbar-brand{
+    padding-right: 5px;
+}
+/*.mywell{*/
+    /*background-color: #fff;*/
+    /*padding-left: 20px;*/
+    /*padding-top: 0px;*/
+    /*border-radius:0px;*/
+    /*padding-bottom: 0px;*/
+    /*padding-right: 20px;*/
+    /*margin-right: 0px;*/
+    /*margin-left: 0px;*/
+    /*margin-bottom: 0px;*/
+    /*border:0px;*/
+
+/*}*/
+
+/*.mynav {*/
+    /*margin-bottom: 0px;*/
+    /*border-radius: 0px;*/
+    /*border:0px;*/
+/*}*/
 
 .navbar-default {
   background-color: #0d698b;
@@ -164,4 +183,36 @@ div#rMenu ul li{
     color: #000000;
     background-color: #0d698b;
   }
+}
+
+.ace_editor.fullScreen {
+    height: auto;
+    width: auto;
+    border: 0;
+    margin: 0;
+    position: fixed !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.navbar-default .navbar-nav > li > a:hover{
+    /*background-color: transparent;*/
+    color: #ecf0f1;
+}
+
+.navbar-default .navbar-nav > li > a:visited{
+    /*background-color: transparent;*/
+    color: #ecf0f1;
+}
+
+.navbar-default .navbar-nav > li > a:focus{
+    /*background-color: transparent;*/
+    color: #ecf0f1;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
+    color: #ecf0f1;
 }

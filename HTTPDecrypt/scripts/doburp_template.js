@@ -104,7 +104,14 @@ doburp_clazz_Thread = Java.use("java.lang.Thread");
                 // console.log("Arg is object");
                 //对象类型，不处理直接返回
                 continue;
-            } else {
+            }else if("string" == typeof args[i]){
+				//continue;
+				console.log("Hi");
+				a = eval(recv_arg[i]);
+				a['ResultType'] = 0;
+				console.log("a");
+				args[i] = a;
+			} else {
                 // console.log("Arg is other type");
                 args[i] = args[i].constructor(recv_arg[i]);
             }

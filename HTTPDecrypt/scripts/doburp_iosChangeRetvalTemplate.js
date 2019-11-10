@@ -41,7 +41,8 @@ Interceptor.attach({{ methodtag }}.implementation, {
         }
 
         this.{{ methodtag }}_sendback['uri'] = "(" + retvaltype + ")" + "{{ clazz_name }}['{{method_name}}']" + this.argTypes;
-    
+
+        this.methodinfo = this.{{ methodtag }}_sendback['uri'];
 
         var recv_iosdata = "";
         send(JSON.stringify(this.{{ methodtag }}_sendback,null, 4) + signature);

@@ -1,8 +1,9 @@
-# coding:utf-8
+# - * - coding:utf-8 - * -
 
 import frida
 from flask import Flask
 from flask_socketio import SocketIO
+from log import logger
 
 
 class Globalenv(object):
@@ -12,6 +13,9 @@ class Globalenv(object):
         self.script = None
         self.packagename = None
         self.session = None
+        self.port = 0
+        self.isAndroid = None
+        self.allApp = {}
 
     def set_pkgname(self, pkg):
         self.packagename = pkg
@@ -19,19 +23,27 @@ class Globalenv(object):
     def get_pkgname(self):
         return self.packagename
 
-    # def set_device(self, port):
-    #     rdev = frida.get_usb_device()
-    #     # devm = frida.get_device_manager()
-    #     # rdev = devm.add_remote_device("127.0.0.1:%s" % port)
-    #     # rdev = devm.add_remote_device("127.0.0.1:23456")
-    #     self.device = rdev
+    def set_device(self, port):
+        self.port = int(port)
 
     def get_device(self):
-        """
-            https://github.com/lyxhh/lxhToolHTTPDecrypt/pull/3/commits/2de5854fe86e0188d3844606cdc3f7bb360673b7 @ Thank akkuman
-        """
-        self.device = frida.get_device_manager().enumerate_devices()[-1]
+        # print(self.port)
+        if self.port == 0:
+            try:
+                self.device = frida.get_usb_device()
+            except Exception as e:
+                logger.error("{}, please wait for few seconds and retry.".format(e))
+                return None
+        else:
+            try:
+                devm = frida.get_device_manager()
+                self.device = devm.add_remote_device("127.0.0.1:%s" % self.port)
+            except Exception as e:
+                return self.device
+        # self.device = frida.get_usb_device()
+        #self.device = frida.get_device_manager().enumerate_devices()[-1] # ios use in window  bug!!!
         return self.device
+
 
 app = Flask(__name__)
 async_mode = None

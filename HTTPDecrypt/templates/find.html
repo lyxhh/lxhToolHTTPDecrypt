@@ -1,0 +1,69 @@
+<p id="toggle_find_info" class="text-primary" style="cursor: pointer; margin-bottom: 3px;display: inline-block;">Finds <i class="glyphicon glyphicon-resize-small"></i></p>&nbsp;&nbsp;
+<div class="btn-group" role="group" aria-label="...">
+    <button type="button" id="loadfindScript" class="btn btn-default btn-xs">Confirm</button>
+    <button type="button" class="btn btn-warning btn-xs" onclick="unloadScript()">UnLoadScript</button>
+    <button type="button" id="Searchmethods" class="btn btn-default btn-xs" >Searchmethods</button>
+    <button type="button" id="ExportAllMoudle" class="btn btn-default btn-xs" >ExportAllMoudle</button>
+    <div class="input-group input-group-sm ">
+        <input type="text" id="keyword" style="height:24px;" class="form-control findsearch" onkeyup="AutoMatch(this)" placeholder="Search" aria-describedby="sizing-addon3">
+    </div>
+</div>
+
+<span><code id="findsmethodname"></code></span>
+
+<div class="well" id="find-info-div">
+    <div class="row ">
+        <div class="col-sm-6 ">
+            <!--label>Match  <span title="Finds 是将已加载的类下的所有方法打印出来，可指定类。&#10;Match使用方式与Hooks一致，支持正则，不填写Match打印所有方法。"><i class="glyphicon glyphicon-question-sign"></i></span></label-->
+            <label>Match </label>
+            <div id="FindMatchcode" style="height: 250px"></div>
+        </div>
+
+        <div class="col-sm-6">
+            <!--label>Options  <span title="由于打印所有方法的时候，很多都是Android的库，因此提供了过滤功能，支持以 开头，包含，结尾的方式过滤。"><i class="glyphicon glyphicon-question-sign"></i></span></label-->
+            <label>Options </label>
+            <div id="FindOptionscode" style="height: 250px"></div>
+        </div>
+
+    </div>
+</div>
+
+<div style="min-height: 500px;" >
+    <div class="left">
+        <ul id="javatree" class="ztree"></ul>
+    </div>
+
+    <div id="mm" class="easyui-menu" style="height: 40px;">
+        <div id="Send to Hooks" data-options="name:'sendhooks'">Send to Hooks</div>
+      <!--   <div id="startsWith" data-options="name:'modify'">Add startsWith FindsOptions</div>
+        <div id="contains" data-options="name:'del'">Add contains FindsOptions</div>
+        <div id="endsWith" data-options="name:'del'">Add endsWith FindsOptions</div> -->
+    </div>
+
+    <div id="mm1" class="easyui-menu" style="height: 40px;">
+        <div id="Send to toBurp" data-options="name:'SendtotoBurp'">Send to toBurp</div>
+        <!--<div id="delNode" data-options="name:'del'">删除节点</div>-->
+    </div>
+
+    <div id="ios" class="easyui-menu">
+        <div id="Send to toBurp" data-options="name:'SendtotoBurp'">Send to toBurp</div>
+        <div id="Send to Hooks" data-options="name:'sendhooks'">Send to Hooks</div>
+        <!--<div id="delNode" data-options="name:'del'">删除节点</div>-->
+    </div>
+
+    <div id="custom" class="easyui-menu">
+        <div id="Generate hook script" data-options="name:'Generate hook script'">Generate native hook script</div>
+        <div id="Generate Exportfun script" data-options="name:'Generate Exportfun scrip'">Generate native Exportfun script</div>
+        <div id="Generate toBurp script" data-options="name:'Generate toBurp script'">Generate native toBurp script</div>
+        <!--<div id="modifyNode" data-options="name:'modify'">修改节点</div>-->
+        <!--<div id="delNode" data-options="name:'del'">删除节点</div>-->
+    </div>
+
+    <div id="native" class="easyui-menu">
+        <div id="enumerateExports" data-options="name:'enumerateExports'">enumerateExports</div>
+        <div id="enumerateRegisterNatives" data-options="name:'enumerateRegisterNatives'">enumerateRegisterNatives</div>
+        <div id="enumerateImports" data-options="name:'enumerateImports'">enumerateImports</div>
+        <div id="enumerateSymbols" data-options="name:'enumerateSymbols'">enumerateSymbols</div>
+    </div>
+
+</div>

@@ -5,3 +5,12 @@
 {"startsWith":"libcore"}
 {"contains":"android"}
 {"endsWith":""}
+
+
+{"startsWith":"java"}
+{"startsWith":"dalvik"}
+{"startsWith":"org"}
+{"startsWith":"libcore"}
+{"contains":"android"}
+{"contains":"huawei"}
+{"endsWith":""}

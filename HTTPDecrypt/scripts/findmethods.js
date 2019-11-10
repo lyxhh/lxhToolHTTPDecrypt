@@ -68,6 +68,7 @@ function enumJavaClassMethod(targetClass,searchstring){
 			finds_classname = targetClass.substr(finds_index + 1);
 			finds_methodname = method.toString().replace(targetClass + ".", "TOKEN").match(/\sTOKEN(.*)/)[1];
 			if (finds_methodname.match(searchstring)) {
+				send("-> " + finds_methodname + "-se00nood00tooag-");
 				finds_cell = {
 					"pkgname": finds_pkgname,
 					"fullclassname": targetClass,

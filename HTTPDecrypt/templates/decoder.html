@@ -1,0 +1,22 @@
+<p id="toggle_find_info" class="text-primary" style="cursor: pointer; margin-bottom: 3px;display: inline-block;">Decoder </p>&nbsp;&nbsp;
+<select class="btn-xs" id="Decoder_select_result">
+    <option value="1">byte array and hex string interconvert</option>
+    <option value="2">byte array and string interconvert</option>
+</select>
+<div class="btn-group" role="group" aria-label="...">
+    <button type="button" onclick="DecoderConfirmLeft()" class="btn btn-default btn-xs">---></button>
+    <button type="button" onclick="DecoderConfirmRight()" class="btn btn-warning btn-xs"><---</button>
+</div>
+
+<div class="well" id="Decoder-info-div">
+    <div class="row ">
+        <div class="col-sm-6 ">
+            <div id="DecoderLeft" style="height: 250px"></div>
+        </div>
+
+        <div class="col-sm-6">
+            <div id="DecoderRight" style="height: 250px"></div>
+        </div>
+
+    </div>
+</div>

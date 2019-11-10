@@ -48,6 +48,13 @@ function clear_hookMessage() {
     socket.emit("clear_hookMessage");
 }
 
+function queryui() {
+    var ptr = $("#txt_ui_ptr").val();
+    socket.emit("queryui",{"ptr":ptr});
+    $('#uiquery').modal('hide');
+    // console.log(ptr)
+}
+
 function clear_findMessage() {
     // $("#javatree").empty();
     $.fn.zTree.destroy("javatree");
@@ -61,9 +68,8 @@ function clear_stackMessage() {
     socket.emit("clear_hookMessage");
 }
 
-function clear_CryptoMessage() {
-    $("#CryptooutputBody").empty();
-    // console.log("clear_hookMessage");
+function clear_Custom_Message() {
+    $("#CustomOutputBody").empty();
     socket.emit("clear_hookMessage");
 }
 function clear_doburp_hookMessage() {
@@ -76,10 +82,105 @@ function detachall() {
     socket.emit("detachall");
 }
 
+function screenshot() {
+    var flag_sec = $("#Settingflag_sec").bootstrapSwitch('state');
+    socket.emit("screenshot", {"flag_sec": flag_sec});
+}
 
-function doburp(type) {
+function download_apk() {
+    socket.emit("downloadApp");
+}
+
+function DecoderConfirmLeft(){
+        var Decoderselected = $("#Decoder_select_result option:selected").val();
+        var DecoderLeftvalues = DecoderLeft.getValue().trim();
+        // console.log(DecoderLeftvalues);
+        if ("1" == Decoderselected){
+            // DecoderRight.setValue(bytesToHex(DecoderLeftvalues.split(',')));
+            DecoderRight.setValue(bytesToHex(eval(DecoderLeftvalues)));
+        }else if ("2" == Decoderselected){
+            // let bytes = new Uint8Array(DecoderLeftvalues.split(','));
+            let bytes = new Uint8Array(eval(DecoderLeftvalues));
+            let str = new TextDecoder().decode(bytes);
+            // console.log(bytes,str);
+            DecoderRight.setValue(str);
+        }
+        // console.log(Decoderselected);
+}
+
+function DecoderConfirmRight() {
+    var Decoderselected = $("#Decoder_select_result option:selected").val();
+    var DecoderRightvalues = DecoderRight.getValue().trim();
+    // console.log(DecoderRightvalues);
+    if ("1" == Decoderselected) {
+        DecoderLeft.setValue("[" + hexToBytes(DecoderRightvalues).toString() + "]");
+    } else if ("2" == Decoderselected) {
+        let bytes = new TextEncoder().encode(DecoderRightvalues);
+        const typedArray = new Int8Array(new Uint8Array(bytes));
+        // console.log(bytes)
+        DecoderLeft.setValue("[" + typedArray.toString() + "]");
+    }
+}
+
+function getFileContentByFileName(filename){
+    $('#filepath').text(filename);
+    $('#deletefilename').text(filename);
+    socket.emit("getFileContentByFileName",{"filename": filename});
+    // console.log(filename);
+}
+
+function loadfileContent(){
+    Customcode.setValue(ScriptManageEditorView.getValue());
+    $('#ScriptManage').modal('hide');
+}
+
+function deletefile(count){
+    if (count == '1'){
+        $('#ScriptManage').modal('hide');
+        $('#deleteScript').modal('show');
+    }else if(count == '2'){
+        var filepath = $('#deletefilename').text().toString().trim();
+
+        if (filepath){
+            // console.log(filepath);
+            socket.emit("deletefile",{"filepath": filepath});
+        }else{
+            alert("Delete failed, Please select the file you want to delete.")
+        }
+        $('#deleteScript').modal('hide');
+    }
+}
+
+
+function savefileContent(type) {
+    var filepath = $('#filepath').text();
+    if ("EditScriptManageEditorView" == type) {
+        var filecontent = ScriptManageEditorView.getValue();
+        socket.emit("savefileContent",{"filepath": filepath, "filecontent": filecontent});
+        $('#ScriptManage').modal('hide');
+    }else if ("EditCustomcode" == type) {
+        var filename = $('#savefilename').val().trim();
+
+        if (filename){
+            var ScriptContent = Customcode.getValue();
+            socket.emit("saveScript", { "ScriptContent": ScriptContent, "filename": filename});
+        }else {
+            alert("Invalid Input, filename not empty.")
+        }
+        $('#SaveScript').modal('hide');
+    }
+}
+
+function loadCustomScript(type) {
+    var ScriptContent = Customcode.getValue();
+    socket.emit("loadCustomScript", { "ScriptContent": ScriptContent, "type": type});
+}
+
+function doburp(type, level) {
     // console.log(type);
     var lists = toBurpinfo.getValue().split('\n');
+    lists = uniqBy(lists);
+
     var methods_list = { methods_list: [] };
     for (var index = 0; index < lists.length; index++) {
         try {
@@ -89,40 +190,98 @@ function doburp(type) {
             var temp = JSON.parse(lists[index]);
             methods_list.methods_list.push(temp)
         } catch (e) {
-            console.log("findhook is error: " + lists[index])
+            console.log("doburp is error: " + lists[index])
         }
     }
     if ("Android" == type) {
         methods_list["type"] = "Android";
-    }else if ("IOSArgs" == type) {
-        methods_list["type"] = "IOSChangeArgs";
-    }else if ("IOSRetval" == type) {
-        methods_list["type"] = "IOSChangeRetval";
+    }else if ("IOS" == type) {
+        methods_list["type"] = "IOS";
     }
-    socket.emit("doburp", methods_list);
+
+    if (level == "normal"){
+        socket.emit("doburp", methods_list);
+    } else if (level == "update"){
+        socket.emit("GeneratetoBurp", methods_list);
+    }
 }
+
+
+function Generate(type) {
+    var lists = toBurpinfo.getValue().split('\n');
+    lists = uniqBy(lists);
+
+    var methods_list = { methods_list: [] };
+    for (var index = 0; index < lists.length; index++) {
+        try {
+            if ("" == lists[index]){
+                continue;
+            }
+            var temp = JSON.parse(lists[index]);
+            methods_list.methods_list.push(temp)
+        } catch (e) {
+            console.log("rpcExport is error: " + lists[index])
+        }
+    }
+    if (type == "GenerateExportStatic") {
+        socket.emit("GenerateExportStatic", methods_list);
+    }else if (type == "findhook"){
+        socket.emit("findhook", methods_list);
+    } else if (type == "rpcExport") {
+        socket.emit("rpcExport", methods_list);
+    } else if (type == "rpcExportInstance") {
+        socket.emit("rpcExportInstance", methods_list);
+    } else if (type == "GenerateExportInstance") {
+        socket.emit("GenerateExportInstance", methods_list);
+    } else if (type == "SettingloadScript") {
+        var Settinghook = $("#Settinghook").bootstrapSwitch('state');
+        var SettingExportInstance = $("#SettingExportInstance").bootstrapSwitch('state');
+        var SettingExportstatic = $("#SettingExportstatic").bootstrapSwitch('state');
+        socket.emit("SettingloadScript",{"Settinghook": Settinghook, "SettingExportInstance": SettingExportInstance, "SettingExportstatic": SettingExportstatic, "methods_list": methods_list})
+    }
+}
+
+function loaduiScript() {
+    socket.emit("loaduiScript")
+}
+
+function iosuidump() {
+    socket.emit("iosuidump")
+}
+
+// function SettingloadScript(type) {
+//     var Settinghook = $("#Settinghook").bootstrapSwitch('state');
+//     var SettingExpInstance = $("#SettingExpInstance").bootstrapSwitch('state');
+//     var SettingExportstatic = $("#SettingExportstatic").bootstrapSwitch('state');
+//     socket.emit("SettingloadScript",{"Settinghook": Settinghook, "SettingExpInstance": SettingExpInstance, "SettingExportstatic": SettingExportstatic})
+//     // console.log(Settinghook);
+//     // console.log(SettingExpInstance);
+//     // console.log(SettingExportstatic)
+//
+// }
 
 function unloadScript() {
 	socket.emit("unloadfindclassScript");
 }
 
-function findhook(){
-    var lists = toBurpinfo.getValue().split('\n');
-
-    var methods_list = { methods_list: [] };
-    for (var index = 0; index < lists.length; index++) {
-        try {
-            if ("" == lists[index]){
-                continue;
-            }
-            var temp = JSON.parse(lists[index]);
-            methods_list.methods_list.push(temp)
-        } catch (e) {
-            console.log("findhook is error: " + lists[index])
-        }
-    }
-    socket.emit("findhook", methods_list);
-}
+// function findhook(){
+//     var lists = toBurpinfo.getValue().split('\n');
+//     lists = uniqBy(lists);
+//
+//     var methods_list = { methods_list: [] };
+//     for (var index = 0; index < lists.length; index++) {
+//         try {
+//             if ("" == lists[index]){
+//                 continue;
+//             }
+//             var temp = JSON.parse(lists[index]);
+//             methods_list.methods_list.push(temp)
+//         } catch (e) {
+//             console.log("findhook is error: " + lists[index])
+//         }
+//     }
+//     socket.emit("findhook", methods_list);
+// }
 
 function addinfo(){
     var select_result = $("#select_result option:selected").val();
@@ -141,58 +300,60 @@ function addinfo(){
         var hook_message = { "classname": jsoninfo.classname, "methodname": jmethodname, "index": Number(select_result), "length":methodarglength, "methodtag": methodtag, "platform": "Android"};
     }
 
-
     var val = toBurpinfo.getValue();
     if (val){
         toBurpinfo.setValue(val + '\n' + JSON.stringify(hook_message));
     }else {
         toBurpinfo.setValue(JSON.stringify(hook_message))
     }    
-
     // console.log(select_result + "::::"+select_text+":::"+methodarglength);
     // var methodtag = jmethodname + jsoninfo.classtag + select_result + methodarglength;
-
     // console.log(jsoninfo);
 }
 
-function rpcExport(){
-    var lists = toBurpinfo.getValue().split('\n');
-    lists = uniqBy(lists);
+// function rpcExport(){
+//     var lists = toBurpinfo.getValue().split('\n');
+//     // console.log(JSON.stringify(lists));
+//     lists = uniqBy(lists);
+//     // console.log(JSON.stringify(lists));
+//
+//     var methods_list = { methods_list: [] };
+//     for (var index = 0; index < lists.length; index++) {
+//         try {
+//             if ("" == lists[index]){
+//                 continue;
+//             }
+//             var temp = JSON.parse(lists[index]);
+//             methods_list.methods_list.push(temp)
+//         } catch (e) {
+//             console.log("rpcExport is error: " + lists[index])
+//         }
+//     }
+//     socket.emit("rpcExport", methods_list);
+// }
 
-    var methods_list = { methods_list: [] };
-    for (var index = 0; index < lists.length; index++) {
-        try {
-            if ("" == lists[index]){
-                continue;
-            }
-            var temp = JSON.parse(lists[index]);
-            methods_list.methods_list.push(temp)
-        } catch (e) {
-            console.log("rpcExport is error: " + lists[index])
-        }
-    }
-    socket.emit("rpcExport", methods_list);
+// function rpcExportInstance(){
+//     var lists = toBurpinfo.getValue().split('\n');
+//     lists = uniqBy(lists);
+//
+//     var methods_list = { methods_list: [] };
+//     for (var index = 0; index < lists.length; index++) {
+//         try {
+//             if ("" == lists[index]){
+//                 continue;
+//             }
+//             var temp = JSON.parse(lists[index]);
+//             methods_list.methods_list.push(temp)
+//         } catch (e) {
+//             console.log("rpcExportInstance is error: " + lists[index])
+//         }
+//     }
+//     socket.emit("rpcExportInstance", methods_list);
+// }
+
+function getcustominfo() {
+    socket.emit("getcustominfo");
 }
-
-function rpcExportInstance(){
-    var lists = toBurpinfo.getValue().split('\n');
-    lists = uniqBy(lists);
-
-    var methods_list = { methods_list: [] };
-    for (var index = 0; index < lists.length; index++) {
-        try {
-            if ("" == lists[index]){
-                continue;
-            }
-            var temp = JSON.parse(lists[index]);
-            methods_list.methods_list.push(temp)
-        } catch (e) {
-            console.log("rpcExportInstance is error: " + lists[index])
-        }
-    }
-    socket.emit("rpcExportInstance", methods_list);
-}
-
 
 // function call(){
 //     var data = $("#findhookmessage").val();
@@ -230,11 +391,12 @@ window.onload = function() {
                         //去除空行。
                         continue;
                     }
-                    var hookOptions = hooksOptionscode[index].trim();
+                    // var hookOptions = hooksOptionscode[index].trim();
+                    var hookOptions = JSON.parse(hooksOptionscode[index]);
                     hookOptions_lists.hookOptions_list.push( hookOptions);
 
             } catch (e) {
-                console.log("findOptions error No Json: " + hooksOptionscode[index])
+                console.log("hook findOptions error No Json: " + hooksOptionscode[index])
             }
         }
 
@@ -243,23 +405,23 @@ window.onload = function() {
         socket.emit("loadHookScript", script_to_load);
     });
 
-    $("#EnumExportNative").click(function(){
+    $("#ExportAllMoudle").click(function(){
         $.fn.zTree.init($("#javatree"), setting, null);
 	    zTree = $.fn.zTree.getZTreeObj("javatree");
-	    socket.emit("loadEnumExportNativeScript");
+	    socket.emit("ExportAllMoudle");
     });
 
-    $("#EnumImportNative").click(function(){
-        $.fn.zTree.init($("#javatree"), setting, null);
-	    zTree = $.fn.zTree.getZTreeObj("javatree");
-	    socket.emit("loadEnumImportNativeScript");
-    });
-
-    $("#EnumSymbols").click(function(){
-        $.fn.zTree.init($("#javatree"), setting, null);
-	    zTree = $.fn.zTree.getZTreeObj("javatree");
-	    socket.emit("loadEnumSymbolsScript");
-    });
+    // $("#EnumImportNative").click(function(){
+    //     $.fn.zTree.init($("#javatree"), setting, null);
+	//     zTree = $.fn.zTree.getZTreeObj("javatree");
+	//     socket.emit("loadEnumImportNativeScript");
+    // });
+    //
+    // $("#EnumSymbols").click(function(){
+    //     $.fn.zTree.init($("#javatree"), setting, null);
+	//     zTree = $.fn.zTree.getZTreeObj("javatree");
+	//     socket.emit("loadEnumSymbolsScript");
+    // });
 
 
 
@@ -352,37 +514,40 @@ window.onload = function() {
         socket.emit("loadfindclassScript", script_to_load);
     });
 
+
+
     $("#loadCryptoScript").click(function(){
         socket.emit("loadCryptoScript");
     });
 
-    $("#DecoderConfirmLeft").click(function(){
-        var Decoderselected = $("#Decoder_select_result option:selected").val();
-        var DecoderLeftvalues = DecoderLeft.getValue().trim();
-        // console.log(DecoderLeftvalues);
-        if ("1" == Decoderselected){
-            DecoderRight.setValue(bytesToHex(DecoderLeftvalues.split(',')));
-        }else if ("2" == Decoderselected){
-            let bytes = new Uint8Array(DecoderLeftvalues.split(','));
-            let str = new TextDecoder().decode(bytes);
-            // console.log(bytes);
-            DecoderRight.setValue(str);
-        }
-        // console.log(Decoderselected);
-    });
+    // $("#DecoderConfirmLeft").click(function(){
+    //     var Decoderselected = $("#Decoder_select_result option:selected").val();
+    //     var DecoderLeftvalues = DecoderLeft.getValue().trim();
+    //     console.log(DecoderLeftvalues);
+    //     if ("1" == Decoderselected){
+    //         DecoderRight.setValue(bytesToHex(DecoderLeftvalues.split(',')));
+    //     }else if ("2" == Decoderselected){
+    //         console.log("aaaa");
+    //         let bytes = new Uint8Array(DecoderLeftvalues.split(','));
+    //         let str = new TextDecoder().decode(bytes);
+    //         console.log(bytes,str);
+    //         DecoderRight.setValue(str);
+    //     }
+    //     // console.log(Decoderselected);
+    // });
 
-    $("#DecoderConfirmRight").click(function(){
-        var Decoderselected = $("#Decoder_select_result option:selected").val();
-        var DecoderRightvalues = DecoderRight.getValue().trim();
-        // console.log(DecoderRightvalues);
-        if ("1" == Decoderselected){
-            DecoderLeft.setValue(hexToBytes(DecoderRightvalues).toString());
-
-        }else if ("2" == Decoderselected){
-            let bytes = new TextEncoder().encode(DecoderRightvalues);
-            DecoderLeft.setValue(bytes.toString());
-        }
-    });
+    // $("#DecoderConfirmRight").click(function(){
+    //     var Decoderselected = $("#Decoder_select_result option:selected").val();
+    //     var DecoderRightvalues = DecoderRight.getValue().trim();
+    //     // console.log(DecoderRightvalues);
+    //     if ("1" == Decoderselected){
+    //         DecoderLeft.setValue(hexToBytes(DecoderRightvalues).toString());
+    //
+    //     }else if ("2" == Decoderselected){
+    //         let bytes = new TextEncoder().encode(DecoderRightvalues);
+    //         DecoderLeft.setValue(bytes.toString());
+    //     }
+    // });
 
     $("#Inspect").click(function(){
         var InspectText = $("#InspectText").val().trim();
@@ -393,7 +558,6 @@ window.onload = function() {
         }else{
             alert("Invalid Input, not empty.")
         }
-
     });
 
     $("#pkgname").click(function(){
@@ -430,6 +594,19 @@ window.onload = function() {
         });
     });
 
+
+    $("#toggle_custom_info").click(function(e) {
+        var link = $(this);
+        $("#Custom-info-div").slideToggle('slow', function() {
+            if ($(this).is(':visible')) {
+                link.html('Custom <i class="glyphicon glyphicon-resize-small"></i>');
+            } else {
+                link.html('Custom <i class="glyphicon glyphicon-resize-full"></i>');
+            }
+        });
+    });
+
+
     $("#toggle_hooks_info").click(function(e) {
         var link = $(this);
         $("#hooks-info-div").slideToggle('slow', function() {
@@ -441,6 +618,30 @@ window.onload = function() {
         });
     });
 
+    $("#uidump_info").click(function () {
+       $("#uiView").empty();
+        socket.emit("clear_hookMessage");
+    });
+
+    socket.on('getCustomScriptList', function(msg) {
+        var filelistdata = msg.data;
+        $('#customscriptlist').html(filelistdata);
+    });
+
+    socket.on('OutputFileContent', function(msg) {
+        var filecontent = msg.filecontent;
+        ScriptManageEditorView.setValue(filecontent);
+        // console.log(filecontent);
+        // $('#customscriptlist').html(filelistdata);
+    });
+
+    socket.on('OutputGenerateExportScript', function(msg) {
+        var filecontent = msg.filecontent;
+        Customcode.setValue(filecontent)
+        // ScriptManageEditorView.setValue(filecontent);
+        // console.log(filecontent);
+        // $('#customscriptlist').html(filelistdata);
+    });
 
     socket.on('new_hook_message', function(msg) {
         var jdata = JSON.parse(msg.data);
@@ -592,35 +793,95 @@ window.onload = function() {
         AllNotes = zTree.getNodes();
     });
 
+    socket.on('nativeinfo',function (msg) {
+        var f_data = JSON.parse(msg.data);
+        var exportname = f_data.exportname;
+        var modulename = f_data.modulename;
+        var type = f_data.type;
+        var fullname = null;
 
+        if (type == "symbols") {
+            var moudletypeico = "/static/images/ss.png";
+        }else if (type == "imports"){
+            var moudletypeico = "/static/images/i.png";
+        } else if (type == "exports"){
+            var moudletypeico = "/static/images/e.png";
+        }else if (type == "RegisterNatives") {
+            var moudletypeico = "/static/images/r.png";
+            fullname = f_data.fullname;
+        }
+        // $.fn.zTree.init($("#javatree"), setting, null);
+        zTree = $.fn.zTree.getZTreeObj("javatree");
 
+        var modulenodes = zTree.getNodesByParam("modulename", modulename, null);
+
+        if (modulenodes.length == 0){
+            var modulenodeinfo = {name: modulename, "modulename": modulename, icon:"/static/images/package_obj.png", "platform": "native"};
+            zTree.addNodes(null, modulenodeinfo);
+
+        }else {
+            //参数没效果，只能自己判断了，大家千万别用zTree这个插件。
+            var modulenodes = zTree.getNodesByParam("modulename", modulename, null);
+            if (modulenodes == null){
+                var node = zTree.getNodeByParam("modulename", modulename, null);
+                var exportNode = {
+                    name: exportname,
+                    icon: moudletypeico,
+                    "exportname": exportname,
+                    "SupportCustomScripts": "true",
+                    "NativeTag":exportname,
+                    "fullname":fullname
+                };
+                zTree.addNodes(node, exportNode);
+            } else {
+                var modulechildnodes = zTree.getNodesByParam("modulename", modulename, null)[0].children;
+                var flag = false;
+                if (modulechildnodes !== undefined) {
+                    for (var i = 0; i < modulechildnodes.length; i++) {
+                        var name = modulechildnodes[i].exportname;
+                        if (name == exportname) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+                if (!flag) {
+                    var node = zTree.getNodeByParam("modulename", modulename, null);
+                    var exportNode = {
+                        name: exportname,
+                        icon: moudletypeico,
+                        "exportname": exportname,
+                        "SupportCustomScripts": "true",
+                        "NativeTag":exportname,
+                        "fullname":fullname
+
+                    };
+                    zTree.addNodes(node, exportNode);
+                }
+            }
+        }
+        AllNotes = zTree.getNodes();
+        // console(exportname + modulename);
+    });
 
     socket.on('enumNative_message', function(msg) {
         var f_data = JSON.parse(msg.data);
-        var nodeinfo = null;
+        // var nodeinfo = null;
         var modulename = f_data.modulename;
-        var funcname = f_data.exportname;
-        // var methodSig = f_data.methodSig;
-        var node = null;
-        var classNode = null;
+
         zTree = $.fn.zTree.getZTreeObj("javatree");
-        var modulenodes = zTree.getNodesByParam("name", modulename, null); // 获取所有的模块节点
-        var funcnamenodes = zTree.getNodesByParam("name", funcname, null); // 获取所有的方法名。
-
-        if (0 != modulenodes.length) {
-                node = zTree.getNodeByParam("name", modulename, null);
-                classNode = {name: funcname, icon:"/static/images/native_co.png",fullclassname: funcname, "NativeTag":funcname};
-                zTree.addNodes(node, classNode);
-
-        }else{
-            nodeinfo = {name: modulename, icon:"/static/images/package_obj.png", fullclassname: modulename};
-            zTree.addNodes(null, nodeinfo);
-
-            node = zTree.getNodeByParam("name", modulename, null);
-	        classNode = {name: funcname, icon:"/static/images/native_co.png",fullclassname: modulename, "NativeTag":funcname };
-
-	        zTree.addNodes(node, classNode);
+        if (zTree == null){
+            $.fn.zTree.init($("#javatree"), setting, null);
+            zTree = $.fn.zTree.getZTreeObj("javatree");
         }
+        var modulenodes = zTree.getNodesByParam("modulename", modulename, null); // 获取所有的模块节点
+        // var funcnamenodes = zTree.getNodesByParam("name", funcname, null); // 获取所有的方法名。
+
+        if (modulenodes.length == 0){
+            var modulenodeinfo = {name: modulename, "modulename": modulename, icon:"/static/images/package_obj.png", "platform": "native"};
+            zTree.addNodes(null, modulenodeinfo)
+        }
+
 
         AllNotes = zTree.getNodes();
     });
@@ -632,6 +893,57 @@ window.onload = function() {
     socket.on('CSig', function(msg) {
         $("#findsmethodname").text(msg.CSig);
     });
+
+    socket.on('getFragmentClassName', function(msg) {
+        $("#fragment").text(msg.data);
+    });
+
+    socket.on('GetClickAndListenerName', function(msg) {
+        var data = JSON.parse(msg.data);
+        $("#click").text(data.onClickViewName);
+        $("#listener").text(data.onClickListenerName);
+    });
+
+    socket.on('GetActivityName', function(msg) {
+        var data = JSON.parse(msg.data);
+        $("#Activity").text(data.ActivityName);
+        $("#pid").text(data.pid);
+    });
+
+    socket.on('CustomScript', function(msg) {
+        // var data = JSON.parse(msg.data);
+        $('#CustomOutputBody').append('<tr><td>' + msg.data + '</td></tr>');
+    });
+
+    socket.on('IOSDumpApp', function(msg) {
+        alert("Currently this feature only supports Android.")
+        // var data = JSON.parse(msg.data);
+        // $('#CustomOutputBody').append('<tr><td>' + msg.data + '</td></tr>');
+    });
+
+    socket.on('AndroidUIDump', function(msg) {
+        // var data = JSON.parse(msg.data);
+        $('#uiwell').html('    <p><span class="label label-info">Activity</span><code id="Activity"></code></p>\n' +
+            '    <p><span class="label label-info">Pid</span><code id="pid"></code></p>\n' +
+            '    <p><span class="label label-info">Click</span> <code id="click"></code></p>\n' +
+            '    <p><span class="label label-info">Listener</span> <code id="listener"></code></p>\n' +
+            '    <p><span class="label label-info">Fragment</span> <code id="fragment"></code></p>')
+
+    });
+    socket.on('IOSUIDump', function(msg) {
+        $('#uiView').html(msg.data);
+        // console.log(msg.data);
+    });
+
+    socket.on('GenerateUiButtom', function(msg) {
+        $("#uidumpbuttom").html('<button type="button" onclick="loaduiScript()" class="btn btn-default btn-xs">Confirm</button>\n' +
+                                '<button type="button" onclick="iosuidump()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Refresh</button>\n' +
+                                '<button type="button" data-toggle="modal" data-toggle="tooltip" title="Query" data-target="#uiquery" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Query </button>'
+                                );
+        $("#uiwell").html('<pre id="uiView" style="overflow: auto"></pre>')
+        // console.log(msg.data);
+    });
+
 
     socket.on('findhook_message', function(msg) {
         var dict1 = {};

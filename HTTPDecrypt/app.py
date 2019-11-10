@@ -1,4 +1,4 @@
-# coding:utf-8
+# - * - coding:utf-8 - * -
 from log import logger
 from flask import render_template, request
 from collections import OrderedDict
@@ -14,7 +14,35 @@ logg.setLevel(logging.ERROR)
 
 @app.route('/')
 def hello():
-    return render_template("index.html")
+    with open('./templates/header.html', encoding='utf-8') as f:
+        header_html = f.read()
+
+    with open('./templates/home.html', encoding='utf-8') as f:
+        home_html = f.read()
+
+    with open('./templates/hook.html', encoding='utf-8') as f:
+        hook_html = f.read()
+
+    with open('./templates/stack.html', encoding='utf-8') as f:
+        stack_html = f.read()
+
+    with open('./templates/find.html', encoding='utf-8') as f:
+        find_html = f.read()
+
+    with open('./templates/uidump.html', encoding='utf-8') as f:
+        uidump_html = f.read()
+
+    with open('./templates/toBurp.html', encoding='utf-8') as f:
+        toBurp_html = f.read()
+
+    with open('./templates/custom.html', encoding='utf-8') as f:
+        custom_html = f.read()
+
+    with open('./templates/decoder.html', encoding='utf-8') as f:
+        decoder_html = f.read()
+    return render_template("index.html", header=header_html, home=home_html, hook=hook_html, stack=stack_html,
+                           find=find_html, uidump=uidump_html, toBurp=toBurp_html, custom=custom_html,
+                           decoder=decoder_html)
 
 
 @app.route('/call', methods=['POST'])
@@ -52,16 +80,15 @@ def bcall():
 
     try:
         jArgsInfo = json.loads(ArgsInfo, object_pairs_hook=OrderedDict)
-        
-        JArgsList = list(jArgsInfo.values())
-        for item in range(len(JArgsList)):
-            temp = str(JArgsList[item])
-            if "-H0T0TooP00Deocot0y0pr-" in temp:
-                JArgsList[item] = base64.b64decode(temp.replace("-H0T0TooP00Deocot0y0pr-","")).decode('utf-8')
- 
-        print(JArgsList)
-        method_to_call = getattr(genv.script.exports, MethodTag)(*JArgsList)
+        argumentsinfo = [base64.b64decode(temp).decode('utf-8') for temp in jArgsInfo.values()]
+
+        print(argumentsinfo)
+
+        method_to_call = getattr(genv.script.exports, MethodTag)(*argumentsinfo)
+
         print(method_to_call)
+        print("=========================================")
+
         return method_to_call
     except Exception as e:
         return "bcall Error is :" + str(e)
@@ -69,17 +96,18 @@ def bcall():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.description = '哈哈哈哈'
+    parser.description = 'HTTP Decrypt'
     parser.add_argument("-p", "--FlaskPort", help="Specify the Flask port , default port is 8088")
-    parser.add_argument("-fp", "--FridaPort", help="Specify the Frida port, default port is 27042")
+    # parser.add_argument("-fp", "--FridaPort", help="Specify the Frida port, default port is 27042")
+    parser.add_argument("-fp", "--FridaPort", help="Specify the Frida port, default port is 0")
     args = parser.parse_args()
     # print(args)
     host = "127.0.0.1"
     FlaskPort = 8088 if (args.FlaskPort is None) else args.FlaskPort
-    FridaPort = 27042 if (args.FridaPort is None) else args.FridaPort
-    # print(FridaPort)
+    FridaPort = 0 if (args.FridaPort is None) else args.FridaPort
+
     logger.info("HTTP Decrypt running at http://127.0.0.1:{}".format(FlaskPort))
-    # genv.set_device(FridaPort)
+    genv.set_device(FridaPort)
     socketio.run(app, host=host, port=FlaskPort, debug=True)
 
 

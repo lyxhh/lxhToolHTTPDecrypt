@@ -1,0 +1,102 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="container-fluid">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <!--
+                            <a href="#" onclick="download_apk()" class="dropdown-toggle downloadapp" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-download-alt" aria-hidden="true"></i> Download App </a>
+                            -->
+                        </li>
+                    </ul>
+
+                     <form class="navbar-form navbar-left" role="search">
+                        <button type="button" onclick="screenshot();" class="btn btn-default" data-toggle="tooltip" title="Screenshot">
+                            <i class="glyphicon glyphicon-camera" aria-hidden="true"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#settings" data-toggle="tooltip" title="Settings">
+                            <i class="glyphicon glyphicon-wrench" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <button type="button" onclick="detachall()" class="btn btn-default navbar-btn" title="Detach All"><i class="glyphicon glyphicon-remove" aria-hidden="true"></i></button>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" onclick="download_apk()" class="dropdown-toggle downloadapp" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-download-alt" aria-hidden="true"></i> Download App </a>
+                </li>
+            </ul>
+            <!--
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+           -->
+        </div>
+    </nav>
+</div>
+
+<div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Settings</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+
+                                    <div class="form-group" data-toggle="buttons">
+                                        <input type='checkbox' id="Settingflag_sec" data-size='mini' > Enable FLAG_SECURE</br>
+                                        <!--input type='checkbox' id="Settingssl_uncheck" data-size='mini' > SSL uncheck-->
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--div class="col-md-12">
+                                <form class="form-horizontal" role="form">
+                                    <legend> toBurp Disable/Enable</legend>
+
+                                    <div class="col-md-6" style="line-height:200%;">
+                                        <input type='checkbox' id="Settinghook" data-size='mini' > Hook</br>
+                                        <input type='checkbox' id="SettingExportInstance" data-size='mini' > Export Instance</br>
+                                    </div>
+
+                                    <div class="col-md-6" style="line-height:200%;">
+                                        <input type='checkbox' id="SettingExportstatic" data-size='mini' > Export Static</br>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-10">
+                                    <form class="form-horizontal " role="form">
+                                        <button type="button" onclick="Generate('SettingloadScript');" class="btn btn-default btn-sm">
+                                            load Script
+                                        </button>
+
+                                        <button type="button" onclick="finishApp();" class="btn btn-default btn-sm">
+                                            load Script(SleepResumeApp)
+                                        </button>
+
+                                    </form>
+                                </div-->
+                                <!--div class="col-md-2">
+
+                                </div-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+</div>

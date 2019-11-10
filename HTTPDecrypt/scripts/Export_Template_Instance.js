@@ -3,9 +3,11 @@
             try{
                 var {{ clazz_var }} = Java.use("{{clazz_name}}");
                 var temp{{ clazz_var }} = undefined;
+				
                 Java.choose("{{clazz_name}}", {
                     "onMatch": function (instance) {
                         temp{{ clazz_var }} = instance;
+						send("find instance.." + "-se00nood00tooag-");
                         return 'stop';
                     },
                     "onComplete": function () {
@@ -14,9 +16,9 @@
                         }
                     }
                 });
-                // console.log(temp{{ clazz_var }});
+                // send(JSON.stringify({"aa":"bb","aa1":"bbb"})+'-cusoto0oom0sc0ri0pt-')
                 rpc_result = temp{{ clazz_var }}.{{ method_name }}({{ args }});
-            }catch(e){console.log(e + " 实例函数参数不为空，自动构造实例对象失败，请自行前往Export_Template_Instance.js构造")}
+            }catch(e){send("{{ method_var }}, " + e + "-er00roo000r-")}
         });
         return rpc_result;
     },

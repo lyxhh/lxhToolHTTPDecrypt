@@ -1,7 +1,7 @@
 ## 安装
 
 * [Android](/docs/AndroidInstall-Chinese.md)
-* [IOS](/docs/IOS-Chinese.md)
+* [IOS](/docs/IOSInstall-Chinese.md)
 
 ## 使用
 

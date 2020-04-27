@@ -105,12 +105,13 @@ public class BurpExtender implements IBurpExtender,IContextMenuFactory,ActionLis
             byte selectedInvocationContext = this.currentInvocation.getInvocationContext();
 
             try {
-
+                String flags = "";
                 byte[] selectedRequestOrResponse = null;
                 if (selectedInvocationContext == IContextMenuInvocation.CONTEXT_MESSAGE_EDITOR_REQUEST) {
                     selectedRequestOrResponse = selectedItems[0].getRequest();
                 } else {
                     selectedRequestOrResponse = selectedItems[0].getResponse();
+                    flags = "1";
                 }
 
                 byte[] preSelectedPortion = Arrays.copyOfRange(selectedRequestOrResponse, 0, selectedBounds[0]);
@@ -119,14 +120,15 @@ public class BurpExtender implements IBurpExtender,IContextMenuFactory,ActionLis
 
                 buildArgResult = this.buildArgMessage(methodtag, selectedPortion);
 
-                byte[] newRequest = ArrayUtils.addAll(preSelectedPortion, BurpExtender.helpers.stringToBytes(Util.sendPost(Config.getWebServerURL(), buildArgResult)));
+                byte[] newRequest = ArrayUtils.addAll(preSelectedPortion, Util.sendPost(Config.getWebServerURL(), buildArgResult).getBytes("utf-8"));
                 newRequest = ArrayUtils.addAll(newRequest, postSelectedPortion);
-                selectedItems[0].setRequest(newRequest);
-
+                if (flags.equals("1")){
+                    selectedItems[0].setResponse(newRequest);
+                }else {
+                    selectedItems[0].setRequest(newRequest);
+                }
             } catch (Exception e) {
-
                 BurpExtender.stdout.print("Exception with custom context application");
-
             }
         } else if (command.equals("contextcustom3") || command.equals("contextcustom4")) {
             methodtag = (command.equals("contextcustom3")) ? Config.getRespfunc3() : Config.getRespfunc4();
@@ -219,7 +221,7 @@ public class BurpExtender implements IBurpExtender,IContextMenuFactory,ActionLis
                     }
                     String ResultArg = this.buildArgMessage(methodtag, body);
                     String Result = Util.sendPost(Config.getWebServerURL(), ResultArg);
-                    messageInfo.setRequest(BurpExtender.helpers.buildHttpMessage(analyzeRequest.getHeaders(), BurpExtender.helpers.stringToBytes(Result)));
+                    messageInfo.setRequest(BurpExtender.helpers.buildHttpMessage(analyzeRequest.getHeaders(), Result.getBytes("utf-8")));
                 } else {
                     byte[] response = messageInfo.getResponse();
                     IResponseInfo analyzedResponse = BurpExtender.helpers.analyzeResponse(response);
@@ -233,7 +235,7 @@ public class BurpExtender implements IBurpExtender,IContextMenuFactory,ActionLis
                     String ResultArg = this.buildArgMessage(methodtag, body);
 
                     String Result = Util.sendPost(Config.getWebServerURL(), ResultArg);
-                    messageInfo.setResponse(BurpExtender.helpers.buildHttpMessage(analyzedResponse.getHeaders(), BurpExtender.helpers.stringToBytes(Result)));
+                    messageInfo.setResponse(BurpExtender.helpers.buildHttpMessage(analyzedResponse.getHeaders(), Result.getBytes("utf-8")));
                 }
             }
         }

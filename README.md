@@ -1,6 +1,7 @@
 ## HTTPDecrypt
 
-Contact me on [Twitter](https://twitter.com/lxhsec)
+Contact me <lyxhh@t00ls.net>
+
 
 Simple Android/iOS protocol analysis and utilization tool. Powered by [frida.re](https://www.frida.re), [python3](https://www.python.org)
 

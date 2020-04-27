@@ -2,6 +2,8 @@
 // var findhook_sendback = {};
 // var findhook_returntype = null;
 
+
+
 function isObjC(p) {
     var klass = getObjCClassPtr(p);
     return !klass.isNull();
@@ -49,6 +51,7 @@ setImmediate(function() {
 		{{iosscript}}
 	}else if(Java.available) {
 	    Java.perform(function() {
+	        var hooks_clazz_Thread = Java.use("java.lang.Thread");
        		{{scripts}}
    		});
 	}

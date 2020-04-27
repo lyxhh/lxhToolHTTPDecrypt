@@ -3,9 +3,7 @@ var {{ index_var }} = {{ index }};
 var {{ clazz_var }} = Java.use("{{ clazz_name }}");
 var {{ clazz_var }}_{{ method_var }} = null;
 
-
 {{ clazz_var }}_{{ method_var }}  = eval('{{ clazz_var }}[{{ method_var }}].overloads[{{ index_var }}]');
-
 {{ clazz_var }}_{{ method_var }}.implementation = function() {
 
     var findhook_retval = null;
@@ -30,6 +28,8 @@ var {{ clazz_var }}_{{ method_var }} = null;
     findhook_sendback['Args'] = arguments;
     findhook_sendback['Retval'] = findhook_retval;
     findhook_sendback['methodtag'] = "{{ methodtag }}";
-    send(JSON.stringify(findhook_sendback,null,4) + "-fi0n0dh0o0ok-");
+    findhook_sendback['stack'] = hooks_clazz_Thread.currentThread().getStackTrace().slice(2,5).reverse().toString().replace(/,/g,"-lineline-");
+
+    send(JSON.stringify(findhook_sendback, null, 4) + "-fi0n0dh0o0ok-");
     return findhook_retval;
 };

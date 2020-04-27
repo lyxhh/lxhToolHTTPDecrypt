@@ -960,9 +960,10 @@ window.onload = function() {
 
         dict1['Retval'] = "<code>" + f_data.Retval + "</code>";
 
-        // console.log(msg.data);
+        var stack = f_data.stack.replace(/-lineline-/g,"<br />");
+        // console.log(stack);
         // console.log(f_data);
-
+        $('#stackoutputBody').append('<tr><td>' + f_data.Methodinfo + '</td><td><code>' + stack + '</code></td></tr>');
         $('#toburpoutputBody').append('<tr><td>' + JSON.stringify(dict1) + '</td><td><form action="/call" method="POST" target="_blank"><input type="hidden" name="methodtag"  value="' + f_data.methodtag + '" />'+"<input type='hidden' name='argsinfo'  value='" + JSON.stringify(f_data.Args) + "' />"+'<button type="submit"  class="btn btn-default " style="width: 90px;height: 32px; margin-bottom: 2px;margin-top: 2px;">call</button></form></td></tr>');
     });
 

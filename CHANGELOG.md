@@ -1,3 +1,7 @@
+## 2020/04/27
+* fix burp plugin bug
+* Add small features
+
 ## 2019-11-10
 * fix Hooks bug
 * Change the use of "Decode Tag" and update the latest screenshot of "decoder"
